@@ -10,8 +10,9 @@ for now to use only in Windows platform
 
 #### Note:
 I Am not focused on abstraction and great written code, goal is to make stuff working,<br />
-i thinking to make many shaders and pipelines just of entity properties because not all entity must use specular lighting <br /> or some bloom effect. <br />
+i thinking to make many shaders and pipelines just of entity properties because not all entity must use specular lighting or some bloom effect. <br />
 Terrain and SkySphere is take form SaschaWillems Tutorial. <br />
+
 For now entity has available graphics effects: <br />
 Per-Pixel Lighting <br />
 Specular Lighting <br />

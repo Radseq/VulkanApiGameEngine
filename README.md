@@ -24,7 +24,7 @@ Specular Lighting <br />
 * [jherico fork of SaschaWillems](https://github.com/jherico/vulkan) <br />
 
 ## TODO
-See [TODO](https://github.com/Radseq/VulkanApiGameEngine/TODO.md)
+See [TODO](TODO.md)
 
 ## Building
 ToDo

@@ -1,0 +1,141 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros">
+    <ASSIMP_DIR>$(vulkan_game_engineSDKDir)\external\assimp</ASSIMP_DIR>
+    <GLI_DIR>$(vulkan_game_engineSDKDir)\external\gli</GLI_DIR>
+    <GLM_DIR>$(vulkan_game_engineSDKDir)\external\glm</GLM_DIR>
+    <IMGUI_DIR>$(vulkan_game_engineSDKDir)\external\imgui</IMGUI_DIR>
+    <STB_DIR>$(vulkan_game_engineSDKDir)\external\stb</STB_DIR>
+    <!--<VULKAN_DIR>$(vulkan_game_engineSDKDir)\vulkan</VULKAN_DIR>
+	<VULKAN_SDK>$(VK_SDK_PATH)\Include</VULKAN_SDK>-->
+    
+    <PREPROCESSOR_DEFS>
+		WIN32;
+        BUILD_TYPE="RelWithDebInfo";
+        BUILD_COMMIT="devel";
+        BUILD_REVISION="0";
+        VERSION="0.0.1";
+		DEBUG;
+		_USE_MATH_DEFINES;
+		GLM_FORCE_RADIANS;
+		GLM_FORCE_DEPTH_ZERO_TO_ONE;
+		_CRT_SECURE_NO_WARNINGS;
+		VK_USE_PLATFORM_WIN32_KHR;
+		GLM_ENABLE_EXPERIMENTAL
+    </PREPROCESSOR_DEFS>
+    
+    <vulkan_game_engine_INCLUDES>
+        $(ASSIMP_DIR);
+        $(GLI_DIR);
+        $(GLM_DIR);
+        $(IMGUI_DIR);
+        $(STB_DIR);
+        <!--$(VULKAN_DIR);-->
+		$(VK_SDK_PATH)\Include\
+    </vulkan_game_engine_INCLUDES>
+    
+    <vulkan_game_engine_LIBS>
+        $(ASSIMP_DIR)\lib\x86;
+        <!--$(VULKAN_DIR)\win32-->
+    </vulkan_game_engine_LIBS>
+    
+    <vulkan_game_engine_LIBS64>
+		$(ASSIMP_DIR)\lib\x64;
+		<!--$(VULKAN_DIR)\win64-->
+    </vulkan_game_engine_LIBS64>
+    
+    <vulkan_game_engine_LIBDEPS>
+		assimp.lib;
+		vulkan-1.lib
+        <!--vulkan-1.lib-->
+    </vulkan_game_engine_LIBDEPS>
+    
+    <vulkan_game_engine_LIBDEPS_D>
+		assimp.lib;
+		vulkan-1.lib
+	</vulkan_game_engine_LIBDEPS_D>
+    
+  </PropertyGroup>
+  <PropertyGroup>
+    <LinkIncremental>false</LinkIncremental>
+	<EnableClangTidyCodeAnalysis>true</EnableClangTidyCodeAnalysis>
+    <RunCodeAnalysis>
+    </RunCodeAnalysis>
+    <ClangTidyChecks>Checks: '*'</ClangTidyChecks>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(vulkan_game_engine_INCLUDES)</AdditionalIncludeDirectories>
+      <WarningLevel>Level3</WarningLevel>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>$(vulkan_game_engine_LIBDEPS)</AdditionalDependencies>
+      <LinkTimeCodeGeneration>Default</LinkTimeCodeGeneration>
+      <IgnoreSpecificDefaultLibraries>libcmt.lib</IgnoreSpecificDefaultLibraries>
+      <LargeAddressAware>true</LargeAddressAware>
+      <SubSystem>Windows</SubSystem>
+      <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
+    </Link>
+    <!-- <ResourceCompile>
+      <PreprocessorDefinitions>$(PREPROCESSOR_DEFS)</PreprocessorDefinitions>
+    </ResourceCompile> -->
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <BuildMacro Include="ASSIMP_DIR">
+      <Value>$(ASSIMP_DIR)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="GLI_DIR">
+      <Value>$(GLI_DIR)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="GLM_DIR">
+      <Value>$(GLM_DIR)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="IMGUI_DIR">
+      <Value>$(IMGUI_DIR)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="STB_DIR">
+      <Value>$(STB_DIR)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <!--<BuildMacro Include="VULKAN_DIR">
+      <Value>$(VULKAN_DIR)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="VULKAN_SDK">
+      <Value>$(VULKAN_SDK)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>-->
+    
+    <BuildMacro Include="PREPROCESSOR_DEFS">
+      <Value>$(PREPROCESSOR_DEFS)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="vulkan_game_engine_INCLUDES">
+      <Value>$(vulkan_game_engine_INCLUDES)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="vulkan_game_engine_LIBS">
+      <Value>$(vulkan_game_engine_LIBS)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="vulkan_game_engine_LIBS64">
+      <Value>$(vulkan_game_engine_LIBS64)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="vulkan_game_engine_LIBDEPS">
+      <Value>$(vulkan_game_engine_LIBDEPS)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="vulkan_game_engine_LIBDEPS_D">
+      <Value>$(vulkan_game_engine_LIBDEPS_D)</Value>
+    </BuildMacro>
+  </ItemGroup>
+</Project>

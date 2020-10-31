@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\Engine\EngineMain.cpp" />
+    <ClCompile Include="..\src\Engine\Game.cpp" />
+    <ClCompile Include="..\src\entities\camera.cpp" />
+    <ClCompile Include="..\src\entities\entity.cpp" />
+    <ClCompile Include="..\src\entities\light.cpp" />
+    <ClCompile Include="..\src\entities\player.cpp" />
+    <ClCompile Include="..\src\EntityProcess\EntityDescriptor.cpp" />
+    <ClCompile Include="..\src\EntityProcess\EntityPipeline.cpp" />
+    <ClCompile Include="..\src\EntityProcess\EntityRenderer.cpp" />
+    <ClCompile Include="..\src\EntityProcess\EntityShader.cpp" />
+    <ClCompile Include="..\src\FileLoader\AssimpLoader.cpp" />
+    <ClCompile Include="..\src\FileLoader\AssimpModelLoader.cpp" />
+    <ClCompile Include="..\src\FileLoader\ifstreamLoader.cpp" />
+    <ClCompile Include="..\src\FileLoader\KtxTextureLoader.cpp" />
+    <ClCompile Include="..\src\FileLoader\stbImgFileLoader.cpp" />
+    <ClCompile Include="..\src\FileLoader\TinyObjModelLoader.cpp" />
+    <ClCompile Include="..\src\Init\DefaultFrameBuffer.cpp" />
+    <ClCompile Include="..\src\Model\Model.cpp" />
+    <ClCompile Include="..\src\Model\ModelCreateInfo.cpp" />
+    <ClCompile Include="..\src\Model\ModelTexture.cpp" />
+    <ClCompile Include="..\src\Model\TexturedModel.cpp" />
+    <ClCompile Include="..\src\Render\Renderer.cpp" />
+    <ClCompile Include="..\src\Textures\Texture2D.cpp" />
+    <ClCompile Include="..\src\Textures\Texture2DArray.cpp" />
+    <ClCompile Include="..\src\UniformBuffers\UniformBuffer.cpp" />
+    <ClCompile Include="..\src\Util\Configuration.cpp" />
+    <ClCompile Include="..\src\Util\math.cpp" />
+    <ClCompile Include="..\src\Util\utils.cpp" />
+    <ClCompile Include="..\src\Window\Window.cpp" />
+    <ClCompile Include="..\src\World\SkySphere\SkySphere.cpp" />
+    <ClCompile Include="..\src\World\Terrain\HeightMap.cpp" />
+    <ClCompile Include="..\src\World\Terrain\Terrain.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\Containers\ImageContainer.hpp" />
+    <ClInclude Include="..\src\Engine\Game.hpp" />
+    <ClInclude Include="..\src\entities\camera.hpp" />
+    <ClInclude Include="..\src\entities\entity.hpp" />
+    <ClInclude Include="..\src\entities\light.hpp" />
+    <ClInclude Include="..\src\entities\player.hpp" />
+    <ClInclude Include="..\src\EntityProcess\EntityDescriptor.hpp" />
+    <ClInclude Include="..\src\EntityProcess\EntityPipeline.hpp" />
+    <ClInclude Include="..\src\EntityProcess\EntityRenderer.hpp" />
+    <ClInclude Include="..\src\EntityProcess\EntityShader.hpp" />
+    <ClInclude Include="..\src\FileLoader\AssimpLoader.hpp" />
+    <ClInclude Include="..\src\FileLoader\AssimpModelLoader.hpp" />
+    <ClInclude Include="..\src\FileLoader\ifstreamLoader.hpp" />
+    <ClInclude Include="..\src\FileLoader\ifstreamLoaderContainer.hpp" />
+    <ClInclude Include="..\src\FileLoader\KtxTextureLoader.hpp" />
+    <ClInclude Include="..\src\FileLoader\stbImgFileLoader.hpp" />
+    <ClInclude Include="..\src\FileLoader\TinyObjModelLoader.hpp" />
+    <ClInclude Include="..\src\Init\DefaultFrameBuffer.hpp" />
+    <ClInclude Include="..\src\Model\Model.hpp" />
+    <ClInclude Include="..\src\Model\ModelCreateInfo.hpp" />
+    <ClInclude Include="..\src\Model\ModelDimension.hpp" />
+    <ClInclude Include="..\src\Model\ModelParts.hpp" />
+    <ClInclude Include="..\src\Model\ModelTexture.hpp" />
+    <ClInclude Include="..\src\Model\TexturedModel.hpp" />
+    <ClInclude Include="..\src\Render\Renderer.hpp" />
+    <ClInclude Include="..\src\Textures\Texture2D.hpp" />
+    <ClInclude Include="..\src\Textures\Texture2DArray.hpp" />
+    <ClInclude Include="..\src\UniformBuffers\UniformBuffer.hpp" />
+    <ClInclude Include="..\src\Util\Configuration.hpp" />
+    <ClInclude Include="..\src\Util\KeyCodes.hpp" />
+    <ClInclude Include="..\src\Util\math.hpp" />
+    <ClInclude Include="..\src\Util\utils.hpp" />
+    <ClInclude Include="..\src\Window\Window.hpp" />
+    <ClInclude Include="..\src\World\SkySphere\SkySphere.hpp" />
+    <ClInclude Include="..\src\World\Terrain\HeightMap.hpp" />
+    <ClInclude Include="..\src\World\Terrain\Terrain.hpp" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{FBA849C3-5D76-4987-95DD-069FE76E0EDF}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>game</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="settings.props" />
+    <Import Project="arch32.props" />
+    <Import Project="debug.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="settings.props" />
+    <Import Project="arch64.props" />
+    <Import Project="debug.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="settings.props" />
+    <Import Project="arch32.props" />
+    <Import Project="release.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="settings.props" />
+    <Import Project="arch64.props" />
+    <Import Project="release.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>$(PREPROCESSOR_DEFS);_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <LanguageStandard>
+      </LanguageStandard>
+    </ClCompile>
+    <Link>
+      <TargetMachine>MachineX86</TargetMachine>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>Console</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>$(PREPROCESSOR_DEFS);_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <XMLDocumentationFileName>$(IntDir)</XMLDocumentationFileName>
+      <GenerateXMLDocumentationFiles>true</GenerateXMLDocumentationFiles>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>$(PREPROCESSOR_DEFS);%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <TargetMachine>MachineX86</TargetMachine>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>$(PREPROCESSOR_DEFS);%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <WarningLevel>Level4</WarningLevel>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

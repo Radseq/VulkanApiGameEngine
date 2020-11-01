@@ -61,8 +61,7 @@ void EntityRenderer::createUniformBuffers (const glm::mat4& perspective)
 {
     uniform.create (context, swapChain.getImageCount( ), sizeof (UniformBufferObject));
     uniform2.create (context, swapChain.getImageCount( ), sizeof (lightUniformBufferObject));
-
-    updateUniformBuffer (0, perspective);
+    for (size_t i = 0; i < swapChain.getImageCount( ); ++i) { updateUniformBuffer (i, perspective); }
 }
 
 void EntityRenderer::updateUniformBuffer (const uint32_t& currentImage, const glm::mat4& proj)

@@ -20,9 +20,8 @@ class GameCore::SwapChain;
 
 class Game
 {
-    const std::string windowName = "Jakas Gra";
-    std::string       windowNameArg;
-    const std::string appName {"Vulkan"};
+    const std::string_view windowName{"Vulkan Api Game"};
+    std::string_view       windowNameArg;
     const int         WIDTH  = Configuration::getInstance( )->GetConfigIntOption ("WindowWidth");
     const int         HEIGHT = Configuration::getInstance( )->GetConfigIntOption ("WindowHeight");
     // const int MAX_FRAMES_IN_FLIGHT = Configuration::getInstance()->GetConfigIntOption("MaxFramesInFlight");

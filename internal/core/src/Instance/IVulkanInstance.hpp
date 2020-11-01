@@ -4,11 +4,14 @@
 #include <vector>
 #include <vulkan/vulkan.hpp>
 
-namespace GameCore {
-    class IVulkanInstance {
+namespace GameCore
+{
+    class IVulkanInstance
+    {
        public:
-        virtual void CreateInstance (const std::string& gameName, const std::vector<std::string>& windowExtensions) = 0;
-        virtual const vk::Instance& getVkInstance( )                                                                = 0;
+        virtual void                CreateInstance (const std::string_view&         gameName,
+                                                    const std::vector<std::string>& windowExtensions) = 0;
+        virtual const vk::Instance& getVkInstance( )                                                  = 0;
 
         virtual ~IVulkanInstance( ) = default;
     };

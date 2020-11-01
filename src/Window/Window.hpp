@@ -38,7 +38,7 @@ class Window {
 
     void createWindowSurface (const vk::Instance& instance, const vk::AllocationCallbacks* pAllocator = nullptr);
 
-    void createWindow (const bool& fullscreen, const std::string& windowTitle, const glm::uvec2& windowSize,
+    void createWindow (const bool& fullscreen, const std::string_view& windowTitle, const glm::uvec2& windowSize,
                        const glm::ivec2& position = {INT_MIN, INT_MIN});
 
     void makeCurrent( ) const { glfwMakeContextCurrent (window); }
@@ -46,7 +46,7 @@ class Window {
     void showWindow (bool show = true) const;
 
     void setExtent2DWindowSize (const vk::Extent2D& size);
-    void setTitle (const std::string& deviceName, const uint32_t& frameCounter = 0) const;
+    void setTitle (const std::string_view& deviceName, const uint32_t& frameCounter = 0) const;
     void setSizeLimits (const glm::uvec2& minSize, const glm::uvec2& maxSize = { }) const;
     void setWindowSize (glm::ivec2& newSize) const;
     void setWindowShouldClose( ) const;

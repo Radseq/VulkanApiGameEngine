@@ -67,7 +67,7 @@ void Game::run( )
     cleanUp( );
 }
 
-void Game::createInstance( ) { vulkanInstance.CreateInstance (appName, window.getRequiredInstanceExtensions( )); }
+void Game::createInstance( ) { vulkanInstance.CreateInstance (windowName, window.getRequiredInstanceExtensions( )); }
 void Game::createSurface( ) { window.createWindowSurface (vulkanInstance.getVkInstance( )); }
 
 void Game::pickPhysicalDevice( )

@@ -1,22 +1,28 @@
 ﻿#include "VulkanInstance.hpp"
 
-namespace GameCore {
+namespace GameCore
+{
 #ifdef _DEBUG
 
     static VKAPI_ATTR VkBool32 debugReportCallbackFunction (VkDebugReportFlagsEXT      flags,
                                                             VkDebugReportObjectTypeEXT objType, uint64_t srcObject,
                                                             size_t location, int32_t msgCode, const char* pLayerPrefix,
-                                                            const char* pMsg, void* pUserData) {
+                                                            const char* pMsg, void* pUserData)
+    {
         std::string message;
         {
             std::stringstream buf;
-            if (flags & VK_DEBUG_REPORT_ERROR_BIT_EXT) {
-                buf << "ERROR: ";
-            } else if (flags & VK_DEBUG_REPORT_WARNING_BIT_EXT) {
+            if (flags & VK_DEBUG_REPORT_ERROR_BIT_EXT) { buf << "ERROR: "; }
+            else if (flags & VK_DEBUG_REPORT_WARNING_BIT_EXT)
+            {
                 buf << "WARNING: ";
-            } else if (flags & VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT) {
+            }
+            else if (flags & VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT)
+            {
                 buf << "PERF: ";
-            } else {
+            }
+            else
+            {
                 return false;
             }
             buf << "[" << pLayerPrefix << "] Code " << msgCode << " : " << pMsg;
@@ -28,90 +34,110 @@ namespace GameCore {
         return false;
     }
 
-    void VulkanInstance::createDebugReportCallback( ) {
+    void VulkanInstance::createDebugReportCallback( )
+    {
         // NOTE: instance.createDebugReportCallbackEXT() would be much nicer but is not currently implemented by the API
         // (only declared)
         const PFN_vkCreateDebugReportCallbackEXT vkCreateDebugReportCallbackEXT =
             reinterpret_cast<PFN_vkCreateDebugReportCallbackEXT> (
                 instance.getProcAddr ("vkCreateDebugReportCallbackEXT"));
-        if (vkCreateDebugReportCallbackEXT) {
+        if (vkCreateDebugReportCallbackEXT)
+        {
             vk::DebugReportCallbackCreateInfoEXT debugReportCallbackCreateInfo (
                 vk::DebugReportFlagBitsEXT::eInformation | vk::DebugReportFlagBitsEXT::eWarning |
                     vk::DebugReportFlagBitsEXT::ePerformanceWarning | vk::DebugReportFlagBitsEXT::eError |
                     vk::DebugReportFlagBitsEXT::eDebug,
                 debugReportCallbackFunction);
             auto temp = VkDebugReportCallbackCreateInfoEXT (debugReportCallbackCreateInfo);
-            if (vkCreateDebugReportCallbackEXT (instance, &temp, nullptr, &debugReportCallback) != VK_SUCCESS) {
-                throw std::runtime_error ("Failed to create debug report callback.");
-            }
+            if (vkCreateDebugReportCallbackEXT (instance, &temp, nullptr, &debugReportCallback) != VK_SUCCESS)
+            { throw std::runtime_error ("Failed to create debug report callback."); }
         }
     }
-    /*
-    std::vector<const char*> VulkanInstance::enabledLayers ()
+
+    vk::ValidationFeaturesEXT VulkanInstance::createValidationFeatures( )
     {
-            //auto layers = vk::enumerateInstanceLayerProperties();
-
-            //for (const auto& layer : layers) {
-            //	enabledLayers.push_back(layer.layerName);
-            //}
-            //VK_LAYER_LUNARG_assistant_layer
-            return std::vector<const char*>{
-                    "VK_LAYER_KHRONOS_validation", "VK_LAYER_LUNARG_standard_validation"
-            };
-    }
-
-    std::vector<const char*> VulkanInstance::enabledFeatures ()
-    {
-            return std::vector<const char*>{"VK_LAYER_LUNARG_assistant_layer"};
-    }*/
-
-    vk::ValidationFeaturesEXT VulkanInstance::createValidationFeatures( ) {
         vk::ValidationFeaturesEXT features;  // slow down ~10%
         features.setEnabledValidationFeatureCount (uint8_t (featuresEnables.size( )));
         features.setPEnabledValidationFeatures (featuresEnables.data( ));
         return features;
     }
+
+    void VulkanInstance::availableInstanceLayer( )
+    {
+        // Check if this layer is available at instance level
+        std::vector<vk::LayerProperties> availableLayers = vk::enumerateInstanceLayerProperties( );
+
+        for (const vk::LayerProperties& layer : availableLayers)
+        {
+            const std::string str (layer.layerName._Elems, strnlen (layer.layerName._Elems, layer.layerName.size( )));
+
+            validationLayerAvailable.push_back (str);
+        }
+    }
+
+    void VulkanInstance::addValidationLayerToUsage( )
+    {
+        std::vector<std::string> validationLayerToUsage {
+            "VK_LAYER_KHRONOS_validation"};  // VK_LAYER_LUNARG_standard_validation is now Deprecated
+
+        for (const auto& layerToUsage : validationLayerToUsage)
+        {
+            for (const auto& layer : validationLayerAvailable)
+            {
+                if (layer == layerToUsage) { validationLayerUsage.push_back (layer.c_str( )); }
+            }
+        }
+    }
+
+    void VulkanInstance::assignmentValidationLayers (vk::InstanceCreateInfo* const instanceCreateInfo)
+    {
+        availableInstanceLayer( );
+        addValidationLayerToUsage( );
+
+        if (!validationLayerUsage.empty( ))
+        {
+            instanceCreateInfo->enabledLayerCount   = static_cast<uint32_t> (validationLayerUsage.size( ));
+            instanceCreateInfo->ppEnabledLayerNames = validationLayerUsage.data( );
+        }
+    }
+
 #endif
 
-    void VulkanInstance::enabledExtensions (const std::vector<std::string>& windowExtensions) {
-        /*auto instanceExtensions = vk::enumerateInstanceExtensionProperties();
-
-        for (const auto& extension : instanceExtensions) {
-                enabledExtensions.push_back(extension.extensionName);
-        }*/
-
+    void VulkanInstance::enabledExtensions (const std::vector<std::string>& windowExtensions)
+    {
         for (const auto& extension : windowExtensions) { extensions.push_back (extension.c_str( )); }
 
         extensions.push_back (vk_debug_report);
     }
 
-    void VulkanInstance::CreateInstance (const std::string&              gameName,
-                                         const std::vector<std::string>& windowExtensions) {
-        vk::ApplicationInfo    appInfo;
-        vk::InstanceCreateInfo instanceCreateInfo;
-
+    void VulkanInstance::CreateInstance (const std::string_view&         gameName,
+                                         const std::vector<std::string>& windowExtensions)
+    {
         // Enable surface extensions depending on os
         enabledExtensions (windowExtensions);
 
-        appInfo.pApplicationName = gameName.c_str( );
-        appInfo.pEngineName      = gameName.c_str( );
-        // appInfo.pEngineName = "Amazing Engine";
-        appInfo.apiVersion = VK_API_VERSION_1_1;  // VK_MAKE_VERSION (1, 2, 0);
-        // appInfo.applicationVersion = VK_MAKE_VERSION (1, 2, 0);
-        appInfo.engineVersion = VK_MAKE_VERSION (1, 0, 0);
+        vk::ApplicationInfo    appInfo;
+        vk::InstanceCreateInfo instanceCreateInfo;
+
+        appInfo.pApplicationName   = gameName.data( );
+        appInfo.pEngineName        = gameName.data( );
+        appInfo.apiVersion         = VK_API_VERSION_1_2;  // VK_MAKE_VERSION (1, 2, 0);
+        appInfo.applicationVersion = VK_MAKE_VERSION (1, 2, 0);
+        appInfo.engineVersion      = VK_MAKE_VERSION (1, 0, 0);
 
         instanceCreateInfo.pApplicationInfo = &appInfo;
 
-        if (!extensions.empty( )) {
+        if (!extensions.empty( ))
+        {
             instanceCreateInfo.enabledExtensionCount   = uint32_t (extensions.size( ));
             instanceCreateInfo.ppEnabledExtensionNames = extensions.data( );
         }
 
 #ifdef _DEBUG
-        instanceCreateInfo.enabledLayerCount   = uint32_t (layers.size( ));
-        instanceCreateInfo.ppEnabledLayerNames = layers.data( );
-        vk::ValidationFeaturesEXT features     = createValidationFeatures( );  // slow down ~10%
-        instanceCreateInfo.pNext               = &features;
+        assignmentValidationLayers (&instanceCreateInfo);
+
+        vk::ValidationFeaturesEXT features = createValidationFeatures( );  // slow down ~10%
+        instanceCreateInfo.pNext           = &features;
 #endif
 
         instance = createInstance (instanceCreateInfo);
@@ -133,7 +159,8 @@ namespace GameCore {
 
     const vk::Instance& VulkanInstance::getVkInstance( ) { return instance; }
 
-    void VulkanInstance::destroy( ) {
+    void VulkanInstance::destroy( )
+    {
 #ifdef _DEBUG
         const PFN_vkDestroyDebugReportCallbackEXT vkDestroyDebugReportCallbackEXT =
             reinterpret_cast<PFN_vkDestroyDebugReportCallbackEXT> (

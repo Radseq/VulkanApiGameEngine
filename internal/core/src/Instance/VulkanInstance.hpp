@@ -8,16 +8,22 @@
 #include <vulkan/vulkan.hpp>
 
 #include "../../../../src/Util/utils.hpp"
+#include "../Util/util.hpp"
 #include "IVulkanInstance.hpp"
 
-namespace GameCore {
+namespace GameCore
+{
     class IVulkanInstance;
 
-    class VulkanInstance : public IVulkanInstance {
+    class VulkanInstance : public IVulkanInstance
+    {
         // Vulkan instance, stores all per-application states
         vk::Instance instance;
 
-        std::vector<const char*> layers {"VK_LAYER_KHRONOS_validation", "VK_LAYER_LUNARG_standard_validation"};
+        // The VK_LAYER_KHRONOS_validation contains all current validation functionality.
+        std::vector<std::string> validationLayerAvailable;
+        std::vector<const char*> validationLayerUsage;
+
         const char*              vk_debug_report {"VK_EXT_debug_report"};
         std::vector<const char*> extensions;
 
@@ -34,10 +40,15 @@ namespace GameCore {
         vk::ValidationFeaturesEXT createValidationFeatures( );
         VkDebugReportCallbackEXT  debugReportCallback { };
 
+        void availableInstanceLayer( );
+        void addValidationLayerToUsage( );
+
+        void assignmentValidationLayers (vk::InstanceCreateInfo* const instanceCreateInfo);
+
        public:
         VulkanInstance( ) = default;
 
-        void CreateInstance (const std::string& gameName, const std::vector<std::string>& windowExtensions) override;
+        void CreateInstance (const std::string_view& gameName, const std::vector<std::string>& windowExtensions) override;
         void destroy( );
         const vk::Instance& getVkInstance( ) override;
     };

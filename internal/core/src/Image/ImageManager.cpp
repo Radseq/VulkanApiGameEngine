@@ -89,6 +89,8 @@ namespace GameCore {
         vk::Offset3D mipSize {static_cast<int32_t> (coreImage.extent.width),
                               static_cast<int32_t> (coreImage.extent.height), 1};
 
+        vk::Offset3D emptyOffset {0, 0, 0};
+
         for (uint32_t i = 1; i < coreImage.mipLevels; i++) {
             barrier.subresourceRange.baseMipLevel = i - 1;
             barrier.oldLayout                     = vk::ImageLayout::eTransferDstOptimal;
@@ -100,17 +102,18 @@ namespace GameCore {
                                                                      vk::PipelineStageFlagBits::eTransfer, { }, nullptr,
                                                                      nullptr, barrier);
 
-            vk::ImageBlit blit                 = { };
-            blit.srcOffsets [0]                = {0, 0, 0};
-            blit.srcOffsets [1]                = mipSize;
+            vk::ImageBlit blit = { };
+            auto scrOffset                     = std::array<vk::Offset3D, 2> {emptyOffset, mipSize};
+            blit.srcOffsets                    = scrOffset;
             blit.srcSubresource.aspectMask     = vk::ImageAspectFlagBits::eColor;
             blit.srcSubresource.mipLevel       = i - 1;
             blit.srcSubresource.baseArrayLayer = 0;
             blit.srcSubresource.layerCount     = coreImage.layerCount;
-            blit.dstOffsets [0]                = {0, 0, 0};
-            blit.dstOffsets [1]            = {mipSize.x > 1 ? mipSize.x / 2 : 1, mipSize.y > 1 ? mipSize.y / 2 : 1, 1};
-            blit.dstSubresource.aspectMask = vk::ImageAspectFlagBits::eColor;
-            blit.dstSubresource.mipLevel   = i;
+            vk::Offset3D destOffset {mipSize.x > 1 ? mipSize.x / 2 : 1, mipSize.y > 1 ? mipSize.y / 2 : 1, 1};
+            auto         dstOffsets            = std::array<vk::Offset3D, 2> {emptyOffset, destOffset};
+            blit.dstOffsets                    = dstOffsets;
+            blit.dstSubresource.aspectMask     = vk::ImageAspectFlagBits::eColor;
+            blit.dstSubresource.mipLevel       = i;
             blit.dstSubresource.baseArrayLayer = 0;
             blit.dstSubresource.layerCount     = coreImage.layerCount;
 
@@ -221,7 +224,11 @@ namespace GameCore {
         // Setup buffer copy regions for each mip level
         std::vector<vk::BufferImageCopy> bufferCopyRegions;
 
+        vk::Offset3D emptyOffset { 0,0,0 };
+
         for (uint32_t i = 0; i < coreImage.mipLevels; i++) {
+            vk::Extent3D imageExtent {imageSize.width >> i, imageSize.height >> i, 1};
+
             vk::BufferImageCopy region = { };
             region.bufferOffset        = 0;
             // region.bufferRowLength = 0;
@@ -230,8 +237,8 @@ namespace GameCore {
             region.imageSubresource.mipLevel       = i;
             region.imageSubresource.baseArrayLayer = 0;
             region.imageSubresource.layerCount     = 1;
-            region.imageOffset                     = {0, 0, 0};
-            region.imageExtent                     = {imageSize.width >> i, imageSize.height >> i, 1};
+            region.imageOffset                     = emptyOffset;
+            region.imageExtent                     = imageExtent;
 
             bufferCopyRegions.push_back (region);
         }

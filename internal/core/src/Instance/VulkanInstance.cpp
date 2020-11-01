@@ -69,8 +69,7 @@ namespace GameCore
 
         for (const vk::LayerProperties& layer : availableLayers)
         {
-            const std::string str (layer.layerName._Elems, strnlen (layer.layerName._Elems, layer.layerName.size( )));
-
+            const std::string str (layer.layerName.data( ));
             validationLayerAvailable.push_back (str);
         }
     }

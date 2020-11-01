@@ -57,6 +57,8 @@ class Game
     float timerSpeed = 0.25F;
 
     void initWindow( );
+    void setWindowNameArgs( );
+
     void initVulkan( );
     void cleanUp( );
     void createSwapChain( );

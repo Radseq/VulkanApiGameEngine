@@ -13,6 +13,13 @@ void Game::initWindow( )
     camera.movementSpeed = 7.5F;*/
 }
 
+void Game::setWindowNameArgs( )
+{
+    assert (context != nullptr);
+    const std::string_view str (context->getDevice( ).GetDeviceProperties( ).deviceName.data( ));
+    windowNameArg = str;
+}
+
 void Game::initVulkan( )
 {
     createInstance( );
@@ -20,16 +27,12 @@ void Game::initVulkan( )
     pickPhysicalDevice( );
     createLogicalDevice( );
     createSwapChain( );
+    setWindowNameArgs( );
 }
 
 void Game::createLogicalDevice( )
 {
     context = localDevices->GetLocalDevice( ).front( );
-
-    const std::string_view str (context->getDevice( ).GetDeviceProperties( ).deviceName._Elems,
-                                strnlen (context->getDevice( ).GetDeviceProperties( ).deviceName._Elems,
-                                         context->getDevice( ).GetDeviceProperties( ).deviceName.size( )));
-    windowNameArg = str;
 
     context->CreateCommandPool( );
 }

@@ -64,8 +64,6 @@ void SkySphere::prepareUniformBuffers (const glm::mat4& perspective)
 
     bufferManager.createUniformBuffer (skySphereVertex, uboVS);
 
-    skySphereVertex.map( );
-
     updateUniformBuffers (perspective);
 }
 

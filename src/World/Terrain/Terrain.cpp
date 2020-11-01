@@ -101,9 +101,7 @@ void Terrain::loadAssets( ) {
 // Prepare and initialize uniform buffer containing shader uniforms
 void Terrain::prepareUniformBuffers (const vk::Extent2D& windowSize, const glm::mat4& perspective)
 {
-    // Shared tessellation shader stages uniform buffer
     bufferManager.createUniformBuffer (terrainTessellation, uboTess);
-    terrainTessellation.map( );
 
     updateUniformBuffers (windowSize, perspective);
 }

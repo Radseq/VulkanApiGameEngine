@@ -57,10 +57,12 @@ void EntityRenderer::destroy (bool isSwapChainCleanUp)
     context.getVkDevice( ).destroyCommandPool (context.getCommandPool( ));
 }
 
-void EntityRenderer::createUniformBuffers( )
+void EntityRenderer::createUniformBuffers (const glm::mat4& perspective)
 {
     uniform.create (context, swapChain.getImageCount( ), sizeof (UniformBufferObject));
     uniform2.create (context, swapChain.getImageCount( ), sizeof (lightUniformBufferObject));
+
+    updateUniformBuffer (0, perspective);
 }
 
 void EntityRenderer::updateUniformBuffer (const uint32_t& currentImage, const glm::mat4& proj)

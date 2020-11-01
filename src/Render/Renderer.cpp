@@ -159,8 +159,7 @@ void Renderer::init (const vk::Extent2D& WindowSize)
 
     loadAsserts( );
 
-    entityRenderer.createUniformBuffers( );
-
+    entityRenderer.createUniformBuffers (perspective);
     entityRenderer.create (defaultFramebuffer.getVkRenderPass( ));
 
     createGraphicsPipeline( );

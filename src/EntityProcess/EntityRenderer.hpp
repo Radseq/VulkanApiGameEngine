@@ -73,7 +73,7 @@ class EntityRenderer
 
     void destroy (bool isSwapChainCleanUp = false);
 
-    void createUniformBuffers( );
+    void createUniformBuffers (const glm::mat4& perspective);
     void updateUniformBuffer (const uint32_t& currentImage, const glm::mat4& proj);
     void updateDrawCommandBuffer (const vk::CommandBuffer& cmdBufer, const size_t& i);
 

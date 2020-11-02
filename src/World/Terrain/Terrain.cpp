@@ -5,9 +5,12 @@
 
 Terrain::Terrain (const GameCore::VulkanDevice& Context, Camera& camera)
     : context (Context)
-    , _camera (camera) { }
+    , _camera (camera)
+{
+}
 
-void Terrain::destroy( ) {
+void Terrain::destroy( )
+{
     terrainTessellation.destroy (context);
     terrainArrayTextureImage.destroy( );
     heightMapTextureImage.destroy( );
@@ -23,12 +26,14 @@ void Terrain::destroy( ) {
     context.getVkDevice( ).destroyPipelineLayout (terrainPipelineLayout);
 }
 
-void Terrain::descriptorDestroy( ) {
+void Terrain::descriptorDestroy( )
+{
     // context.getVkDevice().destroyDescriptorPool(descriptorPool);
     descSetLayout.destroy (context.getVkDevice( ));
 }
 
-void Terrain::loadAssets( ) {
+void Terrain::loadAssets( )
+{
     // Textures
     std::string texFormatSuffix;
     vk::Format  texFormat;
@@ -36,16 +41,23 @@ void Terrain::loadAssets( ) {
 
     const auto& deviceFeatures = context.getDevice( ).GetPhysicalDeviceFeatures( );
 
-    if (deviceFeatures.textureCompressionBC) {
+    if (deviceFeatures.textureCompressionBC)
+    {
         texFormatSuffix = "_bc3_unorm";
         texFormat       = vk::Format::eBc3UnormBlock;
-    } else if (deviceFeatures.textureCompressionASTC_LDR) {
+    }
+    else if (deviceFeatures.textureCompressionASTC_LDR)
+    {
         texFormatSuffix = "_astc_8x8_unorm";
         texFormat       = vk::Format::eAstc8x8UnormBlock;
-    } else if (deviceFeatures.textureCompressionETC2) {
+    }
+    else if (deviceFeatures.textureCompressionETC2)
+    {
         texFormatSuffix = "_etc2_unorm";
         texFormat       = vk::Format::eEtc2R8G8B8A8UnormBlock;
-    } else {
+    }
+    else
+    {
         throw std::runtime_error ("Device does not support any compressed texture format!");
     }
 
@@ -59,7 +71,7 @@ void Terrain::loadAssets( ) {
     Texture2D        texture;
     KtxTextureLoader textureLoader;
 
-    auto textureContainer            = textureLoader.LoadFile (getAssetPath( ) + "textures/terrain_heightmap_r16.ktx");
+    auto textureContainer      = textureLoader.LoadFile (getAssetPath( ) + "textures/terrain_heightmap_r16.ktx");
     textureContainer.mipLevels = 1;
 
     vk::Format heightMapTexFormat {vk::Format::eR16Unorm};
@@ -89,7 +101,8 @@ void Terrain::loadAssets( ) {
     samplerInfo.addressModeV = samplerInfo.addressModeU;
     samplerInfo.addressModeW = samplerInfo.addressModeU;
 
-    if (context.getDevice( ).GetPhysicalDeviceFeatures( ).samplerAnisotropy) {
+    if (context.getDevice( ).GetPhysicalDeviceFeatures( ).samplerAnisotropy)
+    {
         samplerInfo.maxAnisotropy    = 4.0F;
         samplerInfo.anisotropyEnable = VK_TRUE;
     }
@@ -128,7 +141,8 @@ void Terrain::updateUniformBuffers (const vk::Extent2D& windowSize, const glm::m
     if (!tessellation) { uboTess.tessellationFactor = savedFactor; }
 }
 
-void Terrain::updateDrawCommandBuffer (const vk::CommandBuffer& cmdBuffer) {
+void Terrain::updateDrawCommandBuffer (const vk::CommandBuffer& cmdBuffer)
+{
     // Terrrain
 
     // Begin pipeline statistics query
@@ -155,7 +169,8 @@ void Terrain::updateDrawCommandBuffer (const vk::CommandBuffer& cmdBuffer) {
 /// Setup pool and buffer for storing pipeline statistics results
 /// use after prepare frame and before cmd render
 /// </summary>
-void Terrain::setupQueryResultBuffer( ) {
+void Terrain::setupQueryResultBuffer( )
+{
     /*
     const uint32_t bufSize = 2 * sizeof(uint64_t);
     // Results are saved in a host visible buffer for easy access by the application
@@ -174,7 +189,8 @@ void Terrain::setupQueryResultBuffer( ) {
 }
 
 // Retrieves the results of the pipeline statistics query submitted to the command buffer
-void Terrain::getQueryResults( ) {
+void Terrain::getQueryResults( )
+{
     /*
     if (!context.getDevice().GetPhysicalDeviceFeatures().pipelineStatisticsQuery)
     {
@@ -194,15 +210,18 @@ void Terrain::getQueryResults( ) {
     }*/
 }
 
-void Terrain::updateCommandBufferPreDraw (const vk::CommandBuffer& cmdBuffer) {
+void Terrain::updateCommandBufferPreDraw (const vk::CommandBuffer& cmdBuffer)
+{
     /*if (context.getDevice().GetPhysicalDeviceFeatures().pipelineStatisticsQuery)
     {
             cmdBuffer.resetQueryPool(queryPool, 0, 2);
     }*/
 }
 
-void Terrain::generateTerrain( ) {
-    struct Vertex {
+void Terrain::generateTerrain( )
+{
+    struct Vertex
+    {
         glm::vec3 pos;
         glm::vec3 normal;
         glm::vec2 uv;
@@ -216,8 +235,10 @@ void Terrain::generateTerrain( ) {
     constexpr uint32_t              vertexCount = PATCH_SIZE * PATCH_SIZE;
     std::array<Vertex, vertexCount> vertices;
 
-    for (auto x = 0; x < PATCH_SIZE; ++x) {
-        for (auto y = 0; y < PATCH_SIZE; ++y) {
+    for (auto x = 0; x < PATCH_SIZE; ++x)
+    {
+        for (auto y = 0; y < PATCH_SIZE; ++y)
+        {
             uint32_t index           = (x + y * PATCH_SIZE);
             vertices [index].pos [0] = x * wx + wx / 2.0F - static_cast<float> (PATCH_SIZE) * wx / 2.0F;
             vertices [index].pos [1] = 0.0F;
@@ -231,12 +252,15 @@ void Terrain::generateTerrain( ) {
     heightMap.loadHeightMap (getAssetPath( ) + "textures/terrain_heightmap_r16.ktx", PATCH_SIZE);
 
     // Calculate normals from height map using a sobel filter
-    for (auto x = 0; x < PATCH_SIZE; x++) {
-        for (auto y = 0; y < PATCH_SIZE; y++) {
+    for (auto x = 0; x < PATCH_SIZE; x++)
+    {
+        for (auto y = 0; y < PATCH_SIZE; y++)
+        {
             // Get height samples centered around current position
             // float heights [3][3];
             std::array<std::array<int, 3>, 3> heights;
-            for (auto hx = -1; hx <= 1; hx++) {
+            for (auto hx = -1; hx <= 1; hx++)
+            {
                 for (auto hy = -1; hy <= 1; hy++) { heights [hx + 1][hy + 1] = heightMap.getHeight (x + hx, y + hy); }
             }
 
@@ -263,8 +287,10 @@ void Terrain::generateTerrain( ) {
     std::array<uint32_t, indexCount> indices { };
     // uint32_t*                        indices = new uint32_t [indexCount];
 
-    for (auto x = 0; x < w; x++) {
-        for (auto y = 0; y < w; y++) {
+    for (auto x = 0; x < w; x++)
+    {
+        for (auto y = 0; y < w; y++)
+        {
             uint32_t index      = (x + y * w) * 4;
             indices [index]     = (x + y * PATCH_SIZE);
             indices [index + 1] = indices [index] + PATCH_SIZE;
@@ -281,7 +307,8 @@ void Terrain::generateTerrain( ) {
     // delete[] indices;
 }
 
-void Terrain::setupDescriptorSets (GameCore::DescriptorPool& descPool) {
+void Terrain::setupDescriptorSets (GameCore::DescriptorPool& descPool)
+{
     terrainDescriptorSet = context.getVkDevice( ).allocateDescriptorSets (
         {descPool.getDescriptorPool( ), 1, &descSetLayout.getDescriptorSetLayout( )}) [0];
 
@@ -289,9 +316,9 @@ void Terrain::setupDescriptorSets (GameCore::DescriptorPool& descPool) {
         {terrainDescriptorSet, 0, 0, 1, vk::DescriptorType::eUniformBuffer, nullptr,
          &terrainTessellation.getDescriptorInfo( )},
         {terrainDescriptorSet, 1, 0, 1, vk::DescriptorType::eCombinedImageSampler,
-         &heightMapTextureImage.getDescImageInfo()},
+         &heightMapTextureImage.getDescImageInfo( )},
         {terrainDescriptorSet, 2, 0, 1, vk::DescriptorType::eCombinedImageSampler,
-         &terrainArrayTextureImage.getDescImageInfo()}};
+         &terrainArrayTextureImage.getDescImageInfo( )}};
 
     context.getVkDevice( ).updateDescriptorSets (writeDescriptorSets, nullptr);
 }
@@ -301,7 +328,8 @@ void Terrain::setupDescriptorSets (GameCore::DescriptorPool& descPool) {
 //	return pipelineStats;
 //}
 
-void Terrain::createPipeline (const vk::RenderPass& renderPass) {
+void Terrain::createPipeline (const vk::RenderPass& renderPass)
+{
     createDescriptorSetLayouts( );
     // Terrain tessellation pipeline
     GameCore::Pipeline builder {context.getVkDevice( ), terrainPipelineLayout, renderPass};
@@ -347,7 +375,8 @@ void Terrain::createPipeline (const vk::RenderPass& renderPass) {
     wireframePipeline                                                        = builder.create( );
 }
 
-void Terrain::createDescriptorSetLayouts( ) {
+void Terrain::createDescriptorSetLayouts( )
+{
     // Binding 0 : Shared Tessellation shader ubo
     descSetLayout.addDescriptorSetLayoutBinding (
         vk::DescriptorType::eUniformBuffer,
@@ -362,8 +391,8 @@ void Terrain::createDescriptorSetLayouts( ) {
                                                  vk::ShaderStageFlagBits::eFragment);
 
     std::vector<vk::DescriptorType> typesUsed {{vk::DescriptorType::eUniformBuffer},
-                                                                    {vk::DescriptorType::eCombinedImageSampler},
-                                                                    {vk::DescriptorType::eCombinedImageSampler}};
+                                               {vk::DescriptorType::eCombinedImageSampler},
+                                               {vk::DescriptorType::eCombinedImageSampler}};
 
     descSetLayout.create (context.getVkDevice( ), typesUsed);
 

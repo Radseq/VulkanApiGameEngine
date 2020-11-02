@@ -1,7 +1,8 @@
 #include "Texture2D.hpp"
 
 void Texture2D::CreateImage (GameCore::Image& result, const GameCore::VulkanDevice& context,
-                                        const ImageContainer& imgContainer, const vk::Format& format) {
+                             const ImageContainer& imgContainer, const vk::Format& format)
+{
     GameCore::CoreBufferManager stagingBufferManager {context};
     GameCore::CoreBuffer        stagingBuffer;
     stagingBufferManager.createStagingBuffer (stagingBuffer, imgContainer.TextureSize, imgContainer.TextureData);

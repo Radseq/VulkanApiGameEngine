@@ -10,10 +10,9 @@
 #include "../FileLoader/KtxTextureLoader.hpp"
 #include "Util/vkHelpers.hpp"
 
-class Texture2DArray {
+class Texture2DArray
+{
     const GameCore::VulkanDevice& context;
-
-    void CreateImage (GameCore::Image& result, const ImageContainer& imgContainer);
 
     void allocateImgMemory (GameCore::Image& imageResult, const vk::MemoryPropertyFlags& properties) const;
 

@@ -7,7 +7,8 @@
 
 #include "../FileLoader/KtxTextureLoader.hpp"
 
-class Texture2D {
+class Texture2D
+{
    public:
     void CreateImage (GameCore::Image& result, const GameCore::VulkanDevice& context,
                       const ImageContainer& imgContainer, const vk::Format& format);

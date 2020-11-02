@@ -3,14 +3,12 @@
 
 #include <Image\Image.hpp>
 
-class ImageContainer {
+class ImageContainer
+{
    public:
     void*        TextureData;  // someday rewrite to template
     size_t       TextureSize;  // someday rewrite to template
     vk::Extent3D TextureExtend;
-   // uint32_t     mipLevels;
-    //uint32_t     layerCount;
-    //GameCore::Image image { };
 
     uint32_t mipLevels { };
 

@@ -1,36 +1,7 @@
 #include "Texture2DArray.hpp"
 
-void Texture2DArray::CreateImage (GameCore::Image& texture, const ImageContainer& imgContainer) {
-
-    GameCore::CoreBufferManager stagingBufferManager {context};
-    GameCore::CoreBuffer        stagingBuffer;
-    stagingBufferManager.createStagingBuffer (stagingBuffer, imgContainer.TextureSize, imgContainer.TextureData);
-
-    GameCore::ImageManager imageManager {context};
-
-    GameCore::ImageManager textureImageManager {context};
-    textureImageManager.CreateImage (
-        texture, imgContainer.TextureExtend, vk::Format::eR8G8B8A8Srgb, vk::ImageTiling::eOptimal,
-        vk::ImageUsageFlagBits::eTransferSrc | vk::ImageUsageFlagBits::eTransferDst | vk::ImageUsageFlagBits::eSampled,
-        vk::MemoryPropertyFlagBits::eDeviceLocal, imgContainer.mipLevels, vk::SampleCountFlagBits::e1);
-
-    imageManager.copyBufferToImage (stagingBuffer.getBuffer( ), texture);
-
-    stagingBuffer.destroy (context);
-
-    textureImageManager.generateMipmaps (texture);
-
-    imageManager.createImageView (texture, vk::ImageAspectFlagBits::eColor);
-    imageManager.createSampler (texture);
-}
-
 void Texture2DArray::allocateImgMemory (GameCore::Image& imageResult, const vk::MemoryPropertyFlags& properties) const {
     const vk::MemoryRequirements memReqs = context.getVkDevice( ).getImageMemoryRequirements (imageResult.image);
-    /*vk::MemoryAllocateInfo memAllocInfo;
-    memAllocInfo.allocationSize = result.getAllocSize() = memReqs.size;
-    memAllocInfo.memoryTypeIndex = device.getMemoryType(memReqs.memoryTypeBits, memoryPropertyFlags);
-    result.getMemory() = device.getVkDevice().allocateMemory(memAllocInfo);
-    device.getVkDevice().bindImageMemory(result.getVkImage(), result.getMemory(), 0);*/
 
     GameCore::AllocationCreateInfo allocInfo { };
     allocInfo.size            = memReqs.size;

@@ -1,6 +1,7 @@
 #include "Texture2DArray.hpp"
 
-void Texture2DArray::allocateImgMemory (GameCore::Image& imageResult, const vk::MemoryPropertyFlags& properties) const {
+void Texture2DArray::allocateImgMemory (GameCore::Image& imageResult, const vk::MemoryPropertyFlags& properties) const
+{
     const vk::MemoryRequirements memReqs = context.getVkDevice( ).getImageMemoryRequirements (imageResult.image);
 
     GameCore::AllocationCreateInfo allocInfo { };
@@ -13,9 +14,12 @@ void Texture2DArray::allocateImgMemory (GameCore::Image& imageResult, const vk::
 }
 
 Texture2DArray::Texture2DArray (const GameCore::VulkanDevice& Context)
-    : context (Context) { }
+    : context (Context)
+{
+}
 
-void Texture2DArray::LoadTexture (GameCore::Image& result, const std::string& filePatch, const vk::Format& format) {
+void Texture2DArray::LoadTexture (GameCore::Image& result, const std::string& filePatch, const vk::Format& format)
+{
     result.device = context.getVkDevice( );
     result.format = vk::Format::eBc3UnormBlock;
 
@@ -37,6 +41,8 @@ void Texture2DArray::LoadTexture (GameCore::Image& result, const std::string& fi
     auto textData = ktxTexture_GetData (texture);
     auto textSize = ktxTexture_GetSize (texture);
 
+    GameCore::ImageManager imageManager {context};
+
     GameCore::CoreBufferManager bufferManager (context);
     GameCore::CoreBuffer        staging;
     bufferManager.createStagingBuffer (staging, textSize, textData);
@@ -44,8 +50,10 @@ void Texture2DArray::LoadTexture (GameCore::Image& result, const std::string& fi
     // Setup buffer copy regions for each layer including all of it's miplevels
     std::vector<vk::BufferImageCopy> bufferCopyRegions;
 
-    for (uint32_t layer = 0; layer < result.layerCount; layer++) {
-        for (uint32_t level = 0; level < result.mipLevels; level++) {
+    for (uint32_t layer = 0; layer < result.layerCount; ++layer)
+    {
+        for (uint32_t level = 0; level < result.mipLevels; ++level)
+        {
             ktx_size_t     offset;
             KTX_error_code result = ktxTexture_GetImageOffset (texture, level, layer, 0, &offset);
             assert (result == KTX_SUCCESS);
@@ -75,9 +83,8 @@ void Texture2DArray::LoadTexture (GameCore::Image& result, const std::string& fi
     imageCreateInfo.extent        = textureSize;
     imageCreateInfo.usage         = vk::ImageUsageFlagBits::eSampled;
     // Ensure that the TRANSFER_DST bit is set for staging
-    if (!(imageCreateInfo.usage & vk::ImageUsageFlagBits::eTransferDst)) {
-        imageCreateInfo.usage |= vk::ImageUsageFlagBits::eTransferDst;
-    }
+    if (!(imageCreateInfo.usage & vk::ImageUsageFlagBits::eTransferDst))
+    { imageCreateInfo.usage |= vk::ImageUsageFlagBits::eTransferDst; }
     imageCreateInfo.arrayLayers = result.layerCount;
     imageCreateInfo.mipLevels   = result.mipLevels;
 
@@ -85,17 +92,10 @@ void Texture2DArray::LoadTexture (GameCore::Image& result, const std::string& fi
 
     allocateImgMemory (result, vk::MemoryPropertyFlagBits::eDeviceLocal);
 
-    vk::CommandBufferAllocateInfo allocInfo = { };
-    allocInfo.level                         = vk::CommandBufferLevel::ePrimary;
-    allocInfo.commandPool                   = context.getCommandPool( );
-    allocInfo.commandBufferCount            = 1;
-
-    vk::CommandBuffer cmdBuffer = context.getVkDevice( ).allocateCommandBuffers (allocInfo) [0];
-
-    vk::CommandBufferBeginInfo beginInfo = { };
-    beginInfo.flags                      = vk::CommandBufferUsageFlagBits::eOneTimeSubmit;
-
-    cmdBuffer.begin (beginInfo);
+    // maybe use imageManager.transitionImageLayout
+    
+    GameCore::SingleTimeCommandBuffer singleTimeCmdBuffer (context);
+    singleTimeCmdBuffer.createCommandBuffer (true);
 
     // Image barrier for optimal image (target)
     // Set initial layout for all array layers (faces) of the optimal (target) tiled texture
@@ -105,41 +105,20 @@ void Texture2DArray::LoadTexture (GameCore::Image& result, const std::string& fi
     subresourceRange.levelCount                = result.mipLevels;
     subresourceRange.layerCount                = result.layerCount;
 
-    GameCore::vkHelper::setImageLayout (cmdBuffer, result.image, vk::ImageLayout::eUndefined,
+    GameCore::vkHelper::setImageLayout (singleTimeCmdBuffer.getCommandBuffer( ), result.image,
+                                        vk::ImageLayout::eUndefined,
                                         vk::ImageLayout::eTransferDstOptimal, subresourceRange);
 
     // Copy the layers and mip levels from the staging buffer to the optimal tiled image
-
-    cmdBuffer.copyBufferToImage (staging.getBuffer( ), result.image, vk::ImageLayout::eTransferDstOptimal,
-                                 GameCore::util::to_uint_32_t (bufferCopyRegions.size( )), bufferCopyRegions.data( ));
+    singleTimeCmdBuffer.getCommandBuffer( ).copyBufferToImage (staging.getBuffer( ), result.image,
+                                                               vk::ImageLayout::eTransferDstOptimal, bufferCopyRegions);
 
     // Change texture image layout to shader read after all faces have been copied
-    GameCore::vkHelper::setImageLayout (cmdBuffer, result.image, vk::ImageLayout::eTransferDstOptimal,
+    GameCore::vkHelper::setImageLayout (singleTimeCmdBuffer.getCommandBuffer( ), result.image,
+                                        vk::ImageLayout::eTransferDstOptimal,
                                         vk::ImageLayout::eShaderReadOnlyOptimal, subresourceRange);
 
-    cmdBuffer.end( );
+    singleTimeCmdBuffer.endSingleTimeCommands (true);
 
-    vk::SubmitInfo submitInfo     = { };
-    submitInfo.commandBufferCount = 1;
-    submitInfo.pCommandBuffers    = &cmdBuffer;
-
-    context.getGraphicsQueue( ).submit (submitInfo, nullptr);
-    context.getGraphicsQueue( ).waitIdle( );
-
-    context.getVkDevice( ).freeCommandBuffers (context.getCommandPool( ), cmdBuffer);
-
-    vk::ImageViewCreateInfo viewInfo         = { };
-    viewInfo.image                           = result.image;
-    viewInfo.viewType                        = vk::ImageViewType::e2DArray;
-    viewInfo.format                          = result.format;
-    viewInfo.subresourceRange.aspectMask     = vk::ImageAspectFlagBits::eColor;
-    viewInfo.subresourceRange.baseMipLevel   = 0;
-    viewInfo.subresourceRange.levelCount     = result.mipLevels;
-    viewInfo.subresourceRange.baseArrayLayer = 0;
-    viewInfo.subresourceRange.layerCount     = result.layerCount;
-
-    viewInfo.components = {vk::ComponentSwizzle::eR, vk::ComponentSwizzle::eG, vk::ComponentSwizzle::eB,
-                           vk::ComponentSwizzle::eA};
-
-    result.view = context.getVkDevice( ).createImageView (viewInfo);
+    imageManager.createImageView (result, vk::ImageAspectFlagBits::eColor, vk::ImageViewType::e2DArray);
 }

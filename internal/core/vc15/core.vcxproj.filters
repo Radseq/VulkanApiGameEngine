@@ -234,6 +234,9 @@
     <ClInclude Include="..\src\Pipeline\PipelineLayout.hpp">
       <Filter>Header\Pipeline</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\Image\ImageContainer.hpp">
+      <Filter>Header\Image</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\Device\CreateLocalDevice.cpp">

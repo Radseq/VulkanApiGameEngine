@@ -42,6 +42,7 @@
     <ClInclude Include="..\src\Framebuffer\SwapChain.hpp" />
     <ClInclude Include="..\src\Framebuffer\SwapChainSupportDetails.hpp" />
     <ClInclude Include="..\src\Image\Image.hpp" />
+    <ClInclude Include="..\src\Image\ImageContainer.hpp" />
     <ClInclude Include="..\src\Image\ImageManager.hpp" />
     <ClInclude Include="..\src\Instance\IVulkanInstance.hpp" />
     <ClInclude Include="..\src\Instance\VulkanInstance.hpp" />

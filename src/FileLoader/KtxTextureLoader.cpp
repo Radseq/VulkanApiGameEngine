@@ -2,8 +2,8 @@
 
 #include <ktxvulkan.h>
 
-ImageContainer KtxTextureLoader::LoadFile (const std::string& fileName) {
-    ImageContainer result;
+GameCore::ImageContainer KtxTextureLoader::LoadFile (const std::string& fileName) {
+    GameCore::ImageContainer result;
 
     ktxResult   loadresult = KTX_SUCCESS;
     ktxTexture* texture;

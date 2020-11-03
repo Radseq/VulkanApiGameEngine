@@ -5,11 +5,11 @@
 #include <stdexcept>
 #include <string>
 
-#include "../Containers/ImageContainer.hpp"
+#include "Image/ImageContainer.hpp"
 
 class stbImgFileLoader {
    public:
-    ImageContainer LoadFile (const std::string& fileName);
+    GameCore::ImageContainer LoadFile (const std::string& fileName);
 };
 
 #endif  // STB_IMG_FILE_LOADER_HPP

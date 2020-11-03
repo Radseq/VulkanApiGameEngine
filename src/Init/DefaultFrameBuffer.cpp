@@ -199,7 +199,7 @@ void DefaultFrameBuffer::createColorResources ()
 	imageInfo.sharingMode = vk::SharingMode::eExclusive;
 
 	imageManager.createImage (colorImage, imageInfo);
-	imageManager.createImageView (colorImage, vk::ImageAspectFlagBits::eColor);
+	imageManager.createImageView (colorImage, vk::ImageAspectFlagBits::eColor, vk::ImageViewType::e2D);
 }
 
 void DefaultFrameBuffer::createDepthResources ()
@@ -229,5 +229,5 @@ void DefaultFrameBuffer::createDepthResources ()
 		imgAspectFlags |= vk::ImageAspectFlagBits::eStencil;
 	}
 
-	imageManager.createImageView (depthImage, imgAspectFlags);
+	imageManager.createImageView (depthImage, imgAspectFlags, vk::ImageViewType::e2D);
 }

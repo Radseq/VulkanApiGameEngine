@@ -1,8 +1,9 @@
 #include "ImageManager.hpp"
 
-namespace GameCore {
-    void ImageManager::allocateImgMemory (GameCore::Image&               imageResult,
-                                          const vk::MemoryPropertyFlags& properties) const {
+namespace GameCore
+{
+    void ImageManager::allocateImgMemory (GameCore::Image& imageResult, const vk::MemoryPropertyFlags& properties) const
+    {
         const vk::MemoryRequirements memReqs = device.getVkDevice( ).getImageMemoryRequirements (imageResult.image);
         /*vk::MemoryAllocateInfo memAllocInfo;
         memAllocInfo.allocationSize = result.getAllocSize() = memReqs.size;
@@ -20,29 +21,26 @@ namespace GameCore {
     }
 
     ImageManager::ImageManager (const VulkanDevice& Device)
-        : device (Device) { }
+        : device (Device)
+    {
+    }
 
-    void ImageManager::CreateImage (GameCore::Image& result, const vk::Extent3D& imageWidthHeight,
+    void ImageManager::CreateImage (GameCore::Image& result, const ImageContainer& imgContainer,
                                     const vk::Format& format, const vk::ImageTiling& tiling,
                                     const vk::ImageUsageFlags& usage, const vk::MemoryPropertyFlags& properties,
-                                    const uint32_t& mipLevels, const vk::SampleCountFlagBits& numSamples) {
-        result.format = format;
-        result.device = device.getVkDevice( );
-        result.extent = imageWidthHeight;
-
-        // if (useMipLevels)
-        //	result.mipLevels = GameCore::util::to_uint_32_t(std::floor (std::log2 (GameCore::util::maxFromTwo
-        //(imageWidthHeight.width, imageWidthHeight.height)))) + 1;
-
-        result.mipLevels = mipLevels;
+                                    const vk::SampleCountFlagBits& numSamples)
+    {
+        result.format     = format;
+        result.device     = device.getVkDevice( );
+        result.extent     = imgContainer.TextureExtend;
+        result.layerCount = imgContainer.layerCount;
+        result.mipLevels  = imgContainer.mipLevels;
 
         vk::ImageCreateInfo imageInfo = { };
         imageInfo.imageType           = vk::ImageType::e2D;
-        imageInfo.extent.width        = imageWidthHeight.width;
-        imageInfo.extent.height       = imageWidthHeight.height;
-        imageInfo.extent.depth        = 1;
+        imageInfo.extent              = result.extent;
         imageInfo.mipLevels           = result.mipLevels;
-        imageInfo.arrayLayers         = 1;
+        imageInfo.arrayLayers         = result.layerCount;
         imageInfo.format              = format;
         imageInfo.tiling              = tiling;
         imageInfo.initialLayout       = vk::ImageLayout::eUndefined;
@@ -56,7 +54,8 @@ namespace GameCore {
     }
 
     void ImageManager::createImage (GameCore::Image& result, const vk::ImageCreateInfo& imageCreateInfo,
-                                    const vk::MemoryPropertyFlags& memoryPropertyFlags) const {
+                                    const vk::MemoryPropertyFlags& memoryPropertyFlags) const
+    {
         result.device = device.getVkDevice( );
         result.image  = device.getVkDevice( ).createImage (imageCreateInfo);
         result.format = imageCreateInfo.format;
@@ -65,14 +64,14 @@ namespace GameCore {
         allocateImgMemory (result, memoryPropertyFlags);
     }
 
-    void ImageManager::generateMipmaps (const GameCore::Image& coreImage) {
+    void ImageManager::generateMipmaps (const GameCore::Image& coreImage)
+    {
         vk::FormatProperties formatProperties =
             device.getDevice( ).GetPhysicalDevice( ).getFormatProperties (coreImage.format);
 
         // Check if image format supports linear blitting
-        if (!(formatProperties.optimalTilingFeatures & vk::FormatFeatureFlagBits::eSampledImageFilterLinear)) {
-            throw std::runtime_error ("texture image format does not support linear blitting!");
-        }
+        if (!(formatProperties.optimalTilingFeatures & vk::FormatFeatureFlagBits::eSampledImageFilterLinear))
+        { throw std::runtime_error ("texture image format does not support linear blitting!"); }
 
         SingleTimeCommandBuffer singleTimeCmdBuffer (device);
         singleTimeCmdBuffer.createCommandBuffer (true);
@@ -83,7 +82,7 @@ namespace GameCore {
         barrier.dstQueueFamilyIndex             = VK_QUEUE_FAMILY_IGNORED;
         barrier.subresourceRange.aspectMask     = vk::ImageAspectFlagBits::eColor;
         barrier.subresourceRange.baseArrayLayer = 0;
-        barrier.subresourceRange.layerCount     = coreImage.layerCount;
+        barrier.subresourceRange.layerCount     = 1;
         barrier.subresourceRange.levelCount     = 1;
 
         vk::Offset3D mipSize {static_cast<int32_t> (coreImage.extent.width),
@@ -91,7 +90,8 @@ namespace GameCore {
 
         vk::Offset3D emptyOffset {0, 0, 0};
 
-        for (uint32_t i = 1; i < coreImage.mipLevels; i++) {
+        for (uint32_t i = 1; i < coreImage.mipLevels; i++)
+        {
             barrier.subresourceRange.baseMipLevel = i - 1;
             barrier.oldLayout                     = vk::ImageLayout::eTransferDstOptimal;
             barrier.newLayout                     = vk::ImageLayout::eTransferSrcOptimal;
@@ -102,8 +102,8 @@ namespace GameCore {
                                                                      vk::PipelineStageFlagBits::eTransfer, { }, nullptr,
                                                                      nullptr, barrier);
 
-            vk::ImageBlit blit = { };
-            auto scrOffset                     = std::array<vk::Offset3D, 2> {emptyOffset, mipSize};
+            vk::ImageBlit blit                 = { };
+            auto          scrOffset            = std::array<vk::Offset3D, 2> {emptyOffset, mipSize};
             blit.srcOffsets                    = scrOffset;
             blit.srcSubresource.aspectMask     = vk::ImageAspectFlagBits::eColor;
             blit.srcSubresource.mipLevel       = i - 1;
@@ -115,7 +115,7 @@ namespace GameCore {
             blit.dstSubresource.aspectMask     = vk::ImageAspectFlagBits::eColor;
             blit.dstSubresource.mipLevel       = i;
             blit.dstSubresource.baseArrayLayer = 0;
-            blit.dstSubresource.layerCount     = coreImage.layerCount;
+            blit.dstSubresource.layerCount     = 1;
 
             singleTimeCmdBuffer.getCommandBuffer( ).blitImage (coreImage.image, vk::ImageLayout::eTransferSrcOptimal,
                                                                coreImage.image, vk::ImageLayout::eTransferDstOptimal,
@@ -149,10 +149,10 @@ namespace GameCore {
         singleTimeCmdBuffer.endSingleTimeCommands (true);
     }
 
-    void ImageManager::transitionImageLayout (const GameCore::Image& coreImage, const vk::ImageLayout& oldLayout,
-                                              const vk::ImageLayout& newLayout) {
-        GameCore::SingleTimeCommandBuffer singleTimeCmdBuffer (device);
-        singleTimeCmdBuffer.createCommandBuffer (true);
+    void ImageManager::transitionImageLayout (const GameCore::Image& coreImage, const GameCore::SingleTimeCommandBuffer& cmdBuff,
+                                              const vk::ImageLayout& oldLayout,
+                                              const vk::ImageLayout& newLayout)
+    {
 
         vk::ImageMemoryBarrier barrier          = { };
         barrier.oldLayout                       = oldLayout;
@@ -169,29 +169,31 @@ namespace GameCore {
         vk::PipelineStageFlags sourceStage;
         vk::PipelineStageFlags destinationStage;
 
-        if (oldLayout == vk::ImageLayout::eUndefined && newLayout == vk::ImageLayout::eTransferDstOptimal) {
+        if (oldLayout == vk::ImageLayout::eUndefined && newLayout == vk::ImageLayout::eTransferDstOptimal)
+        {
             barrier.srcAccessMask = vk::AccessFlagBits::eIndirectCommandRead;  //??????? should be 0 not 01
             barrier.dstAccessMask = vk::AccessFlagBits::eTransferWrite;
 
             sourceStage      = vk::PipelineStageFlagBits::eTopOfPipe;
             destinationStage = vk::PipelineStageFlagBits::eTransfer;
-        } else if (oldLayout == vk::ImageLayout::eTransferDstOptimal &&
-                   newLayout == vk::ImageLayout::eShaderReadOnlyOptimal) {
+        }
+        else if (oldLayout == vk::ImageLayout::eTransferDstOptimal &&
+                 newLayout == vk::ImageLayout::eShaderReadOnlyOptimal)
+        {
             barrier.srcAccessMask = vk::AccessFlagBits::eShaderRead;
             barrier.dstAccessMask = vk::AccessFlagBits::eShaderRead;
 
             sourceStage      = vk::PipelineStageFlagBits::eTransfer;
             destinationStage = vk::PipelineStageFlagBits::eFragmentShader;
-        } else {
+        }
+        else
+        {
             throw std::invalid_argument ("unsupported layout transition!");
         }
-
-        singleTimeCmdBuffer.getCommandBuffer( ).pipelineBarrier (sourceStage, destinationStage, { }, nullptr, nullptr,
-                                                                 barrier);
-        singleTimeCmdBuffer.endSingleTimeCommands (true);
     }
 
-    void ImageManager::createSampler (GameCore::Image& coreImage) {
+    void ImageManager::createSampler (GameCore::Image& coreImage)
+    {
         vk::Bool32 samplerAnisotropy = device.getDevice( ).GetPhysicalDeviceFeatures( ).samplerAnisotropy;
 
         vk::SamplerCreateInfo samplerInfo = { };
@@ -215,7 +217,8 @@ namespace GameCore {
         coreImage.sampler = device.getVkDevice( ).createSampler (samplerInfo);
     }
 
-    void ImageManager::copyBufferToImage (const vk::Buffer& buffer, const GameCore::Image& coreImage) {
+    void ImageManager::copyBufferToImage (const vk::Buffer& buffer, const GameCore::Image& coreImage)
+    {
         GameCore::SingleTimeCommandBuffer singleTimeCmdBuffer (device);
         singleTimeCmdBuffer.createCommandBuffer (true);
 
@@ -224,9 +227,10 @@ namespace GameCore {
         // Setup buffer copy regions for each mip level
         std::vector<vk::BufferImageCopy> bufferCopyRegions;
 
-        vk::Offset3D emptyOffset { 0,0,0 };
+        vk::Offset3D emptyOffset {0, 0, 0};
 
-        for (uint32_t i = 0; i < coreImage.mipLevels; i++) {
+        for (uint32_t i = 0; i < coreImage.mipLevels; i++)
+        {
             vk::Extent3D imageExtent {imageSize.width >> i, imageSize.height >> i, 1};
 
             vk::BufferImageCopy region = { };
@@ -257,10 +261,12 @@ namespace GameCore {
         singleTimeCmdBuffer.endSingleTimeCommands (true);
     }
 
-    void ImageManager::createImageView (GameCore::Image& coreImage, const vk::ImageAspectFlags& aspectFlags) {
+    void ImageManager::createImageView (GameCore::Image& coreImage, const vk::ImageAspectFlags& aspectFlags,
+                                        const vk::ImageViewType& imgViewType)
+    {
         vk::ImageViewCreateInfo viewInfo         = { };
         viewInfo.image                           = coreImage.image;
-        viewInfo.viewType                        = vk::ImageViewType::e2D;
+        viewInfo.viewType                        = imgViewType;
         viewInfo.format                          = coreImage.format;
         viewInfo.subresourceRange.aspectMask     = aspectFlags;
         viewInfo.subresourceRange.baseMipLevel   = 0;
@@ -278,7 +284,8 @@ namespace GameCore {
                                            vk::ImageCreateInfo& imageCreateInfo,  // should be there reference?
                                            const vk::MemoryPropertyFlags& memoryPropertyFlags,
                                            const vk::DeviceSize& size, const void* data,
-                                           const std::vector<MipData>& mipData, const vk::ImageLayout layout) const {
+                                           const std::vector<MipData>& mipData, const vk::ImageLayout layout) const
+    {
         CoreBufferManager    bufferManager (device);
         GameCore::CoreBuffer staging;
         bufferManager.createStagingBuffer (staging, size, data);
@@ -300,14 +307,18 @@ namespace GameCore {
             vk::BufferImageCopy bufferCopyRegion;
             bufferCopyRegion.imageSubresource.aspectMask = vk::ImageAspectFlagBits::eColor;
             bufferCopyRegion.imageSubresource.layerCount = 1;
-            if (!mipData.empty( )) {
-                for (uint32_t i = 0; i < imageCreateInfo.mipLevels; i++) {
+            if (!mipData.empty( ))
+            {
+                for (uint32_t i = 0; i < imageCreateInfo.mipLevels; i++)
+                {
                     bufferCopyRegion.imageSubresource.mipLevel = i;
                     bufferCopyRegion.imageExtent               = mipData [i].first;
                     bufferCopyRegions.push_back (bufferCopyRegion);
                     bufferCopyRegion.bufferOffset += mipData [i].second;
                 }
-            } else {
+            }
+            else
+            {
                 bufferCopyRegion.imageExtent = imageCreateInfo.extent;
                 bufferCopyRegions.push_back (bufferCopyRegion);
             }
@@ -325,9 +336,11 @@ namespace GameCore {
 
     void ImageManager::stageToDeviceImage (GameCore::Image& result, vk::ImageCreateInfo& imageCreateInfo,
                                            const vk::MemoryPropertyFlags& memoryPropertyFlags,
-                                           const gli::texture2d& tex2D, const vk::ImageLayout& layout) const {
+                                           const gli::texture2d& tex2D, const vk::ImageLayout& layout) const
+    {
         std::vector<MipData> mips;
-        for (size_t i = 0; i < imageCreateInfo.mipLevels; ++i) {
+        for (size_t i = 0; i < imageCreateInfo.mipLevels; ++i)
+        {
             const auto& mip  = tex2D [i];
             const auto  dims = mip.extent( );
             mips.push_back ({vk::Extent3D {uint32_t (dims.x), uint32_t (dims.y), 1}, uint32_t (mip.size( ))});

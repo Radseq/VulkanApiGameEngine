@@ -1,6 +1,7 @@
 #ifndef IMAGE_MANAGER_HPP
 #define IMAGE_MANAGER_HPP
 
+#include <Image\ImageContainer.hpp>
 #include <gli/gli.hpp>
 #include <utility>
 #include <vulkan/vulkan.hpp>
@@ -10,7 +11,8 @@
 #include "Buffer/CoreBuffeManager.hpp"
 #include "Image.hpp"
 
-namespace GameCore {
+namespace GameCore
+{
     class Image;
     class VulkanDevice;
     class CoreBuffeManager;
@@ -18,18 +20,19 @@ namespace GameCore {
     class CommandBufferManager;
     class CoreBuffeManager;
 
-    class ImageManager {
+    class ImageManager
+    {
         const VulkanDevice& device;
         using MipData = std::pair<vk::Extent3D, vk::DeviceSize>;
 
         void allocateImgMemory (GameCore::Image& imageResult, const vk::MemoryPropertyFlags& properties) const;
 
        public:
-        ImageManager (const VulkanDevice& Device);
+        explicit ImageManager (const VulkanDevice& Device);
 
-        void CreateImage (GameCore::Image& result, const vk::Extent3D& imageWidthHeight, const vk::Format& format,
+        void CreateImage (GameCore::Image& result, const ImageContainer& imgContainer, const vk::Format& format,
                           const vk::ImageTiling& tiling, const vk::ImageUsageFlags& usage,
-                          const vk::MemoryPropertyFlags& properties, const uint32_t& mipLevels,
+                          const vk::MemoryPropertyFlags& properties,
                           const vk::SampleCountFlagBits& numSamples = vk::SampleCountFlagBits::e1);
 
         [[nodiscard]] void createImage (
@@ -38,9 +41,11 @@ namespace GameCore {
 
         void createSampler (GameCore::Image& coreImage);
         void copyBufferToImage (const vk::Buffer& buffer, const GameCore::Image& coreImage);
-        void createImageView (GameCore::Image& coreImage, const vk::ImageAspectFlags& aspectFlags);
+        void createImageView (GameCore::Image& coreImage, const vk::ImageAspectFlags& aspectFlags,
+                              const vk::ImageViewType& imgViewType);
         void generateMipmaps (const GameCore::Image& coreImage);
-        void transitionImageLayout (const GameCore::Image& coreImage, const vk::ImageLayout& oldLayout,
+        void transitionImageLayout (const GameCore::Image& coreImage, const GameCore::SingleTimeCommandBuffer& cmdBuff,
+                                    const vk::ImageLayout& oldLayout,
                                     const vk::ImageLayout& newLayout);
 
         void stageToDeviceImage (GameCore::Image& result, vk::ImageCreateInfo& imageCreateInfo,
@@ -50,14 +55,16 @@ namespace GameCore {
 
         template <typename T>
         void stageToDeviceImage (GameCore::Image& result, const vk::ImageCreateInfo& imageCreateInfo,
-                                 const vk::MemoryPropertyFlags& memoryPropertyFlags, const std::vector<T>& data) const {
+                                 const vk::MemoryPropertyFlags& memoryPropertyFlags, const std::vector<T>& data) const
+        {
             return stageToDeviceImage (imageCreateInfo, memoryPropertyFlags, data.size( ) * sizeof (T),
                                        (void*) data.data( ));
         }
 
         template <typename T>
         void stageToDeviceImage (GameCore::Image& result, const vk::ImageCreateInfo& imageCreateInfo,
-                                 const std::vector<T>& data) const {
+                                 const std::vector<T>& data) const
+        {
             return stageToDeviceImage (imageCreateInfo, vk::MemoryPropertyFlagBits::eDeviceLocal,
                                        data.size( ) * sizeof (T), (void*) data.data( ));
         }

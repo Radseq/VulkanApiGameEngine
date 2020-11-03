@@ -5,8 +5,9 @@
 #    include "stb_image.h"
 #endif
 
-ImageContainer stbImgFileLoader::LoadFile (const std::string& fileName) {
-    ImageContainer result;
+GameCore::ImageContainer stbImgFileLoader::LoadFile (const std::string& fileName)
+{
+    GameCore::ImageContainer result;
     int            texWidth, texHeight, texChannels;
 
     char const* source = fileName.data( );

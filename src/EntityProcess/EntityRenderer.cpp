@@ -20,28 +20,21 @@ void EntityRenderer::create (const vk::RenderPass& renderPass)
 
     shader.init (renderPass);
 
-    for (auto const& batch : *entities)
+    for (auto const& entity : entities)
     {
-        for (auto const& entity : batch.second)
+        for (uint32_t i = 0; i < descCount; ++i)
         {
-            for (uint32_t i = 0; i < descCount; ++i)
-            {
-                entityDesc.addDescriptorWrite (uniform.getUniformBuffers( ) [i].getDescriptorInfo( ),
-                                               vk::DescriptorType::eUniformBuffer);
+            entityDesc.addDescriptorWrite (uniform.getUniformBuffers( ) [i].getDescriptorInfo( ),
+                                           vk::DescriptorType::eUniformBuffer);
 
-                entityDesc.addDescriptorWrite (
-                    entity->getTexturedModel( )->getModelTexture( )->getImage( ).getDescImageInfo(),
-                                               vk::DescriptorType::eCombinedImageSampler);
+            entityDesc.addDescriptorWrite (
+                entity->getTexturedModel( )->getModelTexture( )->getImage( ).getDescImageInfo( ),
+                vk::DescriptorType::eCombinedImageSampler);
 
-                entityDesc.addDescriptorWrite (uniform2.getUniformBuffers( ) [i].getDescriptorInfo( ),
-                                               vk::DescriptorType::eUniformBuffer);
-               
+            entityDesc.addDescriptorWrite (uniform2.getUniformBuffers( ) [i].getDescriptorInfo( ),
+                                           vk::DescriptorType::eUniformBuffer);
 
-                //entityDesc.createWriteDescriptors2 (uniform.getUniformBuffers( ), uniform2.getUniformBuffers( ),
-               //                                     entity->getTexturedModel( )->getModelTexture( )->getImage( ));
-
-                entityDesc.updateWriteDescriptors( );
-            }
+            entityDesc.updateWriteDescriptors( );
         }
     }
 }
@@ -66,48 +59,42 @@ void EntityRenderer::createUniformBuffers (const glm::mat4& perspective)
 
 void EntityRenderer::updateUniformBuffer (const uint32_t& currentImage, const glm::mat4& proj)
 {
-    for (auto const& batch : *entities)
+    for (auto const& entity : entities)
     {
-        for (auto const& entity : batch.second)
-        {
-            UniformBufferObject ubo = { };
-            ubo.model =
-                Math::createTransformationMatrix (entity->getPosition( ), entity->getRotation( ), entity->getScale( ));
-            ubo.view = Math::createViewMatrix (camera);
-            ubo.proj = proj;
+        UniformBufferObject ubo = { };
+        ubo.model =
+            Math::createTransformationMatrix (entity->getPosition( ), entity->getRotation( ), entity->getScale( ));
+        ubo.view = Math::createViewMatrix (camera);
+        ubo.proj = proj;
 
-            ubo.lightPosition = light.getPosition( );
+        ubo.lightPosition = light.getPosition( );
 
-            // std::cout << glm::to_string (ubo.model) << std::endl;
+        // std::cout << glm::to_string (ubo.model) << std::endl;
 
-            uniform.updateUniformBuffer (currentImage, ubo);
+        uniform.updateUniformBuffer (currentImage, ubo);
 
-            lightUniformBufferObject lubo = { };
-            lubo.lightColor               = light.getColor( );
-            lubo.reflectivity             = entity->getTexturedModel( )->getModelTexture( )->getReflectivity( );
-            lubo.shineDamper              = entity->getTexturedModel( )->getModelTexture( )->getShineDamper( );
+        lightUniformBufferObject lubo = { };
+        lubo.lightColor               = light.getColor( );
+        lubo.reflectivity             = entity->getTexturedModel( )->getModelTexture( )->getReflectivity( );
+        lubo.shineDamper              = entity->getTexturedModel( )->getModelTexture( )->getShineDamper( );
 
-            uniform2.updateUniformBuffer (currentImage, lubo);
-        }
+        uniform2.updateUniformBuffer (currentImage, lubo);
     }
 }
 
 void EntityRenderer::updateDrawCommandBuffer (const vk::CommandBuffer& cmdBufer, const size_t& i)
 {
-    for (auto const& batch : *entities)
+    for (auto const& entity : entities)
     {
-        for (auto const& entity : batch.second)
-        {
-            shader.bind (cmdBufer, i);
-            std::vector<vk::DeviceSize> offsets {0};
+        shader.bind (cmdBufer, i);
+        std::vector<vk::DeviceSize> offsets {0};
 
-            cmdBufer.bindVertexBuffers (0, entity->getTexturedModel( )->getModel( )->getVCB( ).getBuffer( ), offsets);
-            cmdBufer.bindIndexBuffer (entity->getTexturedModel( )->getModel( )->getICB( ).getBuffer( ), 0,
-                                      vk::IndexType::eUint32);
+        cmdBufer.bindVertexBuffers (0, entity->getTexturedModel( )->getModel( )->getVCB( ).getBuffer( ), offsets);
+        cmdBufer.bindIndexBuffer (entity->getTexturedModel( )->getModel( )->getICB( ).getBuffer( ), 0,
+                                  vk::IndexType::eUint32);
 
-            cmdBufer.drawIndexed (entity->getTexturedModel( )->getModel( )->GetIndexCount( ), 1, 0, 0, 0);
-        }
+        cmdBufer.drawIndexed (entity->getTexturedModel( )->getModel( )->GetIndexCount( ), 1, 0, 0, 0);
     }
 }
 
-void EntityRenderer::pushEntity (const EntityMap* Entities) { entities = Entities; }
+void EntityRenderer::pushEntity (const std::vector<Entity const*>& Entities) { entities = Entities; }

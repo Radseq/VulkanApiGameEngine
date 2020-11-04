@@ -58,9 +58,7 @@ class EntityRenderer
     UniformBuffer uniform;
     UniformBuffer uniform2;
 
-    using EntityMap = std::unordered_map<TexturedModel const*, std::vector<Entity const*>>;
-
-    const EntityMap* entities;
+    std::vector<Entity const*> entities;
 
     EntityDescriptor entityDesc {context};
     EntityShader     shader {context, swapChain, entityDesc};
@@ -77,7 +75,7 @@ class EntityRenderer
     void updateUniformBuffer (const uint32_t& currentImage, const glm::mat4& proj);
     void updateDrawCommandBuffer (const vk::CommandBuffer& cmdBufer, const size_t& i);
 
-    void pushEntity (const EntityMap* Entities);
+    void pushEntity (const std::vector<Entity const*>& Entities);
 };
 
 #endif  // ENTITY_RENDERER_HPP

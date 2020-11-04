@@ -79,9 +79,7 @@ class Renderer
 
     void createPerspective( );
 
-    using EntityMap = std::unordered_map<TexturedModel const*, std::vector<Entity const*>>;
-
-    EntityMap entities;
+    std::vector<Entity const*> entities;
     void      loadAsserts( );
 
     EntityRenderer entityRenderer {*context, *swapChain, camera, light};

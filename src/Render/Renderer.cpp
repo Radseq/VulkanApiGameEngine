@@ -155,9 +155,9 @@ void Renderer::init (const vk::Extent2D& WindowSize)
 
     allocateCmdBuffers( );
 
-    entityRenderer.pushEntity (&entities);
-
     loadAsserts( );
+
+    entityRenderer.pushEntity (entities);
 
     entityRenderer.createUniformBuffers (perspective);
     entityRenderer.create (defaultFramebuffer.getVkRenderPass( ));
@@ -173,7 +173,7 @@ void Renderer::init (const vk::Extent2D& WindowSize)
     terrain.loadAssets( );
     terrain.generateTerrain( );
 
-    skysphere.prepareUniformBuffers( perspective );
+    skysphere.prepareUniformBuffers (perspective);
     terrain.prepareUniformBuffers (swapChain->getSwapChainExtent( ), perspective);
 
     createGraphicsPipeline( );
@@ -273,9 +273,7 @@ void Renderer::loadAsserts( )
 
     Entity* entity = new Entity (tm, pos, rot, scale);
 
-    std::vector<Entity const*> forEntitiesMap {entity};
-
-    entities.emplace (entity->getTexturedModel( ), forEntitiesMap);
+    entities.push_back (entity);
 }
 
 /// <summary>

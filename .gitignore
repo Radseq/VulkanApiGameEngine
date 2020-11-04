@@ -1,6 +1,6 @@
 *.vs/
 *.exe
-*data/
+##*data/
 *.log
 # *.lib
 

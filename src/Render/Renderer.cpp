@@ -6,7 +6,7 @@
 /// <param name="SwapChain">The swap chain.</param>
 /// <param name="Context">The context.</param>
 /// <param name="_camera">The camera.</param>
-Renderer::Renderer (GameCore::SwapChain* SwapChain, GameCore::VulkanDevice* Context, Camera& _camera)
+Renderer::Renderer (GraphicCore::SwapChain* SwapChain, GraphicCore::VulkanDevice* Context, Camera& _camera)
     : swapChain (SwapChain)
     , context (Context)
     , camera (_camera)
@@ -199,18 +199,18 @@ void Renderer::createGraphicsPipeline( )
 void Renderer::createCommandBuffers( )
 {
     const vk::CommandBufferBeginInfo cmdBufInfo {vk::CommandBufferUsageFlagBits::eSimultaneousUse};
-    const vk::Rect2D                 renderArea = GameCore::vkHelper::rect2D (windowSize);
-    const vk::ClearValue clearColor (GameCore::vkHelper::clearColor (glm::vec4 (0.025F, 0.025F, 0.025F, 1.0F)));
-    const vk::ClearDepthStencilValue depthStencil = GameCore::vkHelper::getClearValueDepth (1.0F, 0);
+    const vk::Rect2D                 renderArea = GraphicCore::vkHelper::rect2D (windowSize);
+    const vk::ClearValue clearColor (GraphicCore::vkHelper::clearColor (glm::vec4 (0.025F, 0.025F, 0.025F, 1.0F)));
+    const vk::ClearDepthStencilValue depthStencil = GraphicCore::vkHelper::getClearValueDepth (1.0F, 0);
     std::vector<vk::ClearValue>      clearColors {clearColor, depthStencil};
 
-    vk::Viewport     viewport = GameCore::vkHelper::viewport (windowSize);
-    const vk::Rect2D scissor  = GameCore::vkHelper::rect2D (windowSize);
+    vk::Viewport     viewport = GraphicCore::vkHelper::viewport (windowSize);
+    const vk::Rect2D scissor  = GraphicCore::vkHelper::rect2D (windowSize);
 
     vk::RenderPassBeginInfo renderPassInfo;
     renderPassInfo.renderPass      = defaultFramebuffer.getVkRenderPass( );
     renderPassInfo.renderArea      = renderArea;
-    renderPassInfo.clearValueCount = GameCore::util::to_uint_32_t (clearColors.size( ));
+    renderPassInfo.clearValueCount = GraphicCore::util::to_uint_32_t (clearColors.size( ));
     renderPassInfo.pClearValues    = clearColors.data( );
 
     for (size_t i = 0; i < commandBuffers.size( ); ++i)
@@ -243,7 +243,7 @@ void Renderer::createCommandBuffers( )
 
 void Renderer::loadAsserts( )
 {
-    GameCore::Image* textureImage = new GameCore::Image( );
+    GraphicCore::Image* textureImage = new GraphicCore::Image( );
     Model*           model        = new Model (*context);
 
     TinyObjModelLoader objLoader {*context};
@@ -357,7 +357,7 @@ void Renderer::allocateCmdBuffers( )
 
     commandBuffers =
         context->getVkDevice( ).allocateCommandBuffers ({context->getCommandPool( ), vk::CommandBufferLevel::ePrimary,
-                                                         GameCore::util::to_uint_32_t (commandBuffers.size( ))});
+                                                         GraphicCore::util::to_uint_32_t (commandBuffers.size( ))});
 }
 
 void Renderer::setUpRenderPass( ) { }

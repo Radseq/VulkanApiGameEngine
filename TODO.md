@@ -14,6 +14,8 @@
 
 - [ ] Separate project to Game itself.
  
+- [ ] allocate one buffer for index/vertices (using offsets) instead of two.
+ 
 ### In Progress
 
 ### Done ✓

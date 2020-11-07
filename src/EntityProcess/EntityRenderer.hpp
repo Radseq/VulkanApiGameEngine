@@ -36,8 +36,8 @@
 class EntityRenderer
 {
     const Light&                  light;
-    const GameCore::VulkanDevice& context;
-    const GameCore::SwapChain&    swapChain;
+    const GraphicCore::VulkanDevice& context;
+    const GraphicCore::SwapChain&    swapChain;
 
     struct UniformBufferObject
     {
@@ -45,6 +45,7 @@ class EntityRenderer
         glm::mat4 view;
         glm::mat4 proj;
         glm::vec3 lightPosition;
+        void      a( );
     };
 
     struct lightUniformBufferObject
@@ -52,7 +53,11 @@ class EntityRenderer
         glm::vec3 lightColor;
         float     shineDamper;
         float     reflectivity;
+        void      a( );
     };
+
+    UniformBufferObject      ubo  = { };
+    lightUniformBufferObject lubo = { };
 
     Camera&       camera;
     UniformBuffer uniform;
@@ -64,7 +69,7 @@ class EntityRenderer
     EntityShader     shader {context, swapChain, entityDesc};
 
    public:
-    EntityRenderer (const GameCore::VulkanDevice& Context, const GameCore::SwapChain& SwapChain, Camera& _camera,
+    EntityRenderer (const GraphicCore::VulkanDevice& Context, const GraphicCore::SwapChain& SwapChain, Camera& _camera,
                     const Light& Light);
 
     void create (const vk::RenderPass& renderPass);

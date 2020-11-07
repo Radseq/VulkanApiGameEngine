@@ -3,7 +3,7 @@
 #include "../../FileLoader/KtxTextureLoader.hpp"
 #include "../../Textures/Texture2D.hpp"
 
-Terrain::Terrain (const GameCore::VulkanDevice& Context, Camera& camera)
+Terrain::Terrain (const GraphicCore::VulkanDevice& Context, Camera& camera)
     : context (Context)
     , _camera (camera)
 {
@@ -307,7 +307,7 @@ void Terrain::generateTerrain( )
     // delete[] indices;
 }
 
-void Terrain::setupDescriptorSets (GameCore::DescriptorPool& descPool)
+void Terrain::setupDescriptorSets (GraphicCore::DescriptorPool& descPool)
 {
     terrainDescriptorSet = context.getVkDevice( ).allocateDescriptorSets (
         {descPool.getDescriptorPool( ), 1, &descSetLayout.getDescriptorSetLayout( )}) [0];
@@ -332,7 +332,7 @@ void Terrain::createPipeline (const vk::RenderPass& renderPass)
 {
     createDescriptorSetLayouts( );
     // Terrain tessellation pipeline
-    GameCore::Pipeline builder {context.getVkDevice( ), terrainPipelineLayout, renderPass};
+    GraphicCore::Pipeline builder {context.getVkDevice( ), terrainPipelineLayout, renderPass};
     builder.getPipelineInputAssembly( ).getAssembly( ).topology = vk::PrimitiveTopology::ePatchList;
     // builder.getPipelineDynamic().getDynamicStateEnables().push_back(vk::DynamicState::eViewport);
     builder.getPipelineDynamic( ).getDynamicStateEnables( ).push_back (vk::DynamicState::eLineWidth);
@@ -359,7 +359,7 @@ void Terrain::createPipeline (const vk::RenderPass& renderPass)
     builder.getPipelineColorBlend( ).attachmentCount = 1;
 
     vk::PipelineColorBlendAttachmentState colorBlend { };
-    colorBlend.colorWriteMask = GameCore::vkHelper::fullColorWriteMask( );
+    colorBlend.colorWriteMask = GraphicCore::vkHelper::fullColorWriteMask( );
 
     builder.getPipelineColorBlend( ).getBlendAttachmentStates( ).push_back (colorBlend);
 

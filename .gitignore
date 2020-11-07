@@ -26,7 +26,7 @@ vc15/x86/
 
 external/*
 build/
-internal/core/*.lib
+internal/GraphicCore/*.lib
 
 
 # [Bb]in/

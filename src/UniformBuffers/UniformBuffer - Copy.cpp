@@ -1,10 +1,10 @@
 #include "UniformBuffer.hpp"
 
-void UniformBuffer::create (const GameCore::VulkanDevice& Device, const uint32_t& count, const uint32_t& size)
+void UniformBuffer::create (const GraphicCore::VulkanDevice& Device, const uint32_t& count, const uint32_t& size)
 {
     vk::DeviceSize bufferSize = size;
 
-    GameCore::CoreBufferManager bufferManager {Device};
+    GraphicCore::CoreBufferManager bufferManager {Device};
 
     uniformBuffers.resize (count);
 
@@ -17,10 +17,10 @@ void UniformBuffer::create (const GameCore::VulkanDevice& Device, const uint32_t
     }
 }
 
-std::vector<GameCore::CoreBuffer>& UniformBuffer::getUniformBuffers( ) { return uniformBuffers; }
-GameCore::CoreBuffer& UniformBuffer::getUniformBufferIndex (const uint32_t& index) { return uniformBuffers [index]; }
+std::vector<GraphicCore::CoreBuffer>& UniformBuffer::getUniformBuffers( ) { return uniformBuffers; }
+GraphicCore::CoreBuffer& UniformBuffer::getUniformBufferIndex (const uint32_t& index) { return uniformBuffers [index]; }
 
-void UniformBuffer::destroyBuffer (const GameCore::VulkanDevice& Device)
+void UniformBuffer::destroyBuffer (const GraphicCore::VulkanDevice& Device)
 {
     for (auto& ub : uniformBuffers) { ub.destroy (Device); }
 }

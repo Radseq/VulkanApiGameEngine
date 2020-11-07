@@ -11,7 +11,7 @@
  * @param createInfo MeshCreateInfo structure for load time settings like scale, center, etc.
  * @param copyQueue Queue used for the memory staging copy commands (must support transfer)
  */
-bool AssimpModelLoader::loadFromFile (Model& model, const GameCore::VertexLayout& layout,
+bool AssimpModelLoader::loadFromFile (Model& model, const GraphicCore::VertexLayout& layout,
                                       const std::string& filename, ModelCreateInfo* createInfo) {
     loader.loadFromFile (filename);
 
@@ -64,40 +64,40 @@ bool AssimpModelLoader::loadFromFile (Model& model, const GameCore::VertexLayout
 
             for (const auto& component : layout.components) {
                 switch (component) {
-                    case GameCore::VertexLayout::Component::VERTEX_COMPONENT_POSITION:
+                    case GraphicCore::VertexLayout::Component::VERTEX_COMPONENT_POSITION:
                         vertexBuffer.push_back (scaledPos.x);
                         vertexBuffer.push_back (scaledPos.y);
                         vertexBuffer.push_back (scaledPos.z);
                         break;
-                    case GameCore::VertexLayout::Component::VERTEX_COMPONENT_NORMAL:
+                    case GraphicCore::VertexLayout::Component::VERTEX_COMPONENT_NORMAL:
                         vertexBuffer.push_back (pNormal->x);
                         vertexBuffer.push_back (-pNormal->y);
                         vertexBuffer.push_back (pNormal->z);
                         break;
-                    case GameCore::VertexLayout::Component::VERTEX_COMPONENT_UV:
+                    case GraphicCore::VertexLayout::Component::VERTEX_COMPONENT_UV:
                         vertexBuffer.push_back (pTexCoord->x * uvscale.s);
                         vertexBuffer.push_back (pTexCoord->y * uvscale.t);
                         break;
-                    case GameCore::VertexLayout::Component::VERTEX_COMPONENT_COLOR:
+                    case GraphicCore::VertexLayout::Component::VERTEX_COMPONENT_COLOR:
                         vertexBuffer.push_back (pColor.r);
                         vertexBuffer.push_back (pColor.g);
                         vertexBuffer.push_back (pColor.b);
                         break;
-                    case GameCore::VertexLayout::Component::VERTEX_COMPONENT_TANGENT:
+                    case GraphicCore::VertexLayout::Component::VERTEX_COMPONENT_TANGENT:
                         vertexBuffer.push_back (pTangent->x);
                         vertexBuffer.push_back (pTangent->y);
                         vertexBuffer.push_back (pTangent->z);
                         break;
-                    case GameCore::VertexLayout::Component::VERTEX_COMPONENT_BITANGENT:
+                    case GraphicCore::VertexLayout::Component::VERTEX_COMPONENT_BITANGENT:
                         vertexBuffer.push_back (pBiTangent->x);
                         vertexBuffer.push_back (pBiTangent->y);
                         vertexBuffer.push_back (pBiTangent->z);
                         break;
                         // Dummy components for padding
-                    case GameCore::VertexLayout::Component::VERTEX_COMPONENT_DUMMY_FLOAT:
+                    case GraphicCore::VertexLayout::Component::VERTEX_COMPONENT_DUMMY_FLOAT:
                         vertexBuffer.push_back (0.0F);
                         break;
-                    case GameCore::VertexLayout::Component::VERTEX_COMPONENT_DUMMY_VEC4:
+                    case GraphicCore::VertexLayout::Component::VERTEX_COMPONENT_DUMMY_VEC4:
                         vertexBuffer.push_back (0.0F);
                         vertexBuffer.push_back (0.0F);
                         vertexBuffer.push_back (0.0F);
@@ -114,7 +114,7 @@ bool AssimpModelLoader::loadFromFile (Model& model, const GameCore::VertexLayout
 
         model.parts [i].vertexCount = paiMesh->mNumVertices;
 
-        uint32_t indexBase = GameCore::util::to_uint_32_t (indexBuffer.size( ));
+        uint32_t indexBase = GraphicCore::util::to_uint_32_t (indexBuffer.size( ));
         for (unsigned int j = 0; j < paiMesh->mNumFaces; j++) {
             const aiFace& Face = paiMesh->mFaces [j];
             if (Face.mNumIndices != 3) continue;
@@ -126,7 +126,7 @@ bool AssimpModelLoader::loadFromFile (Model& model, const GameCore::VertexLayout
         }
     }
 
-    GameCore::CoreBufferManager vertexBufferManager {model.GetDevice( )};
+    GraphicCore::CoreBufferManager vertexBufferManager {model.GetDevice( )};
 
     vertexBufferManager.stageToDeviceBuffer (model.vertexCoreBuffer, vk::BufferUsageFlagBits::eVertexBuffer,
                                              vertexBuffer);

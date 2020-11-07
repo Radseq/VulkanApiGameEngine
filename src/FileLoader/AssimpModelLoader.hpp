@@ -40,7 +40,7 @@ class AssimpModelLoader {
      * @param createInfo MeshCreateInfo structure for load time settings like scale, center, etc.
      * @param copyQueue Queue used for the memory staging copy commands (must support transfer)
      */
-    bool loadFromFile (Model& model, const GameCore::VertexLayout& layout, const std::string& filename,
+    bool loadFromFile (Model& model, const GraphicCore::VertexLayout& layout, const std::string& filename,
                        ModelCreateInfo* createInfo);
 
     /**
@@ -52,7 +52,7 @@ class AssimpModelLoader {
      * @param scale Load time scene scale
      * @param copyQueue Queue used for the memory staging copy commands (must support transfer)
      */
-    bool loadFromFile (Model& model, const GameCore::VertexLayout& layout, const std::string& filename,
+    bool loadFromFile (Model& model, const GraphicCore::VertexLayout& layout, const std::string& filename,
                        const float& scale = 1.0F) {
         ModelCreateInfo modelCreateInfo {scale, 1.0F, 0.0f};
         return loadFromFile (model, layout, filename, &modelCreateInfo);

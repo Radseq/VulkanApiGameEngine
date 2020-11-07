@@ -31,13 +31,13 @@ namespace std {
 }  // namespace std
 
 class TinyObjModelLoader {
-    const GameCore::VulkanDevice& context;
+    const GraphicCore::VulkanDevice& context;
 
     void createVertexBuffer (Model* const model, const std::vector<Vertex>& vertices);
     void createIndexBuffer (Model* const model, const std::vector<uint32_t>& indices);
 
    public:
-    TinyObjModelLoader (const GameCore::VulkanDevice& Context);
+    TinyObjModelLoader (const GraphicCore::VulkanDevice& Context);
 
     void loadFromFile (Model* const model, const std::string& filename, ModelCreateInfo* createInfo);
     void loadFromFile (Model* const model, const std::string& filename, const float& scale = 1.0F) {

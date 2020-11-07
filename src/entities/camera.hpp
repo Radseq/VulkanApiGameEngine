@@ -27,8 +27,8 @@ class Camera
     void  calculateZoom( );
     void  calculatePitch( );
     void  calculateAngleAroundPlayer( );
-    float calculateHorizontalDistance( );
-    float calculateVerticalDistance( );
+    float calculateHorizontalDistance( ) const;
+    float calculateVerticalDistance( ) const;
 
     // const Player& player_;
 

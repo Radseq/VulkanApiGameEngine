@@ -12,13 +12,13 @@
 
 class Texture2DArray
 {
-    const GameCore::VulkanDevice& context;
+    const GraphicCore::VulkanDevice& context;
 
-    void allocateImgMemory (GameCore::Image& imageResult, const vk::MemoryPropertyFlags& properties) const;
+    void allocateImgMemory (GraphicCore::Image& imageResult, const vk::MemoryPropertyFlags& properties) const;
 
    public:
-    Texture2DArray (const GameCore::VulkanDevice& Context);
-    void LoadTexture (GameCore::Image& result, const std::string& filePatch, const vk::Format& format);
+    Texture2DArray (const GraphicCore::VulkanDevice& Context);
+    void LoadTexture (GraphicCore::Image& result, const std::string& filePatch, const vk::Format& format);
 };
 
 #endif  // TEXTURE2D_ARRAY_HPP

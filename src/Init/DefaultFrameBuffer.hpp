@@ -11,30 +11,30 @@ class DefaultFrameBuffer {
     std::vector<vk::ImageView>   swapChainImageViews;
     std::vector<vk::Framebuffer> swapChainFramebuffers;
     /*
-    GameCore::CoreImage colorImage{};
-    GameCore::CoreImageView colorImageView{};
+    GraphicCore::CoreImage colorImage{};
+    GraphicCore::CoreImageView colorImageView{};
 
-    GameCore::CoreImage depthImage{};
-    GameCore::CoreImageView depthImageView{};*/
+    GraphicCore::CoreImage depthImage{};
+    GraphicCore::CoreImageView depthImageView{};*/
 
-    GameCore::Image colorImage;
-    GameCore::Image depthImage;
+    GraphicCore::Image colorImage;
+    GraphicCore::Image depthImage;
 
     vk::SampleCountFlagBits msaaSamples = vk::SampleCountFlagBits::e1;
 
-    const GameCore::VulkanDevice& context;
-    const GameCore::SwapChain&    swapChain;
-    GameCore::ImageManager        imageManager {context};
+    const GraphicCore::VulkanDevice& context;
+    const GraphicCore::SwapChain&    swapChain;
+    GraphicCore::ImageManager        imageManager {context};
 
     void ImageViewForSwapChainImg( );
 
     void createColorResources( );
     void createDepthResources( );
 
-    GameCore::RenderPass renderPass;
+    GraphicCore::RenderPass renderPass;
 
    public:
-    DefaultFrameBuffer (const GameCore::VulkanDevice& Context, const GameCore::SwapChain& SwapChain);
+    DefaultFrameBuffer (const GraphicCore::VulkanDevice& Context, const GraphicCore::SwapChain& SwapChain);
     void                                CreateFrameBuffer( );
     void                                createRenderPass( );
     const std::vector<vk::Framebuffer>& getFrameBuffers( );

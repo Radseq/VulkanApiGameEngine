@@ -1,6 +1,6 @@
 #include "Sun.hpp"
 
-Sun::Sun(const GameCore::VulkanDevice & Context, const Camera & Camera, const vk::Extent2D & WindowSize) : context(Context), camera(Camera), windowSize(WindowSize)
+Sun::Sun(const GraphicCore::VulkanDevice & Context, const Camera & Camera, const vk::Extent2D & WindowSize) : context(Context), camera(Camera), windowSize(WindowSize)
 {
 }
 
@@ -67,8 +67,8 @@ void Sun::setImageLayout(vk::CommandBuffer cmdBuffer, vk::Image image, vk::Image
 }
 
 void Sun::updateDrawCommandBuffer(const vk::CommandBuffer& cmdBuffer) {
-	cmdBuffer.setViewport(0, GameCore::util::viewport(windowSize));
-	cmdBuffer.setScissor(0, GameCore::util::rect2D(windowSize));
+	cmdBuffer.setViewport(0, GraphicCore::util::viewport(windowSize));
+	cmdBuffer.setScissor(0, GraphicCore::util::rect2D(windowSize));
 	cmdBuffer.bindDescriptorSets(vk::PipelineBindPoint::eGraphics, pipelineLayout, 0, descriptorSet, nullptr);
 	cmdBuffer.bindPipeline(vk::PipelineBindPoint::eGraphics, pipelines.solid);
 	vk::DeviceSize offsets = 0;
@@ -145,7 +145,7 @@ void Sun::setupDescriptorSets(std::vector<vk::WriteDescriptorSet> & writeDescrip
 }
 
 void Sun::preparePipelines(vk::RenderPass & renderPass) {
-	GameCore::Pipeline pipelineBuilder{ device, pipelineLayout, renderPass };
+	GraphicCore::Pipeline pipelineBuilder{ device, pipelineLayout, renderPass };
 	pipelineBuilder.getPipelineRasterization().getRasterizationState().cullMode = vk::CullModeFlagBits::eNone;
 
 	pipelineBuilder.GetVertexInputState().getBindingDescriptions()= {

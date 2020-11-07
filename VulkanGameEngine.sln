@@ -8,7 +8,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "game", "vc15\game.vcxproj",
 		{17A8F78F-1FFB-4128-A3B3-59CC6C19D89A} = {17A8F78F-1FFB-4128-A3B3-59CC6C19D89A}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "core", "internal\core\vc15\core.vcxproj", "{17A8F78F-1FFB-4128-A3B3-59CC6C19D89A}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GraphicCore", "internal\GraphicCore\vc15\GraphicCore.vcxproj", "{17A8F78F-1FFB-4128-A3B3-59CC6C19D89A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

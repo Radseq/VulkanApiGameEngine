@@ -29,6 +29,7 @@
     <ClCompile Include="..\src\EntityProcess\EntityPipeline.cpp" />
     <ClCompile Include="..\src\EntityProcess\EntityRenderer.cpp" />
     <ClCompile Include="..\src\EntityProcess\EntityShader.cpp" />
+    <ClCompile Include="..\src\EntityProcess\EntityShader2.cpp" />
     <ClCompile Include="..\src\FileLoader\AssimpLoader.cpp" />
     <ClCompile Include="..\src\FileLoader\AssimpModelLoader.cpp" />
     <ClCompile Include="..\src\FileLoader\ifstreamLoader.cpp" />
@@ -53,6 +54,7 @@
     <ClCompile Include="..\src\World\Terrain\Terrain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\src\Base\Core.hpp" />
     <ClInclude Include="..\src\Containers\ImageContainer.hpp" />
     <ClInclude Include="..\src\Engine\Game.hpp" />
     <ClInclude Include="..\src\entities\camera.hpp" />
@@ -63,6 +65,7 @@
     <ClInclude Include="..\src\EntityProcess\EntityPipeline.hpp" />
     <ClInclude Include="..\src\EntityProcess\EntityRenderer.hpp" />
     <ClInclude Include="..\src\EntityProcess\EntityShader.hpp" />
+    <ClInclude Include="..\src\EntityProcess\EntityShader2.hpp" />
     <ClInclude Include="..\src\FileLoader\AssimpLoader.hpp" />
     <ClInclude Include="..\src\FileLoader\AssimpModelLoader.hpp" />
     <ClInclude Include="..\src\FileLoader\ifstreamLoader.hpp" />

@@ -16,7 +16,7 @@
 class Camera;
 class Window;
 class Renderer;
-class GameCore::SwapChain;
+class GraphicCore::SwapChain;
 
 class Game
 {
@@ -27,8 +27,8 @@ class Game
     // const int MAX_FRAMES_IN_FLIGHT = Configuration::getInstance()->GetConfigIntOption("MaxFramesInFlight");
     const int MAX_FPS = Configuration::getInstance( )->GetConfigIntOption ("MaxFps");
 
-    GameCore::VulkanInstance vulkanInstance { };
-    GameCore::VulkanDevice*  context = nullptr;
+    GraphicCore::VulkanInstance vulkanInstance { };
+    GraphicCore::VulkanDevice*  context = nullptr;
 
     vk::Extent2D windowSize {WIDTH, HEIGHT};
 
@@ -37,8 +37,8 @@ class Game
     bool viewUpdated {false};
 
     Window                                  window { };
-    std::unique_ptr<GameCore::LocalDevices> localDevices;  // vulkanInstance, Surface
-    std::unique_ptr<GameCore::SwapChain>    swapChain;     // context
+    std::unique_ptr<GraphicCore::LocalDevices> localDevices;  // vulkanInstance, Surface
+    std::unique_ptr<GraphicCore::SwapChain>    swapChain;     // context
     std::unique_ptr<Renderer>               renderer;      // swapChain, context, camera
 
     // DeviceHandler deviceHandler{camera};

@@ -16,14 +16,14 @@
 #include "Framebuffer/SwapChain.hpp"
 #include "Util/vkHelpers.hpp"
 
-class GameCore::SwapChain;
-class GameCore::VulkanDevice;
+class GraphicCore::SwapChain;
+class GraphicCore::VulkanDevice;
 class Configuration;
 
 class Renderer
 {
-    GameCore::SwapChain*    swapChain;
-    GameCore::VulkanDevice* context;
+    GraphicCore::SwapChain*    swapChain;
+    GraphicCore::VulkanDevice* context;
 
     glm::mat4 perspective;
 
@@ -57,7 +57,7 @@ class Renderer
     SkySphere skysphere {*context, camera};
     Terrain   terrain {*context, camera};
 
-    GameCore::DescriptorPool descPool { };
+    GraphicCore::DescriptorPool descPool { };
 
     void prepareFrame( );
     void drawCurrentCommandBuffer( );
@@ -85,7 +85,7 @@ class Renderer
     EntityRenderer entityRenderer {*context, *swapChain, camera, light};
 
    public:
-    Renderer (GameCore::SwapChain* SwapChain, GameCore::VulkanDevice* Context, Camera& _camera);
+    Renderer (GraphicCore::SwapChain* SwapChain, GraphicCore::VulkanDevice* Context, Camera& _camera);
 
     void draw( );
 

@@ -5,7 +5,7 @@
 
 class KtxTextureLoader {
    public:
-    GameCore::ImageContainer LoadFile (const std::string& fileName);
+    GraphicCore::ImageContainer LoadFile (const std::string& fileName);
 };
 
 #endif  // KTX_TEXTURE_LOADER_HPP

@@ -10,8 +10,8 @@
 class Texture2D
 {
    public:
-    void CreateImage (GameCore::Image& result, const GameCore::VulkanDevice& context,
-                      const GameCore::ImageContainer& imgContainer, const vk::Format& format);
+    void CreateImage (GraphicCore::Image& result, const GraphicCore::VulkanDevice& context,
+                      const GraphicCore::ImageContainer& imgContainer, const vk::Format& format);
 };
 
 #endif  // TEXTURE2D_HPP

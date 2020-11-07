@@ -65,16 +65,16 @@ void TinyObjModelLoader::loadFromFile (Model* const model, const std::string& fi
 }
 
 void TinyObjModelLoader::createVertexBuffer (Model* const model, const std::vector<Vertex>& vertices) {
-    GameCore::CoreBufferManager vertexBufferManager {context};
+    GraphicCore::CoreBufferManager vertexBufferManager {context};
     vertexBufferManager.stageToDeviceBuffer<Vertex> (model->vertexCoreBuffer, vk::BufferUsageFlagBits::eVertexBuffer,
                                                      vertices);
 }
 
 void TinyObjModelLoader::createIndexBuffer (Model* const model, const std::vector<uint32_t>& indices) {
-    GameCore::CoreBufferManager indexBufferManager {context};
+    GraphicCore::CoreBufferManager indexBufferManager {context};
     indexBufferManager.stageToDeviceBuffer<uint32_t> (model->indexCoreBuffer, vk::BufferUsageFlagBits::eIndexBuffer,
                                                       indices);
 }
 
-TinyObjModelLoader::TinyObjModelLoader (const GameCore::VulkanDevice& Context)
+TinyObjModelLoader::TinyObjModelLoader (const GraphicCore::VulkanDevice& Context)
     : context (Context) { }

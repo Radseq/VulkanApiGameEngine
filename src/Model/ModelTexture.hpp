@@ -9,7 +9,7 @@
 /// Used for set parameters to texture.
 /// </summary>
 class ModelTexture {
-    const GameCore::Image& texture;
+    const GraphicCore::Image& texture;
 
     /// <summary>
     /// how close camera should be to reflectivity parm to change brightness
@@ -23,9 +23,9 @@ class ModelTexture {
     float reflectivity;
 
    public:
-    ModelTexture (const GameCore::Image& Texture);
+    ModelTexture (const GraphicCore::Image& Texture);
 
-    const GameCore::Image& getImage( ) const;
+    const GraphicCore::Image& getImage( ) const;
 
     float getShineDamper( ) const;
     void  setShineDamper (const float& ShineDamper);

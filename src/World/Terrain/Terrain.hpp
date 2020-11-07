@@ -15,7 +15,7 @@
 #include "../../entities/camera.hpp"
 
 class Terrain {
-    const GameCore::VulkanDevice& context;
+    const GraphicCore::VulkanDevice& context;
 
     struct {
         glm::mat4 projection;
@@ -30,34 +30,34 @@ class Terrain {
     } uboTess;
 
     // Terrain Pipeline statistics
-    // GameCore::CoreBuffer queryResult;
+    // GraphicCore::CoreBuffer queryResult;
     // vk::QueryPool queryPool;
     // std::array<uint64_t, 2> pipelineStats{0, 0};
 
     // View frustum passed to tessellation control shader for culling
-    GameCore::Frustum frustum { };
+    GraphicCore::Frustum frustum { };
 
     bool tessellation = true;
     bool wireframe    = false;
 
-    GameCore::CoreBuffer terrainTessellation;
-    GameCore::CoreBuffer terrainVertexBuffer;
-    GameCore::CoreBuffer terrainIndexBuffer;
+    GraphicCore::CoreBuffer terrainTessellation;
+    GraphicCore::CoreBuffer terrainVertexBuffer;
+    GraphicCore::CoreBuffer terrainIndexBuffer;
 
     uint32_t terrainIndices {0};
 
     Texture2DArray  terrainArrayTexture {context};
-    GameCore::Image terrainArrayTextureImage;
-    GameCore::Image heightMapTextureImage;
+    GraphicCore::Image terrainArrayTextureImage;
+    GraphicCore::Image heightMapTextureImage;
 
     Camera& _camera;
 
-    GameCore::CoreBufferManager bufferManager {context};
+    GraphicCore::CoreBufferManager bufferManager {context};
 
-    GameCore::VertexLayout vertexLayout {{
-        GameCore::VertexLayout::Component::VERTEX_COMPONENT_POSITION,
-        GameCore::VertexLayout::Component::VERTEX_COMPONENT_NORMAL,
-        GameCore::VertexLayout::Component::VERTEX_COMPONENT_UV,
+    GraphicCore::VertexLayout vertexLayout {{
+        GraphicCore::VertexLayout::Component::VERTEX_COMPONENT_POSITION,
+        GraphicCore::VertexLayout::Component::VERTEX_COMPONENT_NORMAL,
+        GraphicCore::VertexLayout::Component::VERTEX_COMPONENT_UV,
     }};
 
     vk::Pipeline       terrainPipeline;
@@ -66,10 +66,10 @@ class Terrain {
 
     vk::DescriptorSet terrainDescriptorSet;
 
-    GameCore::DescriptorSetLayoutBinding descSetLayout { };
+    GraphicCore::DescriptorSetLayoutBinding descSetLayout { };
 
    public:
-    Terrain (const GameCore::VulkanDevice& Context, Camera& camera);
+    Terrain (const GraphicCore::VulkanDevice& Context, Camera& camera);
 
     void destroy( );
     void descriptorDestroy( );
@@ -95,7 +95,7 @@ class Terrain {
 
     float& GetTessellationFactor( );  // cant const cuse ui uses oryginal reference to modify
 
-    void setupDescriptorSets (GameCore::DescriptorPool& descPool);
+    void setupDescriptorSets (GraphicCore::DescriptorPool& descPool);
     void createDescriptorSetLayouts( );
     void createPipeline (const vk::RenderPass& renderPass);
 

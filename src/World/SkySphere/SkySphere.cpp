@@ -1,6 +1,6 @@
 ﻿#include "SkySphere.hpp"
 
-SkySphere::SkySphere (const GameCore::VulkanDevice& Context, const Camera& camera)
+SkySphere::SkySphere (const GraphicCore::VulkanDevice& Context, const Camera& camera)
     : context (Context)
     , _camera (camera)
 {
@@ -103,7 +103,7 @@ void SkySphere::descriptorDestroy( )
     // context.getVkDevice().destroyDescriptorPool(descriptorPool);
 }
 
-void SkySphere::setupDescriptorSets (GameCore::DescriptorPool& descPool)
+void SkySphere::setupDescriptorSets (GraphicCore::DescriptorPool& descPool)
 {
     skySphereDescriptorSet = context.getVkDevice( ).allocateDescriptorSets (
         {descPool.getDescriptorPool( ), 1, &descSetLayout.getDescriptorSetLayout( )}) [0];
@@ -123,7 +123,7 @@ void SkySphere::createPipelines (vk::RenderPass const& renderPass)
     createDescriptorSetLayouts( );
 
     // Terrain tessellation pipeline
-    GameCore::Pipeline builder {context.getVkDevice( ), skyspherePipelineLayout, renderPass};
+    GraphicCore::Pipeline builder {context.getVkDevice( ), skyspherePipelineLayout, renderPass};
     builder.getPipelineDynamic( ).getDynamicStateEnables( ).push_back (vk::DynamicState::eViewport);
     builder.getPipelineDynamic( ).getDynamicStateEnables( ).push_back (vk::DynamicState::eLineWidth);
     builder.getPipelineDynamic( ).getDynamicStateEnables( ).push_back (vk::DynamicState::eScissor);

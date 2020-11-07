@@ -1,6 +1,6 @@
 #include "EntityShader.hpp"
 
-EntityShader::EntityShader (const GameCore::VulkanDevice& Device, const GameCore::SwapChain& SwapChain,
+EntityShader::EntityShader (const GraphicCore::VulkanDevice& Device, const GraphicCore::SwapChain& SwapChain,
                             const EntityDescriptor& EntityDescriptor)
     : device (Device)
     , swapChain (SwapChain)

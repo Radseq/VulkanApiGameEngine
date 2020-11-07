@@ -17,10 +17,10 @@
 #include <glm\gtx\string_cast.hpp>
 
 class SkySphere {
-    GameCore::VertexLayout vertexLayout {{
-        GameCore::VertexLayout::Component::VERTEX_COMPONENT_POSITION,
-        GameCore::VertexLayout::Component::VERTEX_COMPONENT_NORMAL,
-        GameCore::VertexLayout::Component::VERTEX_COMPONENT_UV,
+    GraphicCore::VertexLayout vertexLayout {{
+        GraphicCore::VertexLayout::Component::VERTEX_COMPONENT_POSITION,
+        GraphicCore::VertexLayout::Component::VERTEX_COMPONENT_NORMAL,
+        GraphicCore::VertexLayout::Component::VERTEX_COMPONENT_UV,
     }};
 
     // Skysphere vertex shader stage
@@ -28,10 +28,10 @@ class SkySphere {
         glm::mat4 mvp;
     } uboVS;
 
-    const GameCore::VulkanDevice& context;
-    GameCore::CoreBuffer          skySphereVertex;
+    const GraphicCore::VulkanDevice& context;
+    GraphicCore::CoreBuffer          skySphereVertex;
 
-    GameCore::Image skySphereTexture;
+    GraphicCore::Image skySphereTexture;
 
     vk::DescriptorSet skySphereDescriptorSet;
 
@@ -39,7 +39,7 @@ class SkySphere {
     vk::Pipeline            skyspherePipeline;
     vk::DescriptorSetLayout skysphereDescriptorSetLayout;
 
-    GameCore::CoreBufferManager bufferManager {context};
+    GraphicCore::CoreBufferManager bufferManager {context};
     const Camera&               _camera;
 
     // const SkySpherePipeline& skySpherePipeline;
@@ -48,10 +48,10 @@ class SkySphere {
 
     Model skySphereModel {context};
 
-    GameCore::DescriptorSetLayoutBinding descSetLayout { };
+    GraphicCore::DescriptorSetLayoutBinding descSetLayout { };
 
    public:
-    SkySphere (const GameCore::VulkanDevice& Context, const Camera& camera);
+    SkySphere (const GraphicCore::VulkanDevice& Context, const Camera& camera);
 
     void destroy( );
     void loadAssets( );
@@ -59,7 +59,7 @@ class SkySphere {
     void updateUniformBuffers (const glm::mat4& perspective);
     void updateDrawCommandBuffer (const vk::CommandBuffer& cmdBuffer);
     void descriptorDestroy( );
-    void setupDescriptorSets (GameCore::DescriptorPool& descPool);
+    void setupDescriptorSets (GraphicCore::DescriptorPool& descPool);
     void createPipelines (vk::RenderPass const& renderPass);
     void createDescriptorSetLayouts( );
 };

@@ -1,6 +1,6 @@
 #include "EntityPipeline.hpp"
 
-EntityPipeline::EntityPipeline (const GameCore::VulkanDevice& Context, const GameCore::SwapChain& SwapChain)
+EntityPipeline::EntityPipeline (const GraphicCore::VulkanDevice& Context, const GraphicCore::SwapChain& SwapChain)
     : context (Context)
     , swapChain (SwapChain)
 {
@@ -8,11 +8,11 @@ EntityPipeline::EntityPipeline (const GameCore::VulkanDevice& Context, const Gam
 }
 
 void EntityPipeline::createGraphicsPipeline (const vk::RenderPass&                       renderPass,
-                                             const GameCore::DescriptorSetLayoutBinding& descSetLayout)
+                                             const GraphicCore::DescriptorSetLayoutBinding& descSetLayout)
 {
     pipelineLayout.create (context.getVkDevice( ), descSetLayout);
 
-    GameCore::Pipeline builder {context.getVkDevice( ), pipelineLayout.getVkPipelineLayout( ), renderPass};
+    GraphicCore::Pipeline builder {context.getVkDevice( ), pipelineLayout.getVkPipelineLayout( ), renderPass};
     builder.getPipelineViewport( ).setViewportAndScissor (swapChain.getSwapChainExtent( ));
     builder.getVertexInputState( ).appendVertexLayout (vertex_layout);
     builder.getPipelineRasterization( ).getRasterizationState( ).cullMode = vk::CullModeFlagBits::eBack;
@@ -38,5 +38,5 @@ void EntityPipeline::createGraphicsPipeline (const vk::RenderPass&              
     graphicsPipeline = builder.create( );
 }
 
-const GameCore::PipelineLayout& EntityPipeline::getPipelineLayout( ) { return pipelineLayout; }
+const GraphicCore::PipelineLayout& EntityPipeline::getPipelineLayout( ) { return pipelineLayout; }
 const vk::Pipeline&             EntityPipeline::getVkPipeline( ) { return graphicsPipeline; }

@@ -6,13 +6,13 @@
 
 class UniformBuffer
 {
-    std::vector<GameCore::CoreBuffer> uniformBuffers;
+    std::vector<GraphicCore::CoreBuffer> uniformBuffers;
 
    public:
-    void create (const GameCore::VulkanDevice& Device, const uint32_t& count, const uint32_t& size);
+    void create (const GraphicCore::VulkanDevice& Device, const uint32_t& count, const uint32_t& size);
 
-    std::vector<GameCore::CoreBuffer>& getUniformBuffers( );
-    GameCore::CoreBuffer&              getUniformBufferIndex (const uint32_t& index);
+    std::vector<GraphicCore::CoreBuffer>& getUniformBuffers( );
+    GraphicCore::CoreBuffer&              getUniformBufferIndex (const uint32_t& index);
 
     /*template <typename T>
     void copyToMemory (const vk::DeviceMemory& memory, const T& data, const vk::DeviceSize& size,
@@ -29,7 +29,7 @@ class UniformBuffer
         uniformBuffers [index].unMap( );
     }
 
-    void destroyBuffer (const GameCore::VulkanDevice& Device);
+    void destroyBuffer (const GraphicCore::VulkanDevice& Device);
 };
 
 #endif  // UNIFORM_BUFFES_HPP

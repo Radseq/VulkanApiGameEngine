@@ -10,16 +10,16 @@
 #include "ModelParts.hpp"
 
 class Model {
-    const GameCore::VulkanDevice& device;
+    const GraphicCore::VulkanDevice& device;
 
    public:
-    GameCore::CoreBuffer vertexCoreBuffer;
-    GameCore::CoreBuffer indexCoreBuffer;
+    GraphicCore::CoreBuffer vertexCoreBuffer;
+    GraphicCore::CoreBuffer indexCoreBuffer;
     uint32_t             indexCount {0};
     uint32_t             vertexCount {0};
 
-    const GameCore::CoreBuffer& getVCB( ) const { return vertexCoreBuffer; };
-    const GameCore::CoreBuffer& getICB( ) const { return indexCoreBuffer; };
+    const GraphicCore::CoreBuffer& getVCB( ) const { return vertexCoreBuffer; };
+    const GraphicCore::CoreBuffer& getICB( ) const { return indexCoreBuffer; };
 
     const uint32_t& GetIndexCount( ) const { return indexCount; };
 
@@ -27,7 +27,7 @@ class Model {
 
     std::vector<ModelPart> parts;
 
-    explicit Model (const GameCore::VulkanDevice& Device);
+    explicit Model (const GraphicCore::VulkanDevice& Device);
 
     // if cant be in destructor make destroy method
     void destroy( ) {
@@ -35,7 +35,7 @@ class Model {
         indexCoreBuffer.destroy (device);
     }
 
-    const GameCore::VulkanDevice& GetDevice( ) const;
+    const GraphicCore::VulkanDevice& GetDevice( ) const;
 };
 
 #endif

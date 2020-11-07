@@ -124,6 +124,12 @@
     <Filter Include="Source\EntityProcess">
       <UniqueIdentifier>{cc7b007f-7dd9-4119-b992-10ab677fc21f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header\Base">
+      <UniqueIdentifier>{0723d0dd-5a3b-4b31-80a2-87a1dcdf1c95}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Base">
+      <UniqueIdentifier>{87d64ffe-5abf-43e7-bac1-6a476b836408}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\Util\Configuration.cpp">
@@ -221,6 +227,9 @@
     </ClCompile>
     <ClCompile Include="..\src\UniformBuffers\UniformBuffer.cpp">
       <Filter>Source\UniformBuffers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\EntityProcess\EntityShader2.cpp">
+      <Filter>Source\EntityProcess</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -331,6 +340,12 @@
     </ClInclude>
     <ClInclude Include="..\src\UniformBuffers\UniformBuffer.hpp">
       <Filter>Header\UniformBuffers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\EntityProcess\EntityShader2.hpp">
+      <Filter>Header\EntityProcess</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Base\Core.hpp">
+      <Filter>Header\Base</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

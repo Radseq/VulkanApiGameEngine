@@ -1,6 +1,6 @@
 #include "EntityDescriptor.hpp"
 
-EntityDescriptor::EntityDescriptor (const GameCore::VulkanDevice& Context)
+EntityDescriptor::EntityDescriptor (const GraphicCore::VulkanDevice& Context)
     : context (Context)
 {
 }
@@ -41,8 +41,8 @@ void EntityDescriptor::destroy( )
     context.getVkDevice( ).destroyCommandPool (context.getCommandPool( ));
 }
 
-const GameCore::DescriptorSetLayoutBinding& EntityDescriptor::getDescSetLayout( ) const { return descSetLayout; }
-const GameCore::DescriptorSets&             EntityDescriptor::getDescriptorSets( ) const { return descriptorSets; }
+const GraphicCore::DescriptorSetLayoutBinding& EntityDescriptor::getDescSetLayout( ) const { return descSetLayout; }
+const GraphicCore::DescriptorSets&             EntityDescriptor::getDescriptorSets( ) const { return descriptorSets; }
 
 void EntityDescriptor::updateWriteDescriptors( )
 {

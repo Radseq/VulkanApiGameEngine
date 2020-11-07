@@ -53,7 +53,7 @@ void Game::cleanUp( )
 
 void Game::createSwapChain( )
 {
-    swapChain = std::make_unique<GameCore::SwapChain> (context);
+    swapChain = std::make_unique<GraphicCore::SwapChain> (context);
     swapChain->CreateSwapChain (windowSize, window.getSurface( ));
 }
 
@@ -75,7 +75,7 @@ void Game::createSurface( ) { window.createWindowSurface (vulkanInstance.getVkIn
 
 void Game::pickPhysicalDevice( )
 {
-    localDevices = std::make_unique<GameCore::LocalDevices> (vulkanInstance, window.getSurface( ));
+    localDevices = std::make_unique<GraphicCore::LocalDevices> (vulkanInstance, window.getSurface( ));
 }
 
 void Game::cleanupSwapChain( )

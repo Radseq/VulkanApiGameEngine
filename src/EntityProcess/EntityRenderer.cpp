@@ -1,6 +1,7 @@
 #include "EntityRenderer.hpp"
+#include <variant>
 
-EntityRenderer::EntityRenderer (const GameCore::VulkanDevice& Context, const GameCore::SwapChain& SwapChain,
+EntityRenderer::EntityRenderer (const GraphicCore::VulkanDevice& Context, const GraphicCore::SwapChain& SwapChain,
                                 Camera& _camera, const Light& Light)
     : context (Context)
     , swapChain (SwapChain)
@@ -52,16 +53,16 @@ void EntityRenderer::destroy (bool isSwapChainCleanUp)
 
 void EntityRenderer::createUniformBuffers (const glm::mat4& perspective)
 {
-    uniform.create (context, swapChain.getImageCount( ), sizeof (UniformBufferObject));
-    uniform2.create (context, swapChain.getImageCount( ), sizeof (lightUniformBufferObject));
-    for (size_t i = 0; i < swapChain.getImageCount( ); ++i) { updateUniformBuffer (i, perspective); }
+    uint32_t ImageCount {swapChain.getImageCount( )};
+    uniform.create (context, ImageCount, sizeof (UniformBufferObject));
+    uniform2.create (context, ImageCount, sizeof (lightUniformBufferObject));
+    for (uint32_t i = 0; i < ImageCount; ++i) { updateUniformBuffer (i, perspective); }
 }
 
 void EntityRenderer::updateUniformBuffer (const uint32_t& currentImage, const glm::mat4& proj)
 {
     for (auto const& entity : entities)
     {
-        UniformBufferObject ubo = { };
         ubo.model =
             Math::createTransformationMatrix (entity->getPosition( ), entity->getRotation( ), entity->getScale( ));
         ubo.view = Math::createViewMatrix (camera);
@@ -73,10 +74,9 @@ void EntityRenderer::updateUniformBuffer (const uint32_t& currentImage, const gl
 
         uniform.updateUniformBuffer (currentImage, ubo);
 
-        lightUniformBufferObject lubo = { };
-        lubo.lightColor               = light.getColor( );
-        lubo.reflectivity             = entity->getTexturedModel( )->getModelTexture( )->getReflectivity( );
-        lubo.shineDamper              = entity->getTexturedModel( )->getModelTexture( )->getShineDamper( );
+        lubo.lightColor   = light.getColor( );
+        lubo.reflectivity = entity->getTexturedModel( )->getModelTexture( )->getReflectivity( );
+        lubo.shineDamper  = entity->getTexturedModel( )->getModelTexture( )->getShineDamper( );
 
         uniform2.updateUniformBuffer (currentImage, lubo);
     }

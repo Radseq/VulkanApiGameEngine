@@ -10,23 +10,23 @@
 class EntityPipeline
 {
     // must be in correct order of model vertexCoreBuffer loaded(from file)
-    GameCore::VertexLayout vertex_layout {{GameCore::VertexLayout::Component::VERTEX_COMPONENT_POSITION,
-                                           GameCore::VertexLayout::Component::VERTEX_COMPONENT_TEXT_COORD,
-                                           GameCore::VertexLayout::Component::VERTEX_COMPONENT_NORMAL}};
+    GraphicCore::VertexLayout vertex_layout {{GraphicCore::VertexLayout::Component::VERTEX_COMPONENT_POSITION,
+                                           GraphicCore::VertexLayout::Component::VERTEX_COMPONENT_TEXT_COORD,
+                                           GraphicCore::VertexLayout::Component::VERTEX_COMPONENT_NORMAL}};
 
     vk::Pipeline graphicsPipeline;
 
-    GameCore::PipelineLayout      pipelineLayout { };
-    const GameCore::VulkanDevice& context;
-    const GameCore::SwapChain&    swapChain;
+    GraphicCore::PipelineLayout      pipelineLayout { };
+    const GraphicCore::VulkanDevice& context;
+    const GraphicCore::SwapChain&    swapChain;
 
    public:
-    EntityPipeline (const GameCore::VulkanDevice& Context, const GameCore::SwapChain& SwapChain);
+    EntityPipeline (const GraphicCore::VulkanDevice& Context, const GraphicCore::SwapChain& SwapChain);
 
     void createGraphicsPipeline (const vk::RenderPass&                       renderPass,
-                                 const GameCore::DescriptorSetLayoutBinding& descSetLayout);
+                                 const GraphicCore::DescriptorSetLayoutBinding& descSetLayout);
 
-    const GameCore::PipelineLayout& getPipelineLayout( );
+    const GraphicCore::PipelineLayout& getPipelineLayout( );
     const vk::Pipeline&             getVkPipeline( );
 };
 

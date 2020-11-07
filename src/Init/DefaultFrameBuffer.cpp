@@ -22,7 +22,7 @@ void DefaultFrameBuffer::ImageViewForSwapChainImg ()
 	}
 }
 
-DefaultFrameBuffer::DefaultFrameBuffer (const GameCore::VulkanDevice& Context, const GameCore::SwapChain& SwapChain) : context (Context), swapChain (SwapChain)
+DefaultFrameBuffer::DefaultFrameBuffer (const GraphicCore::VulkanDevice& Context, const GraphicCore::SwapChain& SwapChain) : context (Context), swapChain (SwapChain)
 {
 	//msaaSamples = context.getDevice ().getMaxUsableSampleCount (); // for now turn off
 }
@@ -198,7 +198,7 @@ void DefaultFrameBuffer::createColorResources ()
 	imageInfo.samples = msaaSamples;
 	imageInfo.sharingMode = vk::SharingMode::eExclusive;
 
-	imageManager.createImage (colorImage, imageInfo);
+	imageManager.CreateImage (colorImage, imageInfo);
 	imageManager.createImageView (colorImage, vk::ImageAspectFlagBits::eColor, vk::ImageViewType::e2D);
 }
 
@@ -221,7 +221,7 @@ void DefaultFrameBuffer::createDepthResources ()
 	imageInfo.samples = msaaSamples;
 	imageInfo.sharingMode = vk::SharingMode::eExclusive;
 
-	imageManager.createImage (depthImage, imageInfo);
+	imageManager.CreateImage (depthImage, imageInfo);
 
 	vk::ImageAspectFlags imgAspectFlags = vk::ImageAspectFlagBits::eDepth;
 	// Stencil aspect should only be set on depth + stencil formats (VK_FORMAT_D16_UNORM_S8_UINT..VK_FORMAT_D32_SFLOAT_S8_UINT

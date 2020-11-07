@@ -1,0 +1,235 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\Allocation\AllocationCreateInfo.hpp" />
+    <ClInclude Include="..\src\Allocation\AllocationPassThrough.hpp" />
+    <ClInclude Include="..\src\Allocation\AllocationPool.hpp" />
+    <ClInclude Include="..\src\Allocation\AllocationProperties.hpp" />
+    <ClInclude Include="..\src\Allocation\IAllocation.hpp" />
+    <ClInclude Include="..\src\Buffer\CoreBuffeManager.hpp" />
+    <ClInclude Include="..\src\Buffer\CoreBuffer.hpp" />
+    <ClInclude Include="..\src\Command\SingleTimeCommandBuffer.hpp" />
+    <ClInclude Include="..\src\Descriptor\DescriptorPool.hpp" />
+    <ClInclude Include="..\src\Descriptor\DescriptorSetLayout.hpp" />
+    <ClInclude Include="..\src\Descriptor\DescriptorSets.hpp" />
+    <ClInclude Include="..\src\Device\CreateLocalDevice.hpp" />
+    <ClInclude Include="..\src\Device\CreateLocalDeviceByGroup.hpp" />
+    <ClInclude Include="..\src\Device\DeviceCreateInfo.hpp" />
+    <ClInclude Include="..\src\Device\ISetDevice.hpp" />
+    <ClInclude Include="..\src\Device\LocalDevices.hpp" />
+    <ClInclude Include="..\src\Device\PhysicalDevice.hpp" />
+    <ClInclude Include="..\src\Device\QueueIndices.hpp" />
+    <ClInclude Include="..\src\Device\vkQuque.hpp" />
+    <ClInclude Include="..\src\Device\VulkanDevice.hpp" />
+    <ClInclude Include="..\src\Framebuffer\SwapChain.hpp" />
+    <ClInclude Include="..\src\Framebuffer\SwapChainSupportDetails.hpp" />
+    <ClInclude Include="..\src\Image\Image.hpp" />
+    <ClInclude Include="..\src\Image\ImageContainer.hpp" />
+    <ClInclude Include="..\src\Image\ImageManager.hpp" />
+    <ClInclude Include="..\src\Instance\IVulkanInstance.hpp" />
+    <ClInclude Include="..\src\Instance\VulkanInstance.hpp" />
+    <ClInclude Include="..\src\Model\VertexLayout.hpp" />
+    <ClInclude Include="..\src\Pipeline\Pipeline.hpp" />
+    <ClInclude Include="..\src\Pipeline\PipelineColorBlend.hpp" />
+    <ClInclude Include="..\src\Pipeline\PipelineColorBlendAttachment.hpp" />
+    <ClInclude Include="..\src\Pipeline\PipelineDepthStencil.hpp" />
+    <ClInclude Include="..\src\Pipeline\PipelineDynamic.hpp" />
+    <ClInclude Include="..\src\Pipeline\PipelineInputAssembly.hpp" />
+    <ClInclude Include="..\src\Pipeline\PipelineLayout.hpp" />
+    <ClInclude Include="..\src\Pipeline\PipelineRasterization.hpp" />
+    <ClInclude Include="..\src\Pipeline\PipelineVertex.hpp" />
+    <ClInclude Include="..\src\Pipeline\PipelineViewport.hpp" />
+    <ClInclude Include="..\src\Pipeline\RenderPass.hpp" />
+    <ClInclude Include="..\src\Shaders\Shader.hpp" />
+    <ClInclude Include="..\src\Util\Frustum.hpp" />
+    <ClInclude Include="..\src\Util\math.hpp" />
+    <ClInclude Include="..\src\Util\util.hpp" />
+    <ClInclude Include="..\src\Util\vkHelpers.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\Allocation\AllocationPassThrough.cpp" />
+    <ClCompile Include="..\src\Allocation\AllocationPool.cpp" />
+    <ClCompile Include="..\src\Buffer\CoreBuffeManager.cpp" />
+    <ClCompile Include="..\src\Buffer\CoreBuffer.cpp" />
+    <ClCompile Include="..\src\Command\SingleTimeCommandBuffer.cpp" />
+    <ClCompile Include="..\src\Descriptor\DescriptorPool.cpp" />
+    <ClCompile Include="..\src\Descriptor\DescriptorSetLayout.cpp" />
+    <ClCompile Include="..\src\Descriptor\DescriptorSets.cpp" />
+    <ClCompile Include="..\src\Device\CreateLocalDevice.cpp" />
+    <ClCompile Include="..\src\Device\CreateLocalDeviceByGroup.cpp" />
+    <ClCompile Include="..\src\Device\DeviceCreateInfo.cpp" />
+    <ClCompile Include="..\src\Device\LocalDevices.cpp" />
+    <ClCompile Include="..\src\Device\PhysicalDevice.cpp" />
+    <ClCompile Include="..\src\Device\VulkanDevice.cpp" />
+    <ClCompile Include="..\src\Framebuffer\SwapChain.cpp" />
+    <ClCompile Include="..\src\Framebuffer\SwapChainSupportDetails.cpp" />
+    <ClCompile Include="..\src\Image\Image.cpp" />
+    <ClCompile Include="..\src\Image\ImageManager.cpp" />
+    <ClCompile Include="..\src\Instance\VulkanInstance.cpp" />
+    <ClCompile Include="..\src\Model\VertexLayout.cpp" />
+    <ClCompile Include="..\src\Pipeline\Pipeline.cpp" />
+    <ClCompile Include="..\src\Pipeline\PipelineColorBlend.cpp" />
+    <ClCompile Include="..\src\Pipeline\PipelineColorBlendAttachment.cpp" />
+    <ClCompile Include="..\src\Pipeline\PipelineDepthStencil.cpp" />
+    <ClCompile Include="..\src\Pipeline\PipelineDynamic.cpp" />
+    <ClCompile Include="..\src\Pipeline\PipelineInputAssembly.cpp" />
+    <ClCompile Include="..\src\Pipeline\PipelineLayout.cpp" />
+    <ClCompile Include="..\src\Pipeline\PipelineRasterization.cpp" />
+    <ClCompile Include="..\src\Pipeline\PipelineVertex.cpp" />
+    <ClCompile Include="..\src\Pipeline\PipelineViewport.cpp" />
+    <ClCompile Include="..\src\Pipeline\RenderPass.cpp" />
+    <ClCompile Include="..\src\Shaders\Shader.cpp" />
+    <ClCompile Include="..\src\Util\Frustum.cpp" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{17A8F78F-1FFB-4128-A3B3-59CC6C19D89A}</ProjectGuid>
+    <RootNamespace>GraphicCore</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>GraphicCore</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="settings.props" />
+    <Import Project="arch32.props" />
+    <Import Project="debug.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="settings.props" />
+    <Import Project="arch64.props" />
+    <Import Project="debug.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="settings.props" />
+    <Import Project="arch32.props" />
+    <Import Project="release.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="settings.props" />
+    <Import Project="arch64.props" />
+    <Import Project="release.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);../src;</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);../src;</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);../src;</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);../src;</IncludePath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>$(PREPROCESSOR_DEFS);%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <Optimization>Disabled</Optimization>
+    </ClCompile>
+    <Link>
+      <TargetMachine>MachineX86</TargetMachine>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>$(PREPROCESSOR_DEFS);%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <XMLDocumentationFileName>$(IntDir)</XMLDocumentationFileName>
+      <GenerateXMLDocumentationFiles>true</GenerateXMLDocumentationFiles>
+    </ClCompile>
+    <Link>
+      <TargetMachine>MachineX64</TargetMachine>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>$(PREPROCESSOR_DEFS);%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <TargetMachine>MachineX86</TargetMachine>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>$(PREPROCESSOR_DEFS);%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <WarningLevel>Level4</WarningLevel>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <TargetMachine>MachineX64</TargetMachine>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

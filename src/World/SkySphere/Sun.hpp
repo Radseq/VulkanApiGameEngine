@@ -14,15 +14,15 @@ class Sun
 		float normal[3];
 	};
 
-	GameCore::Texture2D texture;
+	GraphicCore::Texture2D texture;
 
 	struct {
 		uint32_t count;
-		GameCore::CoreBuffer indices;
-		GameCore::CoreBuffer vertices;
+		GraphicCore::CoreBuffer indices;
+		GraphicCore::CoreBuffer vertices;
 	} geometry;
 
-	GameCore::CoreBuffer uniformDataVS;
+	GraphicCore::CoreBuffer uniformDataVS;
 
 	struct UboVS {
 		glm::mat4 projection;
@@ -39,7 +39,7 @@ class Sun
 	vk::DescriptorSet descriptorSet;
 	vk::DescriptorSetLayout descriptorSetLayout;
 
-	GameCore::VulkanDevice context;
+	GraphicCore::VulkanDevice context;
 
 	const vk::Device& device{ context.getDevice() };
 
@@ -50,7 +50,7 @@ class Sun
 	const vk::Extent2D & windowSize;
 
 public:
-	Sun(const GameCore::VulkanDevice & Context, const Camera & Camera, const vk::Extent2D & WindowSize);
+	Sun(const GraphicCore::VulkanDevice & Context, const Camera & Camera, const vk::Extent2D & WindowSize);
 	~Sun();
 	void setImageLayout(vk::CommandBuffer cmdBuffer, vk::Image image, vk::ImageAspectFlags aspectMask, vk::ImageLayout oldImageLayout, vk::ImageLayout newImageLayout, uint32_t mipLevel, uint32_t mipLevelCount);
 	void updateDrawCommandBuffer(const vk::CommandBuffer& cmdBuffer);

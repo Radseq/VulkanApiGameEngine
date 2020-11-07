@@ -8,7 +8,7 @@
      <!--<IMGUI_DIR>$(vulkan_game_engineSDKDir)\imgui</IMGUI_DIR>
     <VULKAN_DIR>$(vulkan_game_engineSDKDir)\vulkan</VULKAN_DIR>
 	<VULKAN_SDK>$(VK_SDK_PATH)</VULKAN_SDK>-->
-	<CORE_DIR>$(vulkan_game_engineSDKDir)\internal\core</CORE_DIR>
+	<CORE_DIR>$(vulkan_game_engineSDKDir)\internal\GraphicCore</CORE_DIR>
 	<GLFW3_DIR>$(vulkan_game_engineSDKDir)\external\glfw3</GLFW3_DIR>
 	<STB_DIR>$(vulkan_game_engineSDKDir)\external\stb</STB_DIR>
 	<TOL_DIR>$(vulkan_game_engineSDKDir)\external\tinyobjloader</TOL_DIR>
@@ -66,7 +66,7 @@
     <vulkan_game_engine_LIBDEPS>
         glfw3dll.lib;
 		assimp.lib;
-		core.lib;
+		GraphicCore.lib;
 		vulkan-1.lib;
 		ktx.lib;
 		<!--imgui.lib-->
@@ -75,7 +75,7 @@
     <vulkan_game_engine_LIBDEPS_D>
 		glfw3dll.lib;
 		assimp.lib;
-		core.lib;
+		GraphicCore.lib;
 		vulkan-1.lib;
 		ktx.lib;
 		<!--imgui.lib-->

@@ -13,14 +13,14 @@
 
 class EntityShader
 {
-    const GameCore::VulkanDevice& device;
-    const GameCore::SwapChain&    swapChain;
+    const GraphicCore::VulkanDevice& device;
+    const GraphicCore::SwapChain&    swapChain;
 
     EntityPipeline          pipeline {device, swapChain};
     const EntityDescriptor& descriptor;
 
    public:
-    EntityShader (const GameCore::VulkanDevice& Device, const GameCore::SwapChain& SwapChain,
+    EntityShader (const GraphicCore::VulkanDevice& Device, const GraphicCore::SwapChain& SwapChain,
                   const EntityDescriptor& EntityDescriptor);
 
     void init (const vk::RenderPass& renderPass);

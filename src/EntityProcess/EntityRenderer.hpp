@@ -35,7 +35,7 @@
 
 class EntityRenderer
 {
-    const Light&                  light;
+    const Light&                     light;
     const GraphicCore::VulkanDevice& context;
     const GraphicCore::SwapChain&    swapChain;
 
@@ -45,7 +45,6 @@ class EntityRenderer
         glm::mat4 view;
         glm::mat4 proj;
         glm::vec3 lightPosition;
-        void      a( );
     };
 
     struct lightUniformBufferObject
@@ -53,7 +52,6 @@ class EntityRenderer
         glm::vec3 lightColor;
         float     shineDamper;
         float     reflectivity;
-        void      a( );
     };
 
     UniformBufferObject      ubo  = { };

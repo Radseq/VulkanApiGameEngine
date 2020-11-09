@@ -2,6 +2,7 @@
 #define PIPLINE_LAYOUT_HPP
 
 #include <Descriptor\DescriptorSetLayout.hpp>
+#include <Device\VulkanDevice.hpp>
 #include <Util/util.hpp>
 #include <vulkan/vulkan.hpp>
 
@@ -9,14 +10,18 @@ namespace GraphicCore
 {
     class PipelineLayout
     {
-        vk::PipelineLayout           pipelineLayout;
-        vk::PipelineLayoutCreateInfo pipelineLayoutInfo = { };
+        vk::PipelineLayout               pipelineLayout;
+        vk::PipelineLayoutCreateInfo     pipelineLayoutInfo = { };
+        const GraphicCore::VulkanDevice& m_Device;
 
        public:
+        PipelineLayout (const GraphicCore::VulkanDevice& Device)
+            : m_Device (Device) { };
+
         void setPushConstant (const vk::PushConstantRange& pushConstantRange);
         void setPushConstant (const std::vector<vk::PushConstantRange>& pushConstantRange);
 
-        void create (const vk::Device& device, const DescriptorSetLayoutBinding& descSetLayout);
+        void create (const DescriptorSetLayoutBinding& descSetLayout);
 
         const vk::PipelineLayout& getVkPipelineLayout( ) const;
     };

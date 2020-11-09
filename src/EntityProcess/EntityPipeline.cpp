@@ -10,7 +10,7 @@ EntityPipeline::EntityPipeline (const GraphicCore::VulkanDevice& Context, const 
 void EntityPipeline::createGraphicsPipeline (const vk::RenderPass&                       renderPass,
                                              const GraphicCore::DescriptorSetLayoutBinding& descSetLayout)
 {
-    pipelineLayout.create (context.getVkDevice( ), descSetLayout);
+    pipelineLayout.create (descSetLayout);
 
     GraphicCore::Pipeline builder {context.getVkDevice( ), pipelineLayout.getVkPipelineLayout( ), renderPass};
     builder.getPipelineViewport( ).setViewportAndScissor (swapChain.getSwapChainExtent( ));

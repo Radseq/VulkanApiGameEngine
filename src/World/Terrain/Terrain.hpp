@@ -6,7 +6,7 @@
 #include <Descriptor\DescriptorSetLayout.hpp>
 #include <Image\Image.hpp>
 
-#include "../../Textures/Texture2DArray.hpp"
+#include "../../Textures/KtxTexture2DArray.hpp"
 #include "Buffer/CoreBuffer.hpp"
 #include "Device/VulkanDevice.hpp"
 #include "HeightMap.hpp"

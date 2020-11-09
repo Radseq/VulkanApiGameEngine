@@ -10,14 +10,12 @@
 #include "../FileLoader/KtxTextureLoader.hpp"
 #include "Util/vkHelpers.hpp"
 
-class Texture2DArray
+class KtxTexture2DArray
 {
     const GraphicCore::VulkanDevice& context;
 
-    void allocateImgMemory (GraphicCore::Image& imageResult, const vk::MemoryPropertyFlags& properties) const;
-
    public:
-    Texture2DArray (const GraphicCore::VulkanDevice& Context);
+    KtxTexture2DArray (const GraphicCore::VulkanDevice& Context);
     void LoadTexture (GraphicCore::Image& result, const std::string& filePatch, const vk::Format& format);
 };
 

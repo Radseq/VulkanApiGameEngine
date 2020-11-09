@@ -17,12 +17,14 @@ layout(location = 3) in vec3 toCameraVector;
 
 layout(location = 0) out vec4 outColor;
 
+const float ambient = 0.5f;
+
 void main() {
 	vec3 unitNormal = normalize(surfaceNormal);
 	vec3 unitLightVector = normalize(toLightVector);
 
 	float nDotl = dot(unitNormal, unitLightVector);
-	float brightness = max(nDotl, 0.0);
+	float brightness = max(nDotl, ambient);
 	vec3 diffuse = brightness * light.lightColor;
 
 	vec3 unitVectorToCamera = normalize(toCameraVector);

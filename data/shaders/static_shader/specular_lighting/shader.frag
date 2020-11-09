@@ -17,7 +17,7 @@ layout(location = 3) in vec3 toCameraVector;
 
 layout(location = 0) out vec4 outColor;
 
-const float ambient = 0.5f;
+const float ambient = 0.0f;
 
 void main() {
 	vec3 unitNormal = normalize(surfaceNormal);

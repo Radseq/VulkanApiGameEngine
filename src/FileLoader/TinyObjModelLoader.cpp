@@ -3,7 +3,8 @@
 #define TINYOBJLOADER_IMPLEMENTATION
 #include <tiny_obj_loader.h>
 
-void TinyObjModelLoader::loadFromFile (Model* const model, const std::string& filename, ModelCreateInfo* createInfo) {
+void TinyObjModelLoader::loadFromFile (Model* const model, const std::string& filename, ModelCreateInfo* createInfo)
+{
     tinyobj::attrib_t                attrib;
     std::vector<tinyobj::shape_t>    shapes;
     std::vector<tinyobj::material_t> materials;
@@ -17,7 +18,8 @@ void TinyObjModelLoader::loadFromFile (Model* const model, const std::string& fi
     glm::vec3 scale (1.0F);
     glm::vec2 uvscale (1.0F);
     glm::vec3 center (0.0F);
-    if (createInfo != nullptr) {
+    if (createInfo != nullptr)
+    {
         scale   = createInfo->getScale( );
         uvscale = createInfo->getUvScale( );
         center  = createInfo->getCenter( );
@@ -25,12 +27,13 @@ void TinyObjModelLoader::loadFromFile (Model* const model, const std::string& fi
 
     char const* charFileName = filename.data( );
 
-    if (!tinyobj::LoadObj (&attrib, &shapes, &materials, &warn, &err, charFileName)) {
-        throw std::runtime_error (warn + err);
-    }
+    if (!tinyobj::LoadObj (&attrib, &shapes, &materials, &warn, &err, charFileName))
+    { throw std::runtime_error (warn + err); }
 
-    for (const auto& shape : shapes) {
-        for (const auto& index : shape.mesh.indices) {
+    for (const auto& shape : shapes)
+    {
+        for (const auto& index : shape.mesh.indices)
+        {
             glm::vec3 position = {attrib.vertices [index.vertex_index * 3],
                                   attrib.vertices [index.vertex_index * 3 + 1],
                                   attrib.vertices [index.vertex_index * 3 + 2]};
@@ -38,8 +41,7 @@ void TinyObjModelLoader::loadFromFile (Model* const model, const std::string& fi
             position *= scale;
             position += center;
 
-            glm::vec3 normal   = {attrib.normals [index.normal_index * 3], 
-                                attrib.normals [index.normal_index * 3 + 1],
+            glm::vec3 normal = {attrib.normals [index.normal_index * 3], attrib.normals [index.normal_index * 3 + 1],
                                 attrib.normals [index.normal_index * 3 + 2]};
 
             glm::vec2 texCoord = {
@@ -49,7 +51,8 @@ void TinyObjModelLoader::loadFromFile (Model* const model, const std::string& fi
 
             Vertex vertex = {position, texCoord, normal};
 
-            if (uniqueVertices.count (vertex) == 0) {
+            if (uniqueVertices.count (vertex) == 0)
+            {
                 uniqueVertices [vertex] = static_cast<uint32_t> (vertices.size( ));
                 vertices.push_back (vertex);
             }
@@ -64,17 +67,19 @@ void TinyObjModelLoader::loadFromFile (Model* const model, const std::string& fi
     createIndexBuffer (model, indices);
 }
 
-void TinyObjModelLoader::createVertexBuffer (Model* const model, const std::vector<Vertex>& vertices) {
-    GraphicCore::CoreBufferManager vertexBufferManager {context};
-    vertexBufferManager.stageToDeviceBuffer<Vertex> (model->vertexCoreBuffer, vk::BufferUsageFlagBits::eVertexBuffer,
-                                                     vertices);
+void TinyObjModelLoader::createVertexBuffer (Model* const model, const std::vector<Vertex>& vertices)
+{
+    m_BufferManager.stageToDeviceBuffer<Vertex> (model->vertexCoreBuffer, vk::BufferUsageFlagBits::eVertexBuffer,
+                                                 vertices);
 }
 
-void TinyObjModelLoader::createIndexBuffer (Model* const model, const std::vector<uint32_t>& indices) {
-    GraphicCore::CoreBufferManager indexBufferManager {context};
-    indexBufferManager.stageToDeviceBuffer<uint32_t> (model->indexCoreBuffer, vk::BufferUsageFlagBits::eIndexBuffer,
-                                                      indices);
+void TinyObjModelLoader::createIndexBuffer (Model* const model, const std::vector<uint32_t>& indices)
+{
+    m_BufferManager.stageToDeviceBuffer<uint32_t> (model->indexCoreBuffer, vk::BufferUsageFlagBits::eIndexBuffer,
+                                                   indices);
 }
 
 TinyObjModelLoader::TinyObjModelLoader (const GraphicCore::VulkanDevice& Context)
-    : context (Context) { }
+    : context (Context)
+{
+}

@@ -171,9 +171,6 @@
     <ClCompile Include="..\src\FileLoader\KtxTextureLoader.cpp">
       <Filter>Source\FileLoader</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\Textures\Texture2DArray.cpp">
-      <Filter>Source\Textures</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\World\SkySphere\SkySphere.cpp">
       <Filter>Source\World\SkySphere</Filter>
     </ClCompile>
@@ -228,8 +225,8 @@
     <ClCompile Include="..\src\UniformBuffers\UniformBuffer.cpp">
       <Filter>Source\UniformBuffers</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\EntityProcess\EntityShader2.cpp">
-      <Filter>Source\EntityProcess</Filter>
+    <ClCompile Include="..\src\Textures\KtxTexture2DArray.cpp">
+      <Filter>Source\Textures</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -277,9 +274,6 @@
     </ClInclude>
     <ClInclude Include="..\src\Containers\ImageContainer.hpp">
       <Filter>Header\Containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Textures\Texture2DArray.hpp">
-      <Filter>Header\Textures</Filter>
     </ClInclude>
     <ClInclude Include="..\src\World\SkySphere\SkySphere.hpp">
       <Filter>Header\World\SkySphere</Filter>
@@ -341,11 +335,11 @@
     <ClInclude Include="..\src\UniformBuffers\UniformBuffer.hpp">
       <Filter>Header\UniformBuffers</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\EntityProcess\EntityShader2.hpp">
-      <Filter>Header\EntityProcess</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\Base\Core.hpp">
       <Filter>Header\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Textures\KtxTexture2DArray.hpp">
+      <Filter>Header\Textures</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

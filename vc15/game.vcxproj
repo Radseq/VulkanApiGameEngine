@@ -29,7 +29,6 @@
     <ClCompile Include="..\src\EntityProcess\EntityPipeline.cpp" />
     <ClCompile Include="..\src\EntityProcess\EntityRenderer.cpp" />
     <ClCompile Include="..\src\EntityProcess\EntityShader.cpp" />
-    <ClCompile Include="..\src\EntityProcess\EntityShader2.cpp" />
     <ClCompile Include="..\src\FileLoader\AssimpLoader.cpp" />
     <ClCompile Include="..\src\FileLoader\AssimpModelLoader.cpp" />
     <ClCompile Include="..\src\FileLoader\ifstreamLoader.cpp" />
@@ -42,8 +41,8 @@
     <ClCompile Include="..\src\Model\ModelTexture.cpp" />
     <ClCompile Include="..\src\Model\TexturedModel.cpp" />
     <ClCompile Include="..\src\Render\Renderer.cpp" />
+    <ClCompile Include="..\src\Textures\KtxTexture2DArray.cpp" />
     <ClCompile Include="..\src\Textures\Texture2D.cpp" />
-    <ClCompile Include="..\src\Textures\Texture2DArray.cpp" />
     <ClCompile Include="..\src\UniformBuffers\UniformBuffer.cpp" />
     <ClCompile Include="..\src\Util\Configuration.cpp" />
     <ClCompile Include="..\src\Util\math.cpp" />
@@ -65,7 +64,6 @@
     <ClInclude Include="..\src\EntityProcess\EntityPipeline.hpp" />
     <ClInclude Include="..\src\EntityProcess\EntityRenderer.hpp" />
     <ClInclude Include="..\src\EntityProcess\EntityShader.hpp" />
-    <ClInclude Include="..\src\EntityProcess\EntityShader2.hpp" />
     <ClInclude Include="..\src\FileLoader\AssimpLoader.hpp" />
     <ClInclude Include="..\src\FileLoader\AssimpModelLoader.hpp" />
     <ClInclude Include="..\src\FileLoader\ifstreamLoader.hpp" />
@@ -81,8 +79,8 @@
     <ClInclude Include="..\src\Model\ModelTexture.hpp" />
     <ClInclude Include="..\src\Model\TexturedModel.hpp" />
     <ClInclude Include="..\src\Render\Renderer.hpp" />
+    <ClInclude Include="..\src\Textures\KtxTexture2DArray.hpp" />
     <ClInclude Include="..\src\Textures\Texture2D.hpp" />
-    <ClInclude Include="..\src\Textures\Texture2DArray.hpp" />
     <ClInclude Include="..\src\UniformBuffers\UniformBuffer.hpp" />
     <ClInclude Include="..\src\Util\Configuration.hpp" />
     <ClInclude Include="..\src\Util\KeyCodes.hpp" />

@@ -3,20 +3,23 @@
 
 #include <Buffer\CoreBuffer.hpp>
 #include <Device\VulkanDevice.hpp>
+#include <Model\VertexLayout.hpp>
 #include <vector>
 #include <vulkan/vulkan.hpp>
 
 #include "ModelDimension.hpp"
 #include "ModelParts.hpp"
 
-class Model {
+class Model
+{
     const GraphicCore::VulkanDevice& device;
+    const GraphicCore::VertexLayout& m_VertexLayout;
 
    public:
     GraphicCore::CoreBuffer vertexCoreBuffer;
     GraphicCore::CoreBuffer indexCoreBuffer;
-    uint32_t             indexCount {0};
-    uint32_t             vertexCount {0};
+    uint32_t                indexCount {0};
+    uint32_t                vertexCount {0};
 
     const GraphicCore::CoreBuffer& getVCB( ) const { return vertexCoreBuffer; };
     const GraphicCore::CoreBuffer& getICB( ) const { return indexCoreBuffer; };
@@ -27,10 +30,12 @@ class Model {
 
     std::vector<ModelPart> parts;
 
-    explicit Model (const GraphicCore::VulkanDevice& Device);
+    explicit Model (const GraphicCore::VulkanDevice& Device, const GraphicCore::VertexLayout& VertexLayout);
 
-    // if cant be in destructor make destroy method
-    void destroy( ) {
+    const GraphicCore::VertexLayout& GetVertexLayout( ) { return m_VertexLayout; }
+
+    void destroy( )
+    {
         vertexCoreBuffer.destroy (device);
         indexCoreBuffer.destroy (device);
     }

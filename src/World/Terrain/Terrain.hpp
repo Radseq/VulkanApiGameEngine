@@ -46,7 +46,7 @@ class Terrain {
 
     uint32_t terrainIndices {0};
 
-    Texture2DArray  terrainArrayTexture {context};
+    KtxTexture2DArray  terrainArrayTexture {context};
     GraphicCore::Image terrainArrayTextureImage;
     GraphicCore::Image heightMapTextureImage;
 

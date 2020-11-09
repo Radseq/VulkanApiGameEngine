@@ -243,8 +243,14 @@ void Renderer::createCommandBuffers( )
 
 void Renderer::loadAsserts( )
 {
+    GraphicCore::VertexLayout vertexLayout {{
+        GraphicCore::VertexLayout::Component::VERTEX_COMPONENT_POSITION,
+        GraphicCore::VertexLayout::Component::VERTEX_COMPONENT_NORMAL,
+        GraphicCore::VertexLayout::Component::VERTEX_COMPONENT_UV,
+    }};
+
     GraphicCore::Image* textureImage = new GraphicCore::Image( );
-    Model*           model        = new Model (*context);
+    Model*              model        = new Model (*context, vertexLayout);
 
     TinyObjModelLoader objLoader {*context};
     objLoader.loadFromFile (model, getFilePath( ) + "/../../data/models/dragon/dragon.obj");

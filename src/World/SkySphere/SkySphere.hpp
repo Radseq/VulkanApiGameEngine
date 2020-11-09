@@ -46,7 +46,7 @@ class SkySphere {
 
     // TinyObjModelLoader				skySphereModel{ context };
 
-    Model skySphereModel {context};
+    Model skySphereModel {context, vertexLayout};
 
     GraphicCore::DescriptorSetLayoutBinding descSetLayout { };
 

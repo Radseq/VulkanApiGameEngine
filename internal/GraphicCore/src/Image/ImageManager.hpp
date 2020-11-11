@@ -2,7 +2,6 @@
 #define IMAGE_MANAGER_HPP
 
 #include <Image\ImageContainer.hpp>
-#include <gli/gli.hpp>
 #include <utility>
 #include <vulkan/vulkan.hpp>
 
@@ -68,10 +67,6 @@ namespace GraphicCore
             return stageToDeviceImage (imageCreateInfo, vk::MemoryPropertyFlagBits::eDeviceLocal,
                                        data.size( ) * sizeof (T), (void*) data.data( ));
         }
-
-        [[nodiscard]] void stageToDeviceImage (GraphicCore::Image& result, vk::ImageCreateInfo& imageCreateInfo,
-                                               const vk::MemoryPropertyFlags& memoryPropertyFlags,
-                                               const gli::texture2d& tex2D, const vk::ImageLayout& layout) const;
     };
 }  // namespace GraphicCore
 

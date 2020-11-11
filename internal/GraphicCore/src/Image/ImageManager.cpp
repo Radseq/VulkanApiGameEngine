@@ -333,19 +333,4 @@ namespace GraphicCore
 
         staging.destroy (device);
     }
-
-    void ImageManager::stageToDeviceImage (GraphicCore::Image& result, vk::ImageCreateInfo& imageCreateInfo,
-                                           const vk::MemoryPropertyFlags& memoryPropertyFlags,
-                                           const gli::texture2d& tex2D, const vk::ImageLayout& layout) const
-    {
-        std::vector<MipData> mips;
-        for (size_t i = 0; i < imageCreateInfo.mipLevels; ++i)
-        {
-            const auto& mip  = tex2D [i];
-            const auto  dims = mip.extent( );
-            mips.push_back ({vk::Extent3D {uint32_t (dims.x), uint32_t (dims.y), 1}, uint32_t (mip.size( ))});
-        }
-        stageToDeviceImage (result, imageCreateInfo, memoryPropertyFlags, vk::DeviceSize (tex2D.size( )), tex2D.data( ),
-                            mips, layout);
-    }
 }  // namespace GraphicCore

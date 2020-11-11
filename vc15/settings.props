@@ -3,7 +3,6 @@
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros">
     <ASSIMP_DIR>$(vulkan_game_engineSDKDir)\external\assimp</ASSIMP_DIR>
-    <GLI_DIR>$(vulkan_game_engineSDKDir)\external\gli</GLI_DIR>
     <GLM_DIR>$(vulkan_game_engineSDKDir)\external\glm</GLM_DIR>
      <!--<IMGUI_DIR>$(vulkan_game_engineSDKDir)\imgui</IMGUI_DIR>
     <VULKAN_DIR>$(vulkan_game_engineSDKDir)\vulkan</VULKAN_DIR>
@@ -34,7 +33,6 @@
     
     <vulkan_game_engine_INCLUDES>
         $(ASSIMP_DIR);
-        $(GLI_DIR);
         $(GLM_DIR);
 		$(STB_DIR);
 		$(TOL_DIR);
@@ -114,10 +112,6 @@
       <Value>$(ASSIMP_DIR)</Value>
       <EnvironmentVariable>true</EnvironmentVariable>
     </BuildMacro>-->
-    <BuildMacro Include="GLI_DIR">
-      <Value>$(GLI_DIR)</Value>
-      <EnvironmentVariable>true</EnvironmentVariable>
-    </BuildMacro>
     <BuildMacro Include="GLM_DIR">
       <Value>$(GLM_DIR)</Value>
       <EnvironmentVariable>true</EnvironmentVariable>

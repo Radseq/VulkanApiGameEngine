@@ -12,23 +12,25 @@
 #include "../FileLoader/ifstreamLoader.hpp"
 #include "utils.hpp"
 
-class Configuration {
+class Configuration
+{
     std::map<std::string, std::string> options;
 
     inline static Configuration* instance = nullptr;
 
-    std::string exePatch = "";
+    std::string exePatch;
 
    public:
-    static Configuration* getInstance( ) {
+    static Configuration* getInstance( )
+    {
         if (!instance) instance = new Configuration;
         return instance;
     }
 
     // todo template <typename T>
-    const std::string GetConfigStringOption (const std::string& key);
-    int               GetConfigIntOption (const std::string& key);
-    bool              GetConfigBoolOption (const std::string& key);
+    std::string GetConfigStringOption (const std::string& key) const;
+    int         GetConfigIntOption (const std::string& key) const;
+    bool        GetConfigBoolOption (const std::string& key) const;
 
     void loadFile (const std::string& fileName);
 

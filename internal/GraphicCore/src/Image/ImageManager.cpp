@@ -2,9 +2,10 @@
 
 namespace GraphicCore
 {
-    void ImageManager::allocateImgMemory (GraphicCore::Image& imageResult, const vk::MemoryPropertyFlags& properties) const
+    void ImageManager::allocateImgMemory (std::shared_ptr<GraphicCore::Image> imageResult,
+                                          const vk::MemoryPropertyFlags&      properties) const
     {
-        const vk::MemoryRequirements memReqs = device.getVkDevice( ).getImageMemoryRequirements (imageResult.image);
+        const vk::MemoryRequirements memReqs = device.getVkDevice( ).getImageMemoryRequirements (imageResult->image);
         /*vk::MemoryAllocateInfo memAllocInfo;
         memAllocInfo.allocationSize = result.getAllocSize() = memReqs.size;
         memAllocInfo.memoryTypeIndex = device.getMemoryType(memReqs.memoryTypeBits, memoryPropertyFlags);
@@ -16,8 +17,8 @@ namespace GraphicCore
         allocInfo.memoryTypeIndex = device.getMemoryType (memReqs.memoryTypeBits, properties);
         allocInfo.usage           = properties;
 
-        device.getAllocator( )->alloc (imageResult.allocatedMemory, allocInfo);
-        imageResult.bind( );
+        device.getAllocator( )->alloc (imageResult->allocatedMemory, allocInfo);
+        imageResult->bind( );
     }
 
     ImageManager::ImageManager (const VulkanDevice& Device)
@@ -25,22 +26,26 @@ namespace GraphicCore
     {
     }
 
-    void ImageManager::CreateImage (GraphicCore::Image& result, const ImageContainer& imgContainer,
-                                    const vk::Format& format, const vk::ImageTiling& tiling,
-                                    const vk::ImageUsageFlags& usage, const vk::MemoryPropertyFlags& properties,
-                                    const vk::SampleCountFlagBits& numSamples)
+    std::shared_ptr<GraphicCore::Image> ImageManager::CreateImage (const ImageContainer&          imgContainer,
+                                                                   const vk::Format&              format,
+                                                                   const vk::ImageTiling&         tiling,
+                                                                   const vk::ImageUsageFlags&     usage,
+                                                                   const vk::MemoryPropertyFlags& properties,
+                                                                   const vk::SampleCountFlagBits& numSamples)
     {
-        result.format     = format;
-        result.device     = device.getVkDevice( );
-        result.extent     = imgContainer.TextureExtend;
-        result.layerCount = imgContainer.layerCount;
-        result.mipLevels  = imgContainer.mipLevels;
+        std::shared_ptr<GraphicCore::Image> result = std::make_shared<GraphicCore::Image>( );
+
+        result->format     = format;
+        result->device     = device.getVkDevice( );
+        result->extent     = imgContainer.TextureExtend;
+        result->layerCount = imgContainer.layerCount;
+        result->mipLevels  = imgContainer.mipLevels;
 
         vk::ImageCreateInfo imageInfo = { };
         imageInfo.imageType           = vk::ImageType::e2D;
-        imageInfo.extent              = result.extent;
-        imageInfo.mipLevels           = result.mipLevels;
-        imageInfo.arrayLayers         = result.layerCount;
+        imageInfo.extent              = result->extent;
+        imageInfo.mipLevels           = result->mipLevels;
+        imageInfo.arrayLayers         = result->layerCount;
         imageInfo.format              = format;
         imageInfo.tiling              = tiling;
         imageInfo.initialLayout       = vk::ImageLayout::eUndefined;
@@ -48,20 +53,24 @@ namespace GraphicCore
         imageInfo.samples             = numSamples;
         imageInfo.sharingMode         = vk::SharingMode::eExclusive;
 
-        result.image = device.getVkDevice( ).createImage (imageInfo);
+        result->image = device.getVkDevice( ).createImage (imageInfo);
 
         allocateImgMemory (result, properties);
+        return result;
     }
 
-    void ImageManager::CreateImage (GraphicCore::Image& result, const vk::ImageCreateInfo& imageCreateInfo,
-                                    const vk::MemoryPropertyFlags& memoryPropertyFlags) const
+    std::shared_ptr<GraphicCore::Image> ImageManager::CreateImage (
+        const vk::ImageCreateInfo& imageCreateInfo, const vk::MemoryPropertyFlags& memoryPropertyFlags) const
     {
-        result.device = device.getVkDevice( );
-        result.image  = device.getVkDevice( ).createImage (imageCreateInfo);
-        result.format = imageCreateInfo.format;
-        result.extent = imageCreateInfo.extent;
+        std::shared_ptr<GraphicCore::Image> result = std::make_shared<GraphicCore::Image>( );
+        result->device                             = device.getVkDevice( );
+        result->image                              = device.getVkDevice( ).createImage (imageCreateInfo);
+        result->format                             = imageCreateInfo.format;
+        result->extent                             = imageCreateInfo.extent;
 
         allocateImgMemory (result, memoryPropertyFlags);
+
+        return result;
     }
 
     void ImageManager::generateMipmaps (const GraphicCore::Image& coreImage)
@@ -149,11 +158,10 @@ namespace GraphicCore
         singleTimeCmdBuffer.endSingleTimeCommands (true);
     }
 
-    void ImageManager::transitionImageLayout (const GraphicCore::Image& coreImage, const GraphicCore::SingleTimeCommandBuffer& cmdBuff,
-                                              const vk::ImageLayout& oldLayout,
-                                              const vk::ImageLayout& newLayout)
+    void ImageManager::transitionImageLayout (const GraphicCore::Image&                   coreImage,
+                                              const GraphicCore::SingleTimeCommandBuffer& cmdBuff,
+                                              const vk::ImageLayout& oldLayout, const vk::ImageLayout& newLayout)
     {
-
         vk::ImageMemoryBarrier barrier          = { };
         barrier.oldLayout                       = oldLayout;
         barrier.newLayout                       = newLayout;
@@ -192,7 +200,7 @@ namespace GraphicCore
         }
     }
 
-    void ImageManager::createSampler (GraphicCore::Image& coreImage)
+    void ImageManager::createSampler (std::shared_ptr<GraphicCore::Image> coreImage)
     {
         vk::Bool32 samplerAnisotropy = device.getDevice( ).GetPhysicalDeviceFeatures( ).samplerAnisotropy;
 
@@ -211,25 +219,25 @@ namespace GraphicCore
         samplerInfo.compareOp               = vk::CompareOp::eNever;
         samplerInfo.mipmapMode              = vk::SamplerMipmapMode::eLinear;
         samplerInfo.minLod                  = 0;
-        samplerInfo.maxLod                  = static_cast<float> (coreImage.mipLevels);
+        samplerInfo.maxLod                  = static_cast<float> (coreImage->mipLevels);
         samplerInfo.mipLodBias              = 0;
 
-        coreImage.sampler = device.getVkDevice( ).createSampler (samplerInfo);
+        coreImage->sampler = device.getVkDevice( ).createSampler (samplerInfo);
     }
 
-    void ImageManager::copyBufferToImage (const vk::Buffer& buffer, const GraphicCore::Image& coreImage)
+    void ImageManager::copyBufferToImage (const vk::Buffer& buffer, std::shared_ptr<GraphicCore::Image> coreImage)
     {
         GraphicCore::SingleTimeCommandBuffer singleTimeCmdBuffer (device);
         singleTimeCmdBuffer.createCommandBuffer (true);
 
-        vk::Extent2D imageSize (coreImage.extent.width, coreImage.extent.height);
+        vk::Extent2D imageSize (coreImage->extent.width, coreImage->extent.height);
 
         // Setup buffer copy regions for each mip level
         std::vector<vk::BufferImageCopy> bufferCopyRegions;
 
         vk::Offset3D emptyOffset {0, 0, 0};
 
-        for (uint32_t i = 0; i < coreImage.mipLevels; i++)
+        for (uint32_t i = 0; i < coreImage->mipLevels; i++)
         {
             vk::Extent3D imageExtent {imageSize.width >> i, imageSize.height >> i, 1};
 
@@ -247,59 +255,58 @@ namespace GraphicCore
             bufferCopyRegions.push_back (region);
         }
 
-        vk::ImageSubresourceRange range (vk::ImageAspectFlagBits::eColor, 0, coreImage.mipLevels, 0, 1);
+        vk::ImageSubresourceRange range (vk::ImageAspectFlagBits::eColor, 0, coreImage->mipLevels, 0, 1);
         // Prepare for transfer
-        vkHelper ::setImageLayout (singleTimeCmdBuffer.getCommandBuffer( ), coreImage.image,
+        vkHelper ::setImageLayout (singleTimeCmdBuffer.getCommandBuffer( ), coreImage->image,
                                    vk::ImageLayout::eUndefined, vk::ImageLayout::eTransferDstOptimal, range);
 
         singleTimeCmdBuffer.getCommandBuffer( ).copyBufferToImage (
-            buffer, coreImage.image, vk::ImageLayout::eTransferDstOptimal, bufferCopyRegions);
+            buffer, coreImage->image, vk::ImageLayout::eTransferDstOptimal, bufferCopyRegions);
 
-        vkHelper::setImageLayout (singleTimeCmdBuffer.getCommandBuffer( ), coreImage.image,
+        vkHelper::setImageLayout (singleTimeCmdBuffer.getCommandBuffer( ), coreImage->image,
                                   vk::ImageLayout::eTransferDstOptimal, vk::ImageLayout::eShaderReadOnlyOptimal, range);
 
         singleTimeCmdBuffer.endSingleTimeCommands (true);
     }
 
-    void ImageManager::createImageView (GraphicCore::Image& coreImage, const vk::ImageAspectFlags& aspectFlags,
-                                        const vk::ImageViewType& imgViewType)
+    void ImageManager::createImageView (std::shared_ptr<GraphicCore::Image> coreImage,
+                                        const vk::ImageAspectFlags& aspectFlags, const vk::ImageViewType& imgViewType)
     {
         vk::ImageViewCreateInfo viewInfo         = { };
-        viewInfo.image                           = coreImage.image;
+        viewInfo.image                           = coreImage->image;
         viewInfo.viewType                        = imgViewType;
-        viewInfo.format                          = coreImage.format;
+        viewInfo.format                          = coreImage->format;
         viewInfo.subresourceRange.aspectMask     = aspectFlags;
         viewInfo.subresourceRange.baseMipLevel   = 0;
-        viewInfo.subresourceRange.levelCount     = coreImage.mipLevels;
+        viewInfo.subresourceRange.levelCount     = coreImage->mipLevels;
         viewInfo.subresourceRange.baseArrayLayer = 0;
-        viewInfo.subresourceRange.layerCount     = coreImage.layerCount;
+        viewInfo.subresourceRange.layerCount     = coreImage->layerCount;
 
         viewInfo.components = {vk::ComponentSwizzle::eR, vk::ComponentSwizzle::eG, vk::ComponentSwizzle::eB,
                                vk::ComponentSwizzle::eA};
 
-        coreImage.view = device.getVkDevice( ).createImageView (viewInfo);
+        coreImage->view = device.getVkDevice( ).createImageView (viewInfo);
     }
 
-    void ImageManager::stageToDeviceImage (GraphicCore::Image&     result,
-                                           vk::ImageCreateInfo& imageCreateInfo,  // should be there reference?
-                                           const vk::MemoryPropertyFlags& memoryPropertyFlags,
-                                           const vk::DeviceSize& size, const void* data,
-                                           const std::vector<MipData>& mipData, const vk::ImageLayout layout) const
+    std::shared_ptr<GraphicCore::Image> ImageManager::stageToDeviceImage (
+        vk::ImageCreateInfo&           imageCreateInfo,  // should be there reference?
+        const vk::MemoryPropertyFlags& memoryPropertyFlags, const vk::DeviceSize& size, const void* data,
+        const std::vector<MipData>& mipData, const vk::ImageLayout layout) const
     {
-        CoreBufferManager    bufferManager (device);
+        CoreBufferManager       bufferManager (device);
         GraphicCore::CoreBuffer staging;
         bufferManager.createStagingBuffer (staging, size, data);
         imageCreateInfo.usage = imageCreateInfo.usage | vk::ImageUsageFlagBits::eTransferDst;
 
-        CreateImage (result, imageCreateInfo, memoryPropertyFlags);
+        auto stagResult = CreateImage (imageCreateInfo, memoryPropertyFlags);
 
         GraphicCore::SingleTimeCommandBuffer singleTimeCmdBuffer (device);
         singleTimeCmdBuffer.createCommandBuffer (true);
 
         const vk::ImageSubresourceRange range (vk::ImageAspectFlagBits::eColor, 0, imageCreateInfo.mipLevels, 0, 1);
         // Prepare for transfer
-        vkHelper::setImageLayout (singleTimeCmdBuffer.getCommandBuffer( ), result.image, vk::ImageLayout::eUndefined,
-                                  vk::ImageLayout::eTransferDstOptimal, range);
+        vkHelper::setImageLayout (singleTimeCmdBuffer.getCommandBuffer( ), stagResult->image,
+                                  vk::ImageLayout::eUndefined, vk::ImageLayout::eTransferDstOptimal, range);
 
         // Prepare for transfer
         std::vector<vk::BufferImageCopy> bufferCopyRegions;
@@ -324,13 +331,15 @@ namespace GraphicCore
             }
         }
         singleTimeCmdBuffer.getCommandBuffer( ).copyBufferToImage (
-            staging.getBuffer( ), result.image, vk::ImageLayout::eTransferDstOptimal, bufferCopyRegions);
+            staging.getBuffer( ), stagResult->image, vk::ImageLayout::eTransferDstOptimal, bufferCopyRegions);
         // Prepare for shader read
-        vkHelper::setImageLayout (singleTimeCmdBuffer.getCommandBuffer( ), result.image,
+        vkHelper::setImageLayout (singleTimeCmdBuffer.getCommandBuffer( ), stagResult->image,
                                   vk::ImageLayout::eTransferDstOptimal, layout, range);
 
         singleTimeCmdBuffer.endSingleTimeCommands (true);
 
         staging.destroy (device);
+
+        return stagResult;
     }
 }  // namespace GraphicCore

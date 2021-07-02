@@ -3,6 +3,7 @@
 
 #include <Descriptor\DescriptorPool.hpp>
 
+#include "../EntityProcess/EntityMeshRender.hpp"
 #include "../EntityProcess/EntityRenderer.hpp"
 #include "../FileLoader/stbImgFileLoader.hpp"
 #include "../Init/DefaultFrameBuffer.hpp"
@@ -59,6 +60,8 @@ class Renderer
 
     GraphicCore::DescriptorPool descPool { };
 
+    VulkanGame::Ref<EntityMeshRender> EntRendObj;
+
     void prepareFrame( );
     void drawCurrentCommandBuffer( );
     void submitFrame( );
@@ -79,8 +82,8 @@ class Renderer
 
     void createPerspective( );
 
-    std::vector<Entity const*> entities;
-    void      loadAsserts( );
+    std::vector<VulkanGame::Ref<EntityMeshRender>> entities;
+    void                                           loadAsserts( );
 
     EntityRenderer entityRenderer {*context, *swapChain, camera, light};
 

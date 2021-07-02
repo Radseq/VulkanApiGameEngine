@@ -1,19 +1,15 @@
 #include "EntityPipeline.hpp"
 
-EntityPipeline::EntityPipeline (const GraphicCore::VulkanDevice& Context, const GraphicCore::SwapChain& SwapChain)
-    : context (Context)
-    , swapChain (SwapChain)
+EntityPipeline::EntityPipeline (const GraphicCore::VulkanDevice& Context)
+    : m_Context (Context)
 {
-    // msaaSamples = context.getDevice( ).getMaxUsableSampleCount( );
 }
 
-void EntityPipeline::createGraphicsPipeline (const vk::RenderPass&                       renderPass,
-                                             const GraphicCore::DescriptorSetLayoutBinding& descSetLayout)
+void EntityPipeline::CreateGraphicsPipeline (std::vector<std::string>&& shaderPatchName,
+                                             const vk::Extent2D& swapChainWindowSize, const vk::RenderPass& renderPass)
 {
-    pipelineLayout.create (descSetLayout);
-
-    GraphicCore::Pipeline builder {context.getVkDevice( ), pipelineLayout.getVkPipelineLayout( ), renderPass};
-    builder.getPipelineViewport( ).setViewportAndScissor (swapChain.getSwapChainExtent( ));
+    GraphicCore::Pipeline builder {m_Context.getVkDevice( ), pipelineLayout->getVkPipelineLayout( ), renderPass};
+    builder.getPipelineViewport( ).setViewportAndScissor (swapChainWindowSize);
     builder.getVertexInputState( ).appendVertexLayout (vertex_layout);
     builder.getPipelineRasterization( ).getRasterizationState( ).cullMode = vk::CullModeFlagBits::eBack;
     builder.getPipelineRasterization( ).getRasterizationState( ).frontFace =
@@ -30,13 +26,29 @@ void EntityPipeline::createGraphicsPipeline (const vk::RenderPass&              
     colorBlendAttachment.blendEnable = VK_FALSE;
     builder.getPipelineColorBlend( ).getBlendAttachmentStates( ).push_back (colorBlendAttachment);
 
-    builder.loadShader (getFilePath( ) + "/../../data/shaders/static_shader/specular_lighting/", "vert.spv",
-                        vk::ShaderStageFlagBits::eVertex);
-    builder.loadShader (getFilePath( ) + "/../../data/shaders/static_shader/specular_lighting/", "frag.spv",
-                        vk::ShaderStageFlagBits::eFragment);
+    builder.loadShader (shaderPatchName [0], vk::ShaderStageFlagBits::eVertex);
+    builder.loadShader (shaderPatchName [1], vk::ShaderStageFlagBits::eFragment);
 
     graphicsPipeline = builder.create( );
 }
 
-const GraphicCore::PipelineLayout& EntityPipeline::getPipelineLayout( ) { return pipelineLayout; }
-const vk::Pipeline&             EntityPipeline::getVkPipeline( ) { return graphicsPipeline; }
+void EntityPipeline::CreatePipelineLayout (const IShaderDescSet& descSet)
+{
+    pipelineLayout = VulkanGame::CreateRef<GraphicCore::PipelineLayout> (m_Context);
+    pipelineLayout->create (descSet.GetDescSetLayout( ));
+}
+
+void EntityPipeline::Bind (const IShaderDescSet& descSet, const vk::CommandBuffer& cmdBufer,
+                           const size_t& frameIndex) const
+{
+    cmdBufer.bindDescriptorSets (vk::PipelineBindPoint::eGraphics, pipelineLayout->getVkPipelineLayout( ), 0, 1,
+                                 &descSet.GetDescSets( )->getDescriptorSetByIndex (frameIndex), 0, nullptr);
+
+    cmdBufer.bindPipeline (vk::PipelineBindPoint::eGraphics, graphicsPipeline);
+}
+
+void EntityPipeline::Destroy( )
+{
+    m_Context.getVkDevice( ).destroyPipeline (graphicsPipeline);
+    m_Context.getVkDevice( ).destroyPipelineLayout (pipelineLayout->getVkPipelineLayout( ));
+}

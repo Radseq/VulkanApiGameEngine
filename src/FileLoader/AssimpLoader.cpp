@@ -1,12 +1,14 @@
 #include "AssimpLoader.hpp"
 
-void AssimpLoader::throwOnNoLoaded (const std::string& filename) {
+void AssimpLoader::throwOnNoLoaded (const std::string_view& filename)
+{
     const std::string error = importer.GetErrorString( );
-    throw std::runtime_error (error + "\n\nNot Found. patchFile: " + filename);
+    throw std::runtime_error (error + "\n\nNot Found. patchFile: " + filename.data());
 }
 
-void AssimpLoader::loadFromFile (const std::string& filename, const int flags) {
-    pScene = importer.ReadFile (filename, flags);
+void AssimpLoader::loadFromFile (const std::string_view& filename, const int flags)
+{
+    pScene = importer.ReadFile (filename.data(), flags);
 
     if (!pScene) throwOnNoLoaded (filename);
 }

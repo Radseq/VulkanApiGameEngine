@@ -12,8 +12,8 @@ Terrain::Terrain (const GraphicCore::VulkanDevice& Context, Camera& camera)
 void Terrain::destroy( )
 {
     terrainTessellation.destroy (context);
-    terrainArrayTextureImage.destroy( );
-    heightMapTextureImage.destroy( );
+    terrainArrayTextureImage->destroy( );
+    heightMapTextureImage->destroy( );
 
     terrainTessellation.destroy (context);
     terrainVertexBuffer.destroy (context);
@@ -62,41 +62,39 @@ void Terrain::loadAssets( )
     }
 
     // Terrain textures are stored in a texture array with layers corresponding to terrain height
-    terrainArrayTextureImage.layerCount = 1;
-    terrainArrayTexture.LoadTexture (terrainArrayTextureImage,
-                                     getAssetPath( ) + "textures/terrain_texturearray" + texFormatSuffix + ".ktx",
-                                     texFormat);
+    terrainArrayTextureImage = terrainArrayTexture.LoadTexture (
+        ResourcePatch::GetInstance( )->GetPatch ("DataPatch") + "/textures/terrain_texturearray" + texFormatSuffix + ".ktx", texFormat);
 
     // Height data is stored in a one-channel texture
-    Texture2D        texture;
-    KtxTextureLoader textureLoader;
+    VulkanGame::Ref<Texture2D> texture;
+    KtxTextureLoader           textureLoader;
 
-    auto textureContainer      = textureLoader.LoadFile (getAssetPath( ) + "textures/terrain_heightmap_r16.ktx");
+    auto textureContainer      = textureLoader.LoadFile (ResourcePatch::GetInstance( )->GetPatch ("DataPatch") + "/textures/terrain_heightmap_r16.ktx");
     textureContainer.mipLevels = 1;
 
     vk::Format heightMapTexFormat {vk::Format::eR16Unorm};
-    texture.CreateImage (heightMapTextureImage, context, textureContainer, heightMapTexFormat);
+    heightMapTextureImage = texture->CreateImage (context, textureContainer, heightMapTexFormat);
 
     // Setup a mirroring sampler for the height map
-    context.getVkDevice( ).destroySampler (heightMapTextureImage.sampler);
+    context.getVkDevice( ).destroySampler (heightMapTextureImage->sampler);
     vk::SamplerCreateInfo samplerInfo;
     samplerInfo.minFilter = samplerInfo.magFilter = vk::Filter::eLinear;
     samplerInfo.mipmapMode                        = vk::SamplerMipmapMode::eLinear;
-    samplerInfo.maxLod                            = static_cast<float> (heightMapTextureImage.mipLevels);
+    samplerInfo.maxLod                            = static_cast<float> (heightMapTextureImage->mipLevels);
     samplerInfo.borderColor                       = vk::BorderColor::eFloatOpaqueWhite;
     samplerInfo.addressModeU                      = vk::SamplerAddressMode::eMirroredRepeat;
     samplerInfo.addressModeV                      = samplerInfo.addressModeU;
     samplerInfo.addressModeW                      = samplerInfo.addressModeU;
     samplerInfo.maxAnisotropy                     = 1.0F;
 
-    heightMapTextureImage.sampler = context.getVkDevice( ).createSampler (samplerInfo);
+    heightMapTextureImage->sampler = context.getVkDevice( ).createSampler (samplerInfo);
 
-    heightMapTextureImage.setupDescriptorImageInfo (vk::ImageLayout::eShaderReadOnlyOptimal);
+    heightMapTextureImage->setupDescriptorImageInfo (vk::ImageLayout::eShaderReadOnlyOptimal);
 
     // Setup a repeating sampler for the terrain texture layers
-    context.getVkDevice( ).destroySampler (terrainArrayTextureImage.sampler);
+    context.getVkDevice( ).destroySampler (terrainArrayTextureImage->sampler);
 
-    samplerInfo.maxLod       = static_cast<float> (terrainArrayTextureImage.mipLevels);
+    samplerInfo.maxLod       = static_cast<float> (terrainArrayTextureImage->mipLevels);
     samplerInfo.addressModeU = vk::SamplerAddressMode::eRepeat;
     samplerInfo.addressModeV = samplerInfo.addressModeU;
     samplerInfo.addressModeW = samplerInfo.addressModeU;
@@ -107,8 +105,8 @@ void Terrain::loadAssets( )
         samplerInfo.anisotropyEnable = VK_TRUE;
     }
 
-    terrainArrayTextureImage.sampler = context.getVkDevice( ).createSampler (samplerInfo);
-    terrainArrayTextureImage.setupDescriptorImageInfo (vk::ImageLayout::eShaderReadOnlyOptimal);
+    terrainArrayTextureImage->sampler = context.getVkDevice( ).createSampler (samplerInfo);
+    terrainArrayTextureImage->setupDescriptorImageInfo (vk::ImageLayout::eShaderReadOnlyOptimal);
 }
 
 // Prepare and initialize uniform buffer containing shader uniforms
@@ -249,7 +247,7 @@ void Terrain::generateTerrain( )
     }
 
     HeightMap heightMap { };
-    heightMap.loadHeightMap (getAssetPath( ) + "textures/terrain_heightmap_r16.ktx", PATCH_SIZE);
+    heightMap.loadHeightMap (ResourcePatch::GetInstance( )->GetPatch ("DataPatch") + "/textures/terrain_heightmap_r16.ktx", PATCH_SIZE);
 
     // Calculate normals from height map using a sobel filter
     for (auto x = 0; x < PATCH_SIZE; x++)
@@ -316,9 +314,9 @@ void Terrain::setupDescriptorSets (GraphicCore::DescriptorPool& descPool)
         {terrainDescriptorSet, 0, 0, 1, vk::DescriptorType::eUniformBuffer, nullptr,
          &terrainTessellation.getDescriptorInfo( )},
         {terrainDescriptorSet, 1, 0, 1, vk::DescriptorType::eCombinedImageSampler,
-         &heightMapTextureImage.getDescImageInfo( )},
+         &heightMapTextureImage->getDescImageInfo( )},
         {terrainDescriptorSet, 2, 0, 1, vk::DescriptorType::eCombinedImageSampler,
-         &terrainArrayTextureImage.getDescImageInfo( )}};
+         &terrainArrayTextureImage->getDescImageInfo( )}};
 
     context.getVkDevice( ).updateDescriptorSets (writeDescriptorSets, nullptr);
 }
@@ -341,12 +339,12 @@ void Terrain::createPipeline (const vk::RenderPass& renderPass)
 
     // We render the terrain as a grid of quad patches
     vk::PipelineTessellationStateCreateInfo tessellationState {{ }, 4};
-    builder.loadShader (getAssetPath( ) + "shaders/terraintessellation/", "vert.spv", vk::ShaderStageFlagBits::eVertex);
-    builder.loadShader (getAssetPath( ) + "shaders/terraintessellation/", "frag.spv",
+    builder.loadShader (ResourcePatch::GetInstance( )->GetPatch ("DataPatch") + "/shaders/terraintessellation/vert.spv", vk::ShaderStageFlagBits::eVertex);
+    builder.loadShader (ResourcePatch::GetInstance( )->GetPatch ("DataPatch") + "/shaders/terraintessellation/frag.spv",
                         vk::ShaderStageFlagBits::eFragment);
-    builder.loadShader (getAssetPath( ) + "shaders/terraintessellation/", "tesc.spv",
+    builder.loadShader (ResourcePatch::GetInstance( )->GetPatch ("DataPatch") + "/shaders/terraintessellation/tesc.spv",
                         vk::ShaderStageFlagBits::eTessellationControl);
-    builder.loadShader (getAssetPath( ) + "shaders/terraintessellation/", "tese.spv",
+    builder.loadShader (ResourcePatch::GetInstance( )->GetPatch ("DataPatch") + "/shaders/terraintessellation/tese.spv",
                         vk::ShaderStageFlagBits::eTessellationEvaluation);
 
     builder.getPipelineCreateInfo( ).pTessellationState = &tessellationState;
@@ -380,21 +378,17 @@ void Terrain::createDescriptorSetLayouts( )
     // Binding 0 : Shared Tessellation shader ubo
     descSetLayout.addDescriptorSetLayoutBinding (
         vk::DescriptorType::eUniformBuffer,
-        vk::ShaderStageFlagBits::eTessellationControl | vk::ShaderStageFlagBits::eTessellationEvaluation);
+        {vk::ShaderStageFlagBits::eTessellationControl, vk::ShaderStageFlagBits::eTessellationEvaluation});
     // Binding 1 : Height map
-    descSetLayout.addDescriptorSetLayoutBinding (vk::DescriptorType::eCombinedImageSampler,
-                                                 vk::ShaderStageFlagBits::eTessellationControl |
-                                                     vk::ShaderStageFlagBits::eTessellationEvaluation |
-                                                     vk::ShaderStageFlagBits::eFragment);
+    descSetLayout.addDescriptorSetLayoutBinding (
+        vk::DescriptorType::eCombinedImageSampler,
+        {vk::ShaderStageFlagBits::eTessellationControl, vk::ShaderStageFlagBits::eTessellationEvaluation,
+         vk::ShaderStageFlagBits::eFragment});
     // Binding 3 : Terrain texture array layers
     descSetLayout.addDescriptorSetLayoutBinding (vk::DescriptorType::eCombinedImageSampler,
-                                                 vk::ShaderStageFlagBits::eFragment);
+                                                 {vk::ShaderStageFlagBits::eFragment});
 
-    std::vector<vk::DescriptorType> typesUsed {{vk::DescriptorType::eUniformBuffer},
-                                               {vk::DescriptorType::eCombinedImageSampler},
-                                               {vk::DescriptorType::eCombinedImageSampler}};
-
-    descSetLayout.create (context.getVkDevice( ), typesUsed);
+    descSetLayout.create (context.getVkDevice( ));
 
     terrainPipelineLayout = context.getVkDevice( ).createPipelineLayout (
         vk::PipelineLayoutCreateInfo {{ }, 1, &descSetLayout.getDescriptorSetLayout( )});

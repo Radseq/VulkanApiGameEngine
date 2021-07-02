@@ -4,19 +4,20 @@
 #include <Descriptor\DescriptorPool.hpp>
 #include <Descriptor\DescriptorSetLayout.hpp>
 #include <Image\Image.hpp>
+#include <glm\gtx\string_cast.hpp>
 
 #include "../../FileLoader/AssimpModelLoader.hpp"
 #include "../../FileLoader/TinyObjModelLoader.hpp"
+#include "../../Model/Model.hpp"
 #include "../../Textures/Texture2D.hpp"
+#include "../../entities/camera.hpp"
 #include "Buffer/CoreBuffeManager.hpp"
 #include "Buffer/CoreBuffer.hpp"
 #include "Device/VulkanDevice.hpp"
 #include "Pipeline/Pipeline.hpp"
-#include "../../Model/Model.hpp"
-#include "../../entities/camera.hpp"
-#include <glm\gtx\string_cast.hpp>
 
-class SkySphere {
+class SkySphere
+{
     GraphicCore::VertexLayout vertexLayout {{
         GraphicCore::VertexLayout::Component::VERTEX_COMPONENT_POSITION,
         GraphicCore::VertexLayout::Component::VERTEX_COMPONENT_NORMAL,
@@ -24,14 +25,15 @@ class SkySphere {
     }};
 
     // Skysphere vertex shader stage
-    struct {
+    struct
+    {
         glm::mat4 mvp;
     } uboVS;
 
     const GraphicCore::VulkanDevice& context;
     GraphicCore::CoreBuffer          skySphereVertex;
 
-    GraphicCore::Image skySphereTexture;
+    VulkanGame::Ref<GraphicCore::Image> skySphereTexture;
 
     vk::DescriptorSet skySphereDescriptorSet;
 
@@ -40,13 +42,13 @@ class SkySphere {
     vk::DescriptorSetLayout skysphereDescriptorSetLayout;
 
     GraphicCore::CoreBufferManager bufferManager {context};
-    const Camera&               _camera;
+    const Camera&                  _camera;
 
     // const SkySpherePipeline& skySpherePipeline;
 
     // TinyObjModelLoader				skySphereModel{ context };
 
-    Model skySphereModel {context, vertexLayout};
+    Model* skySphereModel = new Model (context, vertexLayout);
 
     GraphicCore::DescriptorSetLayoutBinding descSetLayout { };
 

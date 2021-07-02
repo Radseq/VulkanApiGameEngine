@@ -3,7 +3,8 @@
 #define TINYOBJLOADER_IMPLEMENTATION
 #include <tiny_obj_loader.h>
 
-void TinyObjModelLoader::loadFromFile (Model* const model, const std::string& filename, ModelCreateInfo* createInfo)
+void TinyObjModelLoader::loadFromFile (Model* const model, const std::string_view& filename,
+                                       ModelCreateInfo* const createInfo)
 {
     tinyobj::attrib_t                attrib;
     std::vector<tinyobj::shape_t>    shapes;

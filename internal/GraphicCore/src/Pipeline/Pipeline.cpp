@@ -1,7 +1,9 @@
 #include "Pipeline.hpp"
 
-namespace GraphicCore {
-    void Pipeline::init( ) {
+namespace GraphicCore
+{
+    void Pipeline::init( )
+    {
         pipelineCreateInfo.pRasterizationState = &pipelineRasterization.getRasterizationState( );
         pipelineCreateInfo.pInputAssemblyState = &pipelineInputAssembly.getAssembly( );
         pipelineCreateInfo.pColorBlendState    = &pipelineColorBlend;
@@ -13,7 +15,8 @@ namespace GraphicCore {
     }
 
     Pipeline::Pipeline (const vk::Device& device, const vk::PipelineLayout layout, const vk::RenderPass& renderPass)
-        : device (device) {
+        : device (device)
+    {
         pipelineCreateInfo.layout     = layout;
         pipelineCreateInfo.renderPass = renderPass;
         _renderPass                   = renderPass;
@@ -23,16 +26,20 @@ namespace GraphicCore {
     }
 
     Pipeline::Pipeline (const Pipeline& other)
-        : Pipeline (other.device, other._layout, other._renderPass) { }
+        : Pipeline (other.device, other._layout, other._renderPass)
+    {
+    }
 
     Pipeline::~Pipeline( ) { destroyShaderModules( ); }
 
-    void Pipeline::destroyShaderModules( ) {
+    void Pipeline::destroyShaderModules( )
+    {
         for (const auto shaderStage : shaderStages) { device.destroyShaderModule (shaderStage.module); }
         shaderStages.clear( );
     }
 
-    void Pipeline::update( ) {
+    void Pipeline::update( )
+    {
         // pipelineCreateInfo.stageCount = static_cast<uint32_t>(shaderStages.size());
         // pipelineCreateInfo.pStages = shaderStages.data();
 
@@ -44,27 +51,38 @@ namespace GraphicCore {
         pipelineViewport.update( );
     }
 
-    void Pipeline::appendVertexLayout (const VertexLayout& vertexLayout) {
+    void Pipeline::appendVertexLayout (const VertexLayout& vertexLayout)
+    {
         vertexInputState.appendVertexLayout (vertexLayout);
     }
 
     void Pipeline::setSubPass (uint32_t subpass) { _subpass = subpass; }
 
     // Load a SPIR-V shader
-    vk::PipelineShaderStageCreateInfo& Pipeline::loadShader (const std::string& filePatch, const std::string& fileName,
-                                                             vk::ShaderStageFlagBits stage, const char* entryPoint) {
+    vk::PipelineShaderStageCreateInfo& Pipeline::loadShader (const std::string_view&         filePatchName,
+                                                             const vk::ShaderStageFlagBits&& stage,
+                                                             const char*                     entryPoint)
+    {
         const vk::PipelineShaderStageCreateInfo shaderStage =
-            Shader::loadShader (device, filePatch, fileName, stage, entryPoint);
+            Shader::loadShader (device, filePatchName, stage, entryPoint);
         shaderStages.push_back (shaderStage);
         return shaderStages.back( );
     }
 
-    vk::Pipeline Pipeline::create (const vk::PipelineCache& cache) {
+    vk::Pipeline Pipeline::create (const vk::PipelineCache& cache)
+    {
         update( );
-        return device.createGraphicsPipeline (cache, pipelineCreateInfo);
+
+        vk::ResultValue<vk::Pipeline> result = device.createGraphicsPipeline (cache, pipelineCreateInfo);
+        if (result.result != vk::Result::eSuccess) { throw std::runtime_error ("failed to create pipeline"); }
+        else
+        {
+            return result.value;
+        }
     }
 
-    vk::Pipeline Pipeline::create( ) {
+    vk::Pipeline Pipeline::create( )
+    {
         pipelineCache = device.createPipelineCache (vk::PipelineCacheCreateInfo( ));
         return create (pipelineCache);
     }

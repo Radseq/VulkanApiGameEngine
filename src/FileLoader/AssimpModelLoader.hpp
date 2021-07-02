@@ -16,14 +16,15 @@
 #include <string>
 #include <vector>
 
-#include "AssimpLoader.hpp"
-#include "vulkan/vulkan.h"
-#include "../Model/ModelCreateInfo.hpp"
 #include "../Model/Model.hpp"
-
+#include "../Model/ModelCreateInfo.hpp"
+#include "AssimpLoader.hpp"
+#include "IModelLoad.hpp"
+#include "vulkan/vulkan.h"
 // thx to Sascha Willems - www.saschawillems.de
 
-class AssimpModelLoader {
+class AssimpModelLoader : public IModelLoad
+{
    public:
     static const int defaultFlags = aiProcess_FlipWindingOrder | aiProcess_Triangulate |
                                     aiProcess_PreTransformVertices | aiProcess_CalcTangentSpace |
@@ -40,9 +41,8 @@ class AssimpModelLoader {
      * @param createInfo MeshCreateInfo structure for load time settings like scale, center, etc.
      * @param copyQueue Queue used for the memory staging copy commands (must support transfer)
      */
-    bool loadFromFile (Model& model, const GraphicCore::VertexLayout& layout, const std::string& filename,
-                       ModelCreateInfo* createInfo);
-
+    void loadFromFile (Model* const model, const std::string_view& filename,
+                       ModelCreateInfo* const createInfo) override;
     /**
      * Loads a 3D model from a file into Vulkan buffers
      *
@@ -52,10 +52,10 @@ class AssimpModelLoader {
      * @param scale Load time scene scale
      * @param copyQueue Queue used for the memory staging copy commands (must support transfer)
      */
-    bool loadFromFile (Model& model, const GraphicCore::VertexLayout& layout, const std::string& filename,
-                       const float& scale = 1.0F) {
+    void loadFromFile (Model* const model, const std::string_view& filename, const float& scale = 1.0F)
+    {
         ModelCreateInfo modelCreateInfo {scale, 1.0F, 0.0f};
-        return loadFromFile (model, layout, filename, &modelCreateInfo);
+        return loadFromFile (model, filename, &modelCreateInfo);
     }
 };
 

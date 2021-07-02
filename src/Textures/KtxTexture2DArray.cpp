@@ -5,8 +5,11 @@ KtxTexture2DArray::KtxTexture2DArray (const GraphicCore::VulkanDevice& Context)
 {
 }
 
-void KtxTexture2DArray::LoadTexture (GraphicCore::Image& result, const std::string& filePatch, const vk::Format& format)
+VulkanGame::Ref<GraphicCore::Image> KtxTexture2DArray::LoadTexture (const std::string& filePatch,
+                                                                    const vk::Format&  format)
 {
+    auto result = VulkanGame::CreateRef<GraphicCore::Image>( );
+
     KtxTextureLoader TextureLoader { };
 
     GraphicCore::ImageContainer imgLoadedData = TextureLoader.LoadFile (filePatch);
@@ -42,8 +45,8 @@ void KtxTexture2DArray::LoadTexture (GraphicCore::Image& result, const std::stri
             bufferCopyRegions.push_back (bufferCopyRegion);
         }
     }
-
-    imageManager.CreateImage (result, imgLoadedData, format, vk::ImageTiling::eOptimal,
+    // check ref count of result
+    result = imageManager.CreateImage (imgLoadedData, format, vk::ImageTiling::eOptimal,
                               vk::ImageUsageFlagBits::eSampled | vk::ImageUsageFlagBits::eTransferDst,
                               vk::MemoryPropertyFlagBits::eDeviceLocal, vk::SampleCountFlagBits::e1);
 
@@ -60,20 +63,22 @@ void KtxTexture2DArray::LoadTexture (GraphicCore::Image& result, const std::stri
     subresourceRange.levelCount                = imgLoadedData.mipLevels;
     subresourceRange.layerCount                = imgLoadedData.layerCount;
 
-    GraphicCore::vkHelper::setImageLayout (singleTimeCmdBuffer.getCommandBuffer( ), result.image,
+    GraphicCore::vkHelper::setImageLayout (singleTimeCmdBuffer.getCommandBuffer( ), result->image,
                                            vk::ImageLayout::eUndefined, vk::ImageLayout::eTransferDstOptimal,
                                            subresourceRange);
 
     // Copy the layers and mip levels from the staging buffer to the optimal tiled image
-    singleTimeCmdBuffer.getCommandBuffer( ).copyBufferToImage (staging.getBuffer( ), result.image,
+    singleTimeCmdBuffer.getCommandBuffer( ).copyBufferToImage (staging.getBuffer( ), result->image,
                                                                vk::ImageLayout::eTransferDstOptimal, bufferCopyRegions);
 
     // Change texture image layout to shader read after all faces have been copied
-    GraphicCore::vkHelper::setImageLayout (singleTimeCmdBuffer.getCommandBuffer( ), result.image,
+    GraphicCore::vkHelper::setImageLayout (singleTimeCmdBuffer.getCommandBuffer( ), result->image,
                                            vk::ImageLayout::eTransferDstOptimal,
                                            vk::ImageLayout::eShaderReadOnlyOptimal, subresourceRange);
 
     singleTimeCmdBuffer.endSingleTimeCommands (true);
 
     imageManager.createImageView (result, vk::ImageAspectFlagBits::eColor, vk::ImageViewType::e2DArray);
+
+    return result;
 }

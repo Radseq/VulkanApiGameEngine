@@ -9,6 +9,7 @@
 
 #include "../Model/Model.hpp"
 #include "../Model/ModelCreateInfo.hpp"
+#include "IModelLoad.hpp"
 
 // MUST CORRECT PIPELINE appendVertexLayout ORDER
 struct Vertex
@@ -35,7 +36,7 @@ namespace std
     };
 }  // namespace std
 
-class TinyObjModelLoader
+class TinyObjModelLoader : public IModelLoad
 {
     const GraphicCore::VulkanDevice& context;
 
@@ -47,18 +48,19 @@ class TinyObjModelLoader
    public:
     explicit TinyObjModelLoader (const GraphicCore::VulkanDevice& Context);
 
-    void loadFromFile (Model* const model, const std::string& filename)
+    void loadFromFile (Model* const model, const std::string_view& filename)
     {
         ModelCreateInfo modelCreateInfo {1.0F, 1.0F, 0.0F};
         loadFromFile (model, filename, &modelCreateInfo);
     }
-    void loadFromFile (Model* const model, const std::string& filename, const float& scale)
+    void loadFromFile (Model* const model, const std::string_view& filename, const float& scale)
     {
         ModelCreateInfo modelCreateInfo {scale, 1.0F, 0.0F};
         loadFromFile (model, filename, &modelCreateInfo);
     }
 
-    void loadFromFile (Model* const model, const std::string& filename, ModelCreateInfo* createInfo);
+    void loadFromFile (Model* const model, const std::string_view& filename,
+                       ModelCreateInfo* const createInfo) override;
 };
 
 #endif  // TINY_OBJ_MODEL_LOADER_HPP

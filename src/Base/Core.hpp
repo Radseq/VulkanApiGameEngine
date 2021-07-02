@@ -1,5 +1,6 @@
 #ifndef CORE_HPP
 #define CORE_HPP
+
 #include <memory>
 
 namespace VulkanGame

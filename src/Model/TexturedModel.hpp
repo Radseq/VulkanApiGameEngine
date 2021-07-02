@@ -6,12 +6,12 @@
 
 class TexturedModel {
     const Model*        model;
-    const ModelTexture* texture;
+    VulkanGame::Ref<ModelTexture> texture;
 
    public:
-    TexturedModel (const Model* Model, const ModelTexture* ModelTexture);
+    TexturedModel (const Model* Model, VulkanGame::Ref<ModelTexture> ModelTexture);
 
     Model const*        getModel( ) const;
-    ModelTexture const* getModelTexture( ) const;
+    VulkanGame::Ref<ModelTexture> getModelTexture( ) const;
 };
 #endif /* TEXTURED_MODEL_HPP */

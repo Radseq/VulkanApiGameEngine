@@ -19,16 +19,17 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\Base\ResourcePatch.cpp" />
     <ClCompile Include="..\src\Engine\EngineMain.cpp" />
     <ClCompile Include="..\src\Engine\Game.cpp" />
     <ClCompile Include="..\src\entities\camera.cpp" />
     <ClCompile Include="..\src\entities\entity.cpp" />
     <ClCompile Include="..\src\entities\light.cpp" />
     <ClCompile Include="..\src\entities\player.cpp" />
-    <ClCompile Include="..\src\EntityProcess\EntityDescriptor.cpp" />
+    <ClCompile Include="..\src\EntityProcess\EntityDesc.cpp" />
     <ClCompile Include="..\src\EntityProcess\EntityPipeline.cpp" />
+    <ClCompile Include="..\src\EntityProcess\EntityMeshRender.cpp" />
     <ClCompile Include="..\src\EntityProcess\EntityRenderer.cpp" />
-    <ClCompile Include="..\src\EntityProcess\EntityShader.cpp" />
     <ClCompile Include="..\src\FileLoader\AssimpLoader.cpp" />
     <ClCompile Include="..\src\FileLoader\AssimpModelLoader.cpp" />
     <ClCompile Include="..\src\FileLoader\ifstreamLoader.cpp" />
@@ -41,11 +42,15 @@
     <ClCompile Include="..\src\Model\ModelTexture.cpp" />
     <ClCompile Include="..\src\Model\TexturedModel.cpp" />
     <ClCompile Include="..\src\Render\Renderer.cpp" />
+    <ClCompile Include="..\src\ShaderDescriptors\DescriptorPools.cpp" />
+    <ClCompile Include="..\src\Shader\EntSpecLightShader.cpp" />
+    <ClCompile Include="..\src\Shader\LightShader.cpp" />
     <ClCompile Include="..\src\Textures\KtxTexture2DArray.cpp" />
     <ClCompile Include="..\src\Textures\Texture2D.cpp" />
     <ClCompile Include="..\src\UniformBuffers\UniformBuffer.cpp" />
     <ClCompile Include="..\src\Util\Configuration.cpp" />
     <ClCompile Include="..\src\Util\math.cpp" />
+    <ClCompile Include="..\src\Util\Timer.cpp" />
     <ClCompile Include="..\src\Util\utils.cpp" />
     <ClCompile Include="..\src\Window\Window.cpp" />
     <ClCompile Include="..\src\World\SkySphere\SkySphere.cpp" />
@@ -54,20 +59,22 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\Base\Core.hpp" />
+    <ClInclude Include="..\src\Base\ResourcePatch.hpp" />
     <ClInclude Include="..\src\Containers\ImageContainer.hpp" />
     <ClInclude Include="..\src\Engine\Game.hpp" />
     <ClInclude Include="..\src\entities\camera.hpp" />
     <ClInclude Include="..\src\entities\entity.hpp" />
     <ClInclude Include="..\src\entities\light.hpp" />
     <ClInclude Include="..\src\entities\player.hpp" />
-    <ClInclude Include="..\src\EntityProcess\EntityDescriptor.hpp" />
+    <ClInclude Include="..\src\EntityProcess\EntityDesc.hpp" />
     <ClInclude Include="..\src\EntityProcess\EntityPipeline.hpp" />
+    <ClInclude Include="..\src\EntityProcess\EntityMeshRender.hpp" />
     <ClInclude Include="..\src\EntityProcess\EntityRenderer.hpp" />
-    <ClInclude Include="..\src\EntityProcess\EntityShader.hpp" />
     <ClInclude Include="..\src\FileLoader\AssimpLoader.hpp" />
     <ClInclude Include="..\src\FileLoader\AssimpModelLoader.hpp" />
     <ClInclude Include="..\src\FileLoader\ifstreamLoader.hpp" />
     <ClInclude Include="..\src\FileLoader\ifstreamLoaderContainer.hpp" />
+    <ClInclude Include="..\src\FileLoader\IModelLoad.hpp" />
     <ClInclude Include="..\src\FileLoader\KtxTextureLoader.hpp" />
     <ClInclude Include="..\src\FileLoader\stbImgFileLoader.hpp" />
     <ClInclude Include="..\src\FileLoader\TinyObjModelLoader.hpp" />
@@ -79,12 +86,24 @@
     <ClInclude Include="..\src\Model\ModelTexture.hpp" />
     <ClInclude Include="..\src\Model\TexturedModel.hpp" />
     <ClInclude Include="..\src\Render\Renderer.hpp" />
+    <ClInclude Include="..\src\ShaderDescInterfaces\IShaderDescSet.hpp" />
+    <ClInclude Include="..\src\ShaderDescInterfaces\IShaderPipeline.hpp" />
+    <ClInclude Include="..\src\ShaderDescriptors\DescriptorPools.hpp" />
+    <ClInclude Include="..\src\ShaderInterfaces\IShader.hpp" />
+    <ClInclude Include="..\src\ShaderInterfaces\IShaderFloatParm.hpp" />
+    <ClInclude Include="..\src\ShaderInterfaces\IShaderMat4Parm.hpp" />
+    <ClInclude Include="..\src\ShaderInterfaces\IShaderUniform.hpp" />
+    <ClInclude Include="..\src\ShaderInterfaces\IShaderUniformUpdate.hpp" />
+    <ClInclude Include="..\src\ShaderInterfaces\IShaderVec3Parm.hpp" />
+    <ClInclude Include="..\src\Shader\EntSpecLightShader.hpp" />
+    <ClInclude Include="..\src\Shader\LightShader.hpp" />
     <ClInclude Include="..\src\Textures\KtxTexture2DArray.hpp" />
     <ClInclude Include="..\src\Textures\Texture2D.hpp" />
     <ClInclude Include="..\src\UniformBuffers\UniformBuffer.hpp" />
     <ClInclude Include="..\src\Util\Configuration.hpp" />
     <ClInclude Include="..\src\Util\KeyCodes.hpp" />
     <ClInclude Include="..\src\Util\math.hpp" />
+    <ClInclude Include="..\src\Util\Timer.hpp" />
     <ClInclude Include="..\src\Util\utils.hpp" />
     <ClInclude Include="..\src\Window\Window.hpp" />
     <ClInclude Include="..\src\World\SkySphere\SkySphere.hpp" />
@@ -186,7 +205,7 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <XMLDocumentationFileName>$(IntDir)</XMLDocumentationFileName>
-      <GenerateXMLDocumentationFiles>true</GenerateXMLDocumentationFiles>
+      <GenerateXMLDocumentationFiles>false</GenerateXMLDocumentationFiles>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>

@@ -5,6 +5,7 @@
 
 //#include "../Render/Renderer.hpp"
 #include "../Render/Renderer.hpp"
+#include "../Util/Timer.hpp"
 #include "../Window/Window.hpp"
 #include "../entities/camera.hpp"
 #include "Device/LocalDevices.hpp"
@@ -17,13 +18,14 @@ class Camera;
 class Window;
 class Renderer;
 class GraphicCore::SwapChain;
+class Timer;
 
 class Game
 {
-    const std::string_view windowName{"Vulkan Api Game"};
+    const std::string_view windowName {"Vulkan Api Game"};
     std::string_view       windowNameArg;
-    const int         WIDTH  = Configuration::getInstance( )->GetConfigIntOption ("WindowWidth");
-    const int         HEIGHT = Configuration::getInstance( )->GetConfigIntOption ("WindowHeight");
+    const int              WIDTH  = Configuration::getInstance( )->GetConfigIntOption ("WindowWidth");
+    const int              HEIGHT = Configuration::getInstance( )->GetConfigIntOption ("WindowHeight");
     // const int MAX_FRAMES_IN_FLIGHT = Configuration::getInstance()->GetConfigIntOption("MaxFramesInFlight");
     const int MAX_FPS = Configuration::getInstance( )->GetConfigIntOption ("MaxFps");
 
@@ -36,10 +38,10 @@ class Game
 
     bool viewUpdated {false};
 
-    Window                                  window { };
+    Window                                     window { };
     std::unique_ptr<GraphicCore::LocalDevices> localDevices;  // vulkanInstance, Surface
     std::unique_ptr<GraphicCore::SwapChain>    swapChain;     // context
-    std::unique_ptr<Renderer>               renderer;      // swapChain, context, camera
+    std::unique_ptr<Renderer>                  renderer;      // swapChain, context, camera
 
     // DeviceHandler deviceHandler{camera};
 
@@ -55,6 +57,8 @@ class Game
     float timer = 0.0F;
     // Multiplier for speeding up (or slowing down) the global timer
     float timerSpeed = 0.25F;
+
+    Timer m_Timer { };
 
     void initWindow( );
     void setWindowNameArgs( );

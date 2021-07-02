@@ -47,8 +47,8 @@ class Terrain {
     uint32_t terrainIndices {0};
 
     KtxTexture2DArray  terrainArrayTexture {context};
-    GraphicCore::Image terrainArrayTextureImage;
-    GraphicCore::Image heightMapTextureImage;
+    VulkanGame::Ref<GraphicCore::Image> terrainArrayTextureImage;
+    VulkanGame::Ref<GraphicCore::Image> heightMapTextureImage;
 
     Camera& _camera;
 

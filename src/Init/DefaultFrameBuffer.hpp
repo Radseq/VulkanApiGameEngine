@@ -7,7 +7,10 @@
 #include <Image\ImageManager.hpp>
 #include <vulkan/vulkan.hpp>
 
-class DefaultFrameBuffer {
+#include "../Base/Core.hpp"
+
+class DefaultFrameBuffer
+{
     std::vector<vk::ImageView>   swapChainImageViews;
     std::vector<vk::Framebuffer> swapChainFramebuffers;
     /*
@@ -17,8 +20,8 @@ class DefaultFrameBuffer {
     GraphicCore::CoreImage depthImage{};
     GraphicCore::CoreImageView depthImageView{};*/
 
-    GraphicCore::Image colorImage;
-    GraphicCore::Image depthImage;
+    VulkanGame::Ref<GraphicCore::Image> colorImage;
+    VulkanGame::Ref<GraphicCore::Image> depthImage;
 
     vk::SampleCountFlagBits msaaSamples = vk::SampleCountFlagBits::e1;
 

@@ -7,7 +7,8 @@
 #include "Pipeline/RenderPass.hpp"
 #include "SwapChainSupportDetails.hpp"
 
-namespace GraphicCore {
+namespace GraphicCore
+{
     /// essentially a queue of images that are waiting to be presented to the screen.
     /// general purpose of the swap chain is to synchronize the presentation of images with the refresh rate of the
     /// screen.
@@ -15,7 +16,8 @@ namespace GraphicCore {
     class PhysicalDevice;
     class RenderPass;
 
-    class SwapChain {
+    class SwapChain
+    {
         const VulkanDevice* device;
 
         vk::SurfaceCapabilitiesKHR surfCaps;

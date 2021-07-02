@@ -1,7 +1,9 @@
 #include "AllocationPool.hpp"
 
-namespace GraphicCore {
-    void AllocationPool::alloc (AllocationProperties& outAlloc, AllocationCreateInfo createInfo) {
+namespace GraphicCore
+{
+    void AllocationPool::alloc (AllocationProperties& outAlloc, AllocationCreateInfo createInfo)
+    {
         const uint32_t       memoryType = createInfo.memoryTypeIndex;
         const vk::DeviceSize size       = createInfo.size;
 
@@ -15,7 +17,10 @@ namespace GraphicCore {
         const bool needsOwnPage = createInfo.usage != vk::MemoryPropertyFlagBits::eDeviceLocal;
         const bool found        = findFreeChunkForAllocation (location, memoryType, requestedAllocSize, needsOwnPage);
 
-        if (!found) { location = {addBlockToPool (requestedAllocSize, memoryType, needsOwnPage, createInfo.bufferUsageShader), 0}; }
+        if (!found)
+        {
+            location = {addBlockToPool (requestedAllocSize, memoryType, needsOwnPage, createInfo.bufferUsageShader), 0};
+        }
 
         pool.blocks [location.blockIdx].pageReserved = needsOwnPage;
 
@@ -29,7 +34,8 @@ namespace GraphicCore {
         markChunkOfMemoryBlockUsed (memoryType, location, requestedAllocSize);
     }
 
-    void AllocationPool::free (const AllocationProperties& allocationProperties) {
+    void AllocationPool::free (const AllocationProperties& allocationProperties)
+    {
         const vk::DeviceSize requestedAllocSize = ((allocationProperties.size / state.pageSize) + 1) * state.pageSize;
 
         const OffsetSize span = {allocationProperties.offset, requestedAllocSize};
@@ -40,9 +46,11 @@ namespace GraphicCore {
         bool found = false;
 
         const size_t numLayoutMems = pool.blocks [allocationProperties.id].layout.size( );
-        for (size_t j = 0; j < numLayoutMems; ++j) {
+        for (size_t j = 0; j < numLayoutMems; ++j)
+        {
             if (pool.blocks [allocationProperties.id].layout [j].offset ==
-                requestedAllocSize + allocationProperties.offset) {
+                requestedAllocSize + allocationProperties.offset)
+            {
                 pool.blocks [allocationProperties.id].layout [j].offset = allocationProperties.offset;
                 pool.blocks [allocationProperties.id].layout [j].size += requestedAllocSize;
                 found = true;
@@ -50,7 +58,8 @@ namespace GraphicCore {
             }
         }
 
-        if (!found) {
+        if (!found)
+        {
             state.memPools [allocationProperties.type].blocks [allocationProperties.id].layout.push_back (span);
             state.memTypeAllocSizes [allocationProperties.type] -= requestedAllocSize;
             context.getVkDevice( ).freeMemory (allocationProperties.handle);
@@ -58,7 +67,8 @@ namespace GraphicCore {
     }
 
     uint32_t AllocationPool::addBlockToPool (const vk::DeviceSize& size, const uint32_t& memoryType, bool fitToAlloc,
-                                             bool bufferUsageShader) {
+                                             bool bufferUsageShader)
+    {
         vk::DeviceSize newPoolSize = util::checkMaxUint64Size (size * 2);
         newPoolSize                = newPoolSize < state.memoryBlockMinSize ? state.memoryBlockMinSize : newPoolSize;
 
@@ -69,7 +79,8 @@ namespace GraphicCore {
         // correct one to allocate memory from is important
         info.memoryTypeIndex = memoryType;
 
-        if (bufferUsageShader) {
+        if (bufferUsageShader)
+        {
             vk::MemoryAllocateFlagsInfoKHR allocFlagsInfo { };
             allocFlagsInfo.flags = vk::MemoryAllocateFlagBits::eDeviceAddress;
             info.pNext           = &allocFlagsInfo;
@@ -77,9 +88,12 @@ namespace GraphicCore {
 
         DeviceMemoryBlock newBlock = { };
 
-        try {
+        try
+        {
             newBlock.mem.handle = context.getVkDevice( ).allocateMemory (info);
-        } catch (std::exception const& e) {
+        }
+        catch (std::exception const& e)
+        {
             std::string errMsg;
             util::constCharToString (errMsg, e.what( ));
             throw std::runtime_error ("failed create memory " + errMsg);
@@ -99,7 +113,8 @@ namespace GraphicCore {
     }
 
     void AllocationPool::markChunkOfMemoryBlockUsed (const uint32_t& memoryType, const BlockSpanIndexPair& indices,
-                                                     const vk::DeviceSize& size) {
+                                                     const vk::DeviceSize& size)
+    {
         MemoryPool& pool = state.memPools [memoryType];
 
         pool.blocks [indices.blockIdx].layout [indices.spanIdx].offset += size;
@@ -107,7 +122,8 @@ namespace GraphicCore {
     }
 
     bool AllocationPool::findFreeChunkForAllocation (BlockSpanIndexPair& outIndexPair, const uint32_t& memoryType,
-                                                     const vk::DeviceSize& size, const bool& needsWholePage) {
+                                                     const vk::DeviceSize& size, const bool& needsWholePage)
+    {
         MemoryPool& pool = state.memPools [memoryType];
 
         /*uint32_t blocksIterator = 0;
@@ -129,10 +145,13 @@ namespace GraphicCore {
         }*/
 
         // this code is faster by 5ms in 1000000 iter loop
-        for (uint32_t i = 0; i < pool.blocks.size( ); ++i) {
-            for (uint32_t j = 0; j < pool.blocks [i].layout.size( ); ++j) {
+        for (uint32_t i = 0; i < pool.blocks.size( ); ++i)
+        {
+            for (uint32_t j = 0; j < pool.blocks [i].layout.size( ); ++j)
+            {
                 const bool validOffset = needsWholePage ? pool.blocks [i].layout [j].offset == 0 : true;
-                if (pool.blocks [i].layout [j].size >= size && validOffset) {
+                if (pool.blocks [i].layout [j].size >= size && validOffset)
+                {
                     outIndexPair.blockIdx = i;
                     outIndexPair.spanIdx  = j;
                     return true;
@@ -151,7 +170,8 @@ namespace GraphicCore {
     }
 
     AllocationPool::AllocationPool (const VulkanDevice& Context)
-        : context (Context) {
+        : context (Context)
+    {
         const vk::PhysicalDeviceMemoryProperties memProperties = context.getDevice( ).GetPhysicalDeviceMemoryProp( );
 
         state.memTypeAllocSizes.resize (memProperties.memoryTypeCount);
@@ -161,7 +181,8 @@ namespace GraphicCore {
         state.memoryBlockMinSize = util::checkMaxUint64Size (state.pageSize * 10);
     }
 
-    size_t AllocationPool::allocatedSize (const uint32_t& memoryType) const {
+    size_t AllocationPool::allocatedSize (const uint32_t& memoryType) const
+    {
         return state.memTypeAllocSizes [memoryType];
     }
 

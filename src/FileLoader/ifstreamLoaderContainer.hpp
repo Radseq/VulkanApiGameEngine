@@ -4,9 +4,14 @@
 #include <fstream>
 #include <vector>
 
-enum class ifstreamLoaderFlags { text, bin };
+enum class ifstreamLoaderFlags
+{
+    text,
+    bin
+};
 
-class ifstreamLoaderContainer {
+class ifstreamLoaderContainer
+{
    public:
     std::string         filePatch;
     std::string         fileName;

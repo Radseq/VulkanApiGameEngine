@@ -2,8 +2,8 @@
 
 namespace GraphicCore
 {
-    void GraphicCore::DescriptorSets::create (const vk::Device& device, const uint32_t& count,
-                                           GraphicCore::DescriptorSetLayoutBinding& descSetLayout)
+    void GraphicCore::DescriptorSets::create (const uint32_t& count,
+                                              const GraphicCore::DescriptorSetLayoutBinding& descSetLayout)
     {
         std::vector<vk::DescriptorSetLayout> layouts (count, descSetLayout.getDescriptorSetLayout( ));
 
@@ -18,13 +18,10 @@ namespace GraphicCore
 
     void GraphicCore::DescriptorSets::update( )
     {
-        // assingVkDescSet( );
-
-        device.updateDescriptorSets (GraphicCore::util::to_uint_32_t (descriptorWrites.size( )), descriptorWrites.data( ),
-                                     0, nullptr);
+        device.updateDescriptorSets (GraphicCore::util::to_uint_32_t (descriptorWrites.size( )),
+                                     descriptorWrites.data( ), 0, nullptr);
 
         descriptorWrites.clear( );
-        // binding = 0;
     }
 
 #ifdef DEBUG
@@ -46,18 +43,14 @@ namespace GraphicCore
     }
 #endif
 
-    void GraphicCore::DescriptorSets::clearWriteDescSets( )
-    {
-        descriptorWrites.clear( );
-        // binding = 0;
-    }
+   // void GraphicCore::DescriptorSets::clearWriteDescSets( ) { descriptorWrites.clear( ); }
 
     const vk::DescriptorSet& GraphicCore::DescriptorSets::getDescriptorSetByIndex (const size_t& i) const
     {
         return descriptorSets [i];
     }
 
-    void GraphicCore::DescriptorSets::addDescriptorWrite (const vk::WriteDescriptorSet& writeDescSet)
+    void GraphicCore::DescriptorSets::addDescriptorWrite (const vk::WriteDescriptorSet&& writeDescSet)
     {
 #ifdef DEBUG
         validateWriteDescSet (writeDescSet);
@@ -65,22 +58,6 @@ namespace GraphicCore
         descriptorWrites.push_back (writeDescSet);
     }
 
-    /*
-    void GraphicCore::DescriptorSets::assingVkDescSet( ) {
-    uint32_t descSetPoint {0};
-    auto     descSetsSize = descriptorSets.size( );
-
-    for (size_t i = 0; i < descriptorWrites.size( ); ++i) {
-        descriptorWrites.at (i).dstSet = descriptorSets.at (descSetPoint);
-        ++descSetPoint;
-
-        if (descSetPoint == descSetsSize) descSetPoint = 0;
-    }
-
-    assert (descSetPoint == 0);
-    }*/
-
-    // const std::vector<vk::WriteDescriptorSet>& GraphicCore::DescriptorSets::getWriteDescSets( ) { return
-    // descriptorWrites; }
+    const uint32_t DescriptorSets::GetDescSetCount( ) const { return static_cast<uint32_t> (descriptorSets.size( )); }
 
 }  // namespace GraphicCore

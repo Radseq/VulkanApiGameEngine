@@ -1,8 +1,9 @@
 #include "TexturedModel.hpp"
 
-TexturedModel::TexturedModel (const Model* Model, const ModelTexture* Texture)
+TexturedModel::TexturedModel (const Model* Model, VulkanGame::Ref<ModelTexture> Texture)
     : model (Model)
-    , texture (Texture) { }
+    , texture (Texture)
+{ }
 
-Model const*        TexturedModel::getModel( ) const { return model; }
-ModelTexture const* TexturedModel::getModelTexture( ) const { return texture; }
+Model const*                  TexturedModel::getModel( ) const { return model; }
+VulkanGame::Ref<ModelTexture> TexturedModel::getModelTexture( ) const { return texture; }

@@ -130,6 +130,24 @@
     <Filter Include="Source\Base">
       <UniqueIdentifier>{87d64ffe-5abf-43e7-bac1-6a476b836408}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header\Shader">
+      <UniqueIdentifier>{730f9365-d32b-4aa9-98c7-8b881e8198c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Shader">
+      <UniqueIdentifier>{c0b6afd8-d4b2-408b-80e2-af3d3661282e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header\ShaderInterfaces">
+      <UniqueIdentifier>{8354dc16-0436-4883-a374-151f77cc75e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header\ShaderDescInterfaces">
+      <UniqueIdentifier>{d12e3d4a-efc1-4058-ac1b-1204675d0e32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header\ShaderDescriptors">
+      <UniqueIdentifier>{2943be83-6807-46e3-a7c9-09f89089b892}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\ShaderDescriptors">
+      <UniqueIdentifier>{8707da8b-321b-4702-9677-35669e10e292}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\Util\Configuration.cpp">
@@ -213,20 +231,35 @@
     <ClCompile Include="..\src\EntityProcess\EntityRenderer.cpp">
       <Filter>Source\EntityProcess</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\EntityProcess\EntityShader.cpp">
-      <Filter>Source\EntityProcess</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\EntityProcess\EntityDescriptor.cpp">
-      <Filter>Source\EntityProcess</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\EntityProcess\EntityPipeline.cpp">
-      <Filter>Source\EntityProcess</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\UniformBuffers\UniformBuffer.cpp">
       <Filter>Source\UniformBuffers</Filter>
     </ClCompile>
     <ClCompile Include="..\src\Textures\KtxTexture2DArray.cpp">
       <Filter>Source\Textures</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Util\Timer.cpp">
+      <Filter>Source\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Shader\LightShader.cpp">
+      <Filter>Source\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Shader\EntSpecLightShader.cpp">
+      <Filter>Source\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\EntityProcess\EntityMeshRender.cpp">
+      <Filter>Source\EntityProcess</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ShaderDescriptors\DescriptorPools.cpp">
+      <Filter>Source\ShaderDescriptors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Base\ResourcePatch.cpp">
+      <Filter>Source\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\EntityProcess\EntityDesc.cpp">
+      <Filter>Source\EntityProcess</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\EntityProcess\EntityPipeline.cpp">
+      <Filter>Source\EntityProcess</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -323,15 +356,6 @@
     <ClInclude Include="..\src\EntityProcess\EntityRenderer.hpp">
       <Filter>Header\EntityProcess</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\EntityProcess\EntityShader.hpp">
-      <Filter>Header\EntityProcess</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\EntityProcess\EntityDescriptor.hpp">
-      <Filter>Header\EntityProcess</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\EntityProcess\EntityPipeline.hpp">
-      <Filter>Header\EntityProcess</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\UniformBuffers\UniformBuffer.hpp">
       <Filter>Header\UniformBuffers</Filter>
     </ClInclude>
@@ -340,6 +364,57 @@
     </ClInclude>
     <ClInclude Include="..\src\Textures\KtxTexture2DArray.hpp">
       <Filter>Header\Textures</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Util\Timer.hpp">
+      <Filter>Header\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Shader\LightShader.hpp">
+      <Filter>Header\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ShaderInterfaces\IShader.hpp">
+      <Filter>Header\ShaderInterfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ShaderInterfaces\IShaderFloatParm.hpp">
+      <Filter>Header\ShaderInterfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ShaderInterfaces\IShaderMat4Parm.hpp">
+      <Filter>Header\ShaderInterfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ShaderInterfaces\IShaderUniform.hpp">
+      <Filter>Header\ShaderInterfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ShaderInterfaces\IShaderUniformUpdate.hpp">
+      <Filter>Header\ShaderInterfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ShaderInterfaces\IShaderVec3Parm.hpp">
+      <Filter>Header\ShaderInterfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Shader\EntSpecLightShader.hpp">
+      <Filter>Header\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\EntityProcess\EntityMeshRender.hpp">
+      <Filter>Header\EntityProcess</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ShaderDescInterfaces\IShaderDescSet.hpp">
+      <Filter>Header\ShaderDescInterfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ShaderDescInterfaces\IShaderPipeline.hpp">
+      <Filter>Header\ShaderDescInterfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ShaderDescriptors\DescriptorPools.hpp">
+      <Filter>Header\ShaderDescriptors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Base\ResourcePatch.hpp">
+      <Filter>Header\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\EntityProcess\EntityDesc.hpp">
+      <Filter>Header\EntityProcess</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\EntityProcess\EntityPipeline.hpp">
+      <Filter>Header\EntityProcess</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\FileLoader\IModelLoad.hpp">
+      <Filter>Header\FileLoader</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -3,13 +3,15 @@
 
 #include <Image\Image.hpp>
 
+#include "../Base/Core.hpp"
 #include "Model.hpp"
 
 /// <summary>
 /// Used for set parameters to texture.
 /// </summary>
-class ModelTexture {
-    const GraphicCore::Image& texture;
+class ModelTexture
+{
+    VulkanGame::Ref<GraphicCore::Image> texture;
 
     /// <summary>
     /// how close camera should be to reflectivity parm to change brightness
@@ -23,9 +25,9 @@ class ModelTexture {
     float reflectivity;
 
    public:
-    ModelTexture (const GraphicCore::Image& Texture);
+    ModelTexture (VulkanGame::Ref<GraphicCore::Image> Texture);
 
-    const GraphicCore::Image& getImage( ) const;
+    VulkanGame::Ref<GraphicCore::Image> getImage( ) const;
 
     float getShineDamper( ) const;
     void  setShineDamper (const float& ShineDamper);

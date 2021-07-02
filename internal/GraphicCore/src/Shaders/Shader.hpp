@@ -6,16 +6,18 @@
 
 #include "../../../../src/FileLoader/ifstreamLoader.hpp"
 
-namespace GraphicCore {
-    class Shader {
+namespace GraphicCore
+{
+    class Shader
+    {
        public:
-        static vk::ShaderModule loadShaderModule (const vk::Device& device, const std::string& filePatch,
-                                                  const std::string& fileName);
+        static vk::ShaderModule loadShaderModule (const vk::Device& device, const std::string_view& filePatchName);
 
         // Load a SPIR-V shader
-        static vk::PipelineShaderStageCreateInfo loadShader (const vk::Device& device, const std::string& filePatch,
-                                                             const std::string& fileName, vk::ShaderStageFlagBits stage,
-                                                             const char* entryPoint = "main");
+        static vk::PipelineShaderStageCreateInfo loadShader (const vk::Device&       device,
+                                                             const std::string_view& filePatchName,
+                                                             vk::ShaderStageFlagBits stage,
+                                                             const char*             entryPoint = "main");
     };
 }  // namespace GraphicCore
 

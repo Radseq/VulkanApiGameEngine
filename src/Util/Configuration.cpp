@@ -2,7 +2,7 @@
 
 void Configuration::loadFile (const std::string& fileName)
 {
-    ifstreamLoader::getInstance( )->LoadFileText (exePatch + "/../", fileName);
+    ifstreamLoader::getInstance( )->LoadFileText (exePatch + "/../" + fileName);
 
     std::vector<std::string> getFileTextLines = ifstreamLoader::getInstance( )->getFileTextLines (fileName);
 
@@ -24,7 +24,7 @@ void Configuration::loadFile (const std::string& fileName)
     catch (const std::exception& e)
     {
         std::cerr << e.what( ) << std::endl;
-        LogMsg (e.what( ));
+        LogMsg (e.what( ), LogLevel::LOG_ERROR);
     }
 
     ifstreamLoader::getInstance( )->closeFileByName (fileName);

@@ -1,8 +1,11 @@
 #include "EntityRenderer.hpp"
+
 #include <variant>
 
+#include "EntityMeshRender.hpp"
+
 EntityRenderer::EntityRenderer (const GraphicCore::VulkanDevice& Context, const GraphicCore::SwapChain& SwapChain,
-                                Camera& _camera, const Light& Light)
+                                const Camera& _camera, const Light& Light)
     : context (Context)
     , swapChain (SwapChain)
     , camera (_camera)
@@ -11,90 +14,48 @@ EntityRenderer::EntityRenderer (const GraphicCore::VulkanDevice& Context, const 
     // msaaSamples = context.getDevice( ).getMaxUsableSampleCount( );
 }
 
-void EntityRenderer::create (const vk::RenderPass& renderPass)
-{
-    const auto descCount = swapChain.getImageCount( );
-
-    entityDesc.createDescriptorSetLayout( );
-    entityDesc.createDescriptorPool (descCount);
-    entityDesc.createDescriptorSets (descCount);
-
-    shader.init (renderPass);
-
-    for (auto const& entity : entities)
-    {
-        for (uint32_t i = 0; i < descCount; ++i)
-        {
-            entityDesc.addDescriptorWrite (uniform.getUniformBuffers( ) [i].getDescriptorInfo( ),
-                                           vk::DescriptorType::eUniformBuffer);
-
-            entityDesc.addDescriptorWrite (
-                entity->getTexturedModel( )->getModelTexture( )->getImage( ).getDescImageInfo( ),
-                vk::DescriptorType::eCombinedImageSampler);
-
-            entityDesc.addDescriptorWrite (uniform2.getUniformBuffers( ) [i].getDescriptorInfo( ),
-                                           vk::DescriptorType::eUniformBuffer);
-
-            entityDesc.updateWriteDescriptors( );
-        }
-    }
-}
-
 void EntityRenderer::destroy (bool isSwapChainCleanUp)
 {
-    if (isSwapChainCleanUp)
-    {
-        uniform.destroyBuffer (context);
-        uniform2.destroyBuffer (context);
-    }
-
+    /* if (isSwapChainCleanUp)
+     {
+         entities.Destroy( );
+     }
+     */
+    entities->Destroy( );
     context.getVkDevice( ).destroyCommandPool (context.getCommandPool( ));
 }
 
 void EntityRenderer::createUniformBuffers (const glm::mat4& perspective)
 {
     uint32_t ImageCount {swapChain.getImageCount( )};
-    uniform.create (context, ImageCount, sizeof (UniformBufferObject));
-    uniform2.create (context, ImageCount, sizeof (lightUniformBufferObject));
+
     for (uint32_t i = 0; i < ImageCount; ++i) { updateUniformBuffer (i, perspective); }
 }
 
 void EntityRenderer::updateUniformBuffer (const uint32_t& currentImage, const glm::mat4& proj)
 {
-    for (auto const& entity : entities)
+    for (auto& ent : entities->GetShaders( ))
     {
-        ubo.model =
-            Math::createTransformationMatrix (entity->getPosition( ), entity->getRotation( ), entity->getScale( ));
-        ubo.view = Math::createViewMatrix (camera);
-        ubo.proj = proj;
+        auto entity = entities->GetEntity( );
 
-        ubo.lightPosition = light.getPosition( );
-
+        ent->SetMat4 ("model", Math::createTransformationMatrix (entity.getPosition( ), entity.getRotation( ),
+                                                                 entity.getScale( )));
+        ent->SetMat4 ("view", Math::createViewMatrix (camera));
+        ent->SetMat4 ("proj", proj);
+        ent->SetVec3 ("lightPosition", light.getPosition( ));
         // std::cout << glm::to_string (ubo.model) << std::endl;
+        // ent->Update (currentImage);
 
-        uniform.updateUniformBuffer (currentImage, ubo);
-
-        lubo.lightColor   = light.getColor( );
-        lubo.reflectivity = entity->getTexturedModel( )->getModelTexture( )->getReflectivity( );
-        lubo.shineDamper  = entity->getTexturedModel( )->getModelTexture( )->getShineDamper( );
-
-        uniform2.updateUniformBuffer (currentImage, lubo);
+        ent->SetVec3 ("lightColor", light.getColor( ));
+        ent->SetFloat ("shineDamper", entity.getTexturedModel( )->getModelTexture( )->getShineDamper( ));
+        ent->SetFloat ("reflectivity", entity.getTexturedModel( )->getModelTexture( )->getReflectivity( ));
+        ent->Update (currentImage);
     }
 }
 
 void EntityRenderer::updateDrawCommandBuffer (const vk::CommandBuffer& cmdBufer, const size_t& i)
 {
-    for (auto const& entity : entities)
-    {
-        shader.bind (cmdBufer, i);
-        std::vector<vk::DeviceSize> offsets {0};
-
-        cmdBufer.bindVertexBuffers (0, entity->getTexturedModel( )->getModel( )->getVCB( ).getBuffer( ), offsets);
-        cmdBufer.bindIndexBuffer (entity->getTexturedModel( )->getModel( )->getICB( ).getBuffer( ), 0,
-                                  vk::IndexType::eUint32);
-
-        cmdBufer.drawIndexed (entity->getTexturedModel( )->getModel( )->GetIndexCount( ), 1, 0, 0, 0);
-    }
+    entities->Draw (cmdBufer, i);
 }
 
-void EntityRenderer::pushEntity (const std::vector<Entity const*>& Entities) { entities = Entities; }
+void EntityRenderer::pushEntity (VulkanGame::Ref<EntityMeshRender> Entities) { entities = Entities; }

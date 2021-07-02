@@ -1,71 +1,63 @@
 ﻿#include "DescriptorSetLayout.hpp"
 namespace GraphicCore
 {
-    void DescriptorSetLayoutBinding::addDescriptorSetLayoutBinding (const vk::DescriptorType&      descType,
-                                                                    const vk::ShaderStageFlagBits& shaderStageFlag)
+    const vk::Flags<vk::ShaderStageFlagBits> DescriptorSetLayoutBinding::ParseVecFlags (
+        const std::vector<vk::ShaderStageFlagBits>& shaderStageFlag)
     {
-        const auto flags = vk::Flags<vk::ShaderStageFlagBits> (shaderStageFlag);
-        addDescriptorSetLayoutBinding (descType, flags);
+        vk::Flags<vk::ShaderStageFlagBits> flagsToUse;
+
+        for (const auto& flag : shaderStageFlag) { flagsToUse = flagsToUse | flag; }
+        return flagsToUse;
     }
 
     void DescriptorSetLayoutBinding::addDescriptorSetLayoutBinding (
-        const vk::DescriptorType& descType, const vk::Flags<vk::ShaderStageFlagBits>& shaderStageFlag)
+        const vk::DescriptorType&& descType, const std::vector<vk::ShaderStageFlagBits>&& shaderStageFlag)
     {
+        m_TypesShader [descType] = shaderStageFlag;
+        m_DescTypes.push_back (descType);
+
         vk::DescriptorSetLayoutBinding uboLayoutBinding = { };
-        uboLayoutBinding.binding                        = bindingCount;
+        uboLayoutBinding.binding                        = m_BindingCount;
         uboLayoutBinding.descriptorCount                = 1;
         uboLayoutBinding.descriptorType                 = descType;
         uboLayoutBinding.pImmutableSamplers             = nullptr;
-        uboLayoutBinding.stageFlags                     = shaderStageFlag;
+        uboLayoutBinding.stageFlags                     = ParseVecFlags (shaderStageFlag);
 
-        bindings.push_back (uboLayoutBinding);
+        m_Bindings.push_back (uboLayoutBinding);
 
-        ++bindingCount;
+        ++m_BindingCount;
     }
 
-    void DescriptorSetLayoutBinding::create (const vk::Device&                      device,
-                                             const std::vector<vk::DescriptorType>& typesCanBeUsed)
+    void DescriptorSetLayoutBinding::create (const vk::Device& device)
     {
-#ifdef DEBUG
-        validateLayoutTypeWithDescPoolTypes (typesCanBeUsed);
-#endif
         vk::DescriptorSetLayoutCreateInfo layoutInfo = { };
-        layoutInfo.bindingCount                      = GraphicCore::util::to_uint_32_t (bindings.size( ));
-        layoutInfo.pBindings                         = bindings.data( );
+        layoutInfo.bindingCount                      = m_BindingCount;
+        layoutInfo.pBindings                         = m_Bindings.data( );
 
-        descriptorSetLayout = device.createDescriptorSetLayout (layoutInfo);
+        m_DescriptorSetLayout = device.createDescriptorSetLayout (layoutInfo);
     }
 
     const vk::DescriptorSetLayout& DescriptorSetLayoutBinding::getDescriptorSetLayout( ) const
     {
-        assert (descriptorSetLayout);
-        return descriptorSetLayout;
+        assert (m_DescriptorSetLayout);
+        return m_DescriptorSetLayout;
     }
+
+    /// <summary>
+    /// In pipeline desc types are using, like flags
+    /// used to make validation
+    /// </summary>
+    /// <returns></returns>
+    const std::unordered_map<vk::DescriptorType, std::vector<vk::ShaderStageFlagBits>>
+    DescriptorSetLayoutBinding::GetDescTypeWithFlags( ) const
+    {
+        return m_TypesShader;
+    }
+
+    const std::vector<vk::DescriptorType>& DescriptorSetLayoutBinding::GetDescTypes( ) { return m_DescTypes; }
 
     void DescriptorSetLayoutBinding::destroy (const vk::Device& device)
     {
-        device.destroyDescriptorSetLayout (descriptorSetLayout);
+        device.destroyDescriptorSetLayout (m_DescriptorSetLayout);
     }
-
-#ifdef DEBUG
-    void DescriptorSetLayoutBinding::validateLayoutTypeWithDescPoolTypes (
-        const std::vector<vk::DescriptorType>& typesCanBeUsed)
-    {
-        uint32_t usedDescriptorType {0};
-
-        for (const auto& descBinding : bindings)
-        {
-            for (const auto& type : typesCanBeUsed)
-            {
-                if (descBinding.descriptorType == type)
-                {
-                    ++usedDescriptorType;
-                    break;
-                }
-            }
-        }
-
-        assert (usedDescriptorType == bindingCount);
-    }
-#endif
 }  // namespace GraphicCore

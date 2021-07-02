@@ -1,4 +1,5 @@
 ﻿#include "Game.hpp"
+#include "../PCH.hpp"
 
 void Game::initWindow( )
 {
@@ -102,15 +103,15 @@ void Game::render( )
     {
         window.glPollEvents( );
 
-        auto tStart = std::chrono::high_resolution_clock::now( );
+        m_Timer.Start( );
 
         renderer->draw( );
 
         if (renderer->isFrameBufferResized( )) { recreateSwapChain( ); }
 
-        auto       tEnd         = std::chrono::high_resolution_clock::now( );
-        const auto tDiff        = std::chrono::duration<float, std::milli> (tEnd - tStart).count( );
-        const auto tDiffSeconds = tDiff / 1000.0F;
+        m_Timer.End( );
+
+        const auto tDiffSeconds = m_Timer.GetDurationInSeconds( );
 
         if (viewUpdated)
         {

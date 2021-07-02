@@ -8,8 +8,8 @@ SkySphere::SkySphere (const GraphicCore::VulkanDevice& Context, const Camera& ca
 
 void SkySphere::destroy( )
 {
-    skySphereModel.destroy( );
-    skySphereTexture.destroy( );
+    skySphereModel->destroy( );
+    skySphereTexture->destroy( );
     skySphereVertex.destroy (context);
     descSetLayout.destroy (context.getVkDevice( ));
 }
@@ -17,8 +17,9 @@ void SkySphere::destroy( )
 void SkySphere::loadAssets( )
 {
     AssimpModelLoader assimpModelLoader { };
-    assimpModelLoader.loadFromFile (skySphereModel, vertexLayout,
-                                    getAssetPath( ) + "/../data/models/skysphere/geosphere.obj", 10.F);
+    assimpModelLoader.loadFromFile (
+        skySphereModel, ResourcePatch::GetInstance( )->GetPatch ("DataPatch") + "/models/skysphere/geosphere.obj",
+        10.F);
 
     std::string texFormatSuffix;
     vk::Format  texFormat;
@@ -46,15 +47,15 @@ void SkySphere::loadAssets( )
         throw std::runtime_error ("Device does not support any compressed texture format!");
     }
 
-    Texture2D        texture;
-    KtxTextureLoader textureLoader;
+    VulkanGame::Ref<Texture2D> texture;
+    KtxTextureLoader           textureLoader;
 
-    auto textureContainer =
-        textureLoader.LoadFile (getAssetPath( ) + "/../data/textures/skysphere/skysphere" + texFormatSuffix + ".ktx");
+    auto textureContainer = textureLoader.LoadFile (ResourcePatch::GetInstance( )->GetPatch ("DataPatch") +
+                                                    "/textures/skysphere/skysphere" + texFormatSuffix + ".ktx");
     // textureContainer.image.mipLevels = 1;
 
-    texture.CreateImage (skySphereTexture, context, textureContainer, texFormat);
-    skySphereTexture.setupDescriptorImageInfo (vk::ImageLayout::eShaderReadOnlyOptimal);
+    skySphereTexture = texture->CreateImage (context, textureContainer, texFormat);
+    skySphereTexture->setupDescriptorImageInfo (vk::ImageLayout::eShaderReadOnlyOptimal);
 }
 
 // Prepare and initialize uniform buffer containing shader uniforms
@@ -71,7 +72,7 @@ void SkySphere::updateUniformBuffers (const glm::mat4& perspective)
 {
     // uboVS.mvp = perspective * glm::mat4 (glm::mat3 (Math::createViewMatrix (_camera)));
 
-    //todo fix me
+    // todo fix me
     glm::mat4 m4 (1.0f);  // identity matrix
     m4 [0] = {-0.909567, -0.129053, 0.350605, 0.350537};
 
@@ -80,7 +81,7 @@ void SkySphere::updateUniformBuffers (const glm::mat4& perspective)
     m4 [2] = {0.349150, -0.336195, 0.913358, 0.913180};
 
     m4 [3] = {0.000000, 0.000000, -0.100020, 0.000000};
-   
+
     uboVS.mvp = m4;
 
     // std::cout << glm::to_string (uboVS.mvp) << std::endl;
@@ -92,9 +93,9 @@ void SkySphere::updateDrawCommandBuffer (const vk::CommandBuffer& cmdBuffer)
     cmdBuffer.bindPipeline (vk::PipelineBindPoint::eGraphics, skyspherePipeline);
     cmdBuffer.bindDescriptorSets (vk::PipelineBindPoint::eGraphics, skyspherePipelineLayout, 0, skySphereDescriptorSet,
                                   { });
-    cmdBuffer.bindVertexBuffers (0, skySphereModel.vertexCoreBuffer.getBuffer( ), {0});
-    cmdBuffer.bindIndexBuffer (skySphereModel.indexCoreBuffer.getBuffer( ), 0, vk::IndexType::eUint32);
-    cmdBuffer.drawIndexed (skySphereModel.indexCount, 1, 0, 0, 0);
+    cmdBuffer.bindVertexBuffers (0, skySphereModel->vertexCoreBuffer.getBuffer( ), {0});
+    cmdBuffer.bindIndexBuffer (skySphereModel->indexCoreBuffer.getBuffer( ), 0, vk::IndexType::eUint32);
+    cmdBuffer.drawIndexed (skySphereModel->indexCount, 1, 0, 0, 0);
 }
 
 void SkySphere::descriptorDestroy( )
@@ -112,7 +113,7 @@ void SkySphere::setupDescriptorSets (GraphicCore::DescriptorPool& descPool)
         {skySphereDescriptorSet, 0, 0, 1, vk::DescriptorType::eUniformBuffer, nullptr,
          &skySphereVertex.getDescriptorInfo( )},
         {skySphereDescriptorSet, 1, 0, 1, vk::DescriptorType::eCombinedImageSampler,
-         &skySphereTexture.getDescImageInfo( )},
+         &skySphereTexture->getDescImageInfo( )},
     };
 
     context.getVkDevice( ).updateDescriptorSets (writeDescriptorSets, nullptr);
@@ -152,22 +153,25 @@ void SkySphere::createPipelines (vk::RenderPass const& renderPass)
     builder.getPipelineDepthStencil( ).getDepthStencil( ) = depthStencil;
     builder.getLayout( )                                  = skyspherePipelineLayout;
 
-    builder.loadShader (getAssetPath( ) + "shaders/skysphere/", "vert.spv", vk::ShaderStageFlagBits::eVertex);
-    builder.loadShader (getAssetPath( ) + "shaders/skysphere/", "frag.spv", vk::ShaderStageFlagBits::eFragment);
+    builder.loadShader (ResourcePatch::GetInstance( )->GetPatch ("DataPatch") + "/shaders/skysphere/vert.spv",
+                        vk::ShaderStageFlagBits::eVertex);
+    builder.loadShader (ResourcePatch::GetInstance( )->GetPatch ("DataPatch") + "/shaders/skysphere/frag.spv",
+                        vk::ShaderStageFlagBits::eFragment);
 
     skyspherePipeline = builder.create( );
 }
 
 void SkySphere::createDescriptorSetLayouts( )
 {
-    descSetLayout.addDescriptorSetLayoutBinding (vk::DescriptorType::eUniformBuffer, vk::ShaderStageFlagBits::eVertex);
+    descSetLayout.addDescriptorSetLayoutBinding (vk::DescriptorType::eUniformBuffer,
+                                                 {vk::ShaderStageFlagBits::eVertex});
     descSetLayout.addDescriptorSetLayoutBinding (vk::DescriptorType::eCombinedImageSampler,
-                                                 vk::ShaderStageFlagBits::eFragment);
-
+                                                 {vk::ShaderStageFlagBits::eFragment});
+    /*
     std::vector<vk::DescriptorType> typesUsed {{vk::DescriptorType::eUniformBuffer},
-                                               {vk::DescriptorType::eCombinedImageSampler}};
+                                               {vk::DescriptorType::eCombinedImageSampler}};*/
 
-    descSetLayout.create (context.getVkDevice( ), typesUsed);
+    descSetLayout.create (context.getVkDevice( ) /*, typesUsed*/);
 
     skyspherePipelineLayout = context.getVkDevice( ).createPipelineLayout (
         vk::PipelineLayoutCreateInfo {{ }, 1, &descSetLayout.getDescriptorSetLayout( )});

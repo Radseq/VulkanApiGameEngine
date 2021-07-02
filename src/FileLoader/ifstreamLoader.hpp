@@ -6,32 +6,37 @@
 #include <vector>
 
 #include "ifstreamLoaderContainer.hpp"
+#include "../Base/Core.hpp"
 
-class ifstreamLoader {
+class ifstreamLoader
+{
     inline static ifstreamLoader* instance = nullptr;
 
-    std::vector<ifstreamLoaderContainer*> filesLoaded;
+    std::vector<VulkanGame::Scope<ifstreamLoaderContainer>> filesLoaded;
 
-    void throwOnNotFound (const std::ifstream& file, const std::string& fileNamePatch);
+    void throwOnNotFound (const std::ifstream& file, const std::string_view& fileNamePatch);
 
-    ifstreamLoaderContainer* getContainerByFileName (const std::string& fileName);
+    template <typename... ARGS> std::string add (const ARGS&... args) { return (std::string (args) + ...); }
+
+    std::string_view FileNameFromPatch (const std::string_view& patchFileName);
 
    public:
-    static ifstreamLoader* getInstance( ) {
+    static ifstreamLoader* getInstance( )
+    {
         if (!instance) instance = new ifstreamLoader;
         return instance;
     }
 
     ~ifstreamLoader( );
 
-    void LoadFileText (const std::string& patch, const std::string& fileName);
-    void LoadFileBin (const std::string& patch, const std::string& fileName);
+    void LoadFileText (const std::string_view fileNamePatch);
+    void LoadFileBin (const std::string_view fileNamePatch);
 
-    std::vector<std::string> getFileTextLines (const std::string& fileName);
-    std::vector<char>        readChars (const std::string& filename);
+    std::vector<std::string> getFileTextLines (const std::string_view& fileName);
+    std::vector<char>        readChars (const std::string_view& fileName);
 
     void closeFiles( );
-    void closeFileByName (const std::string& fileName);
+    void closeFileByName (const std::string_view& fileName);
 };
 
 #endif  // FILE_LOADER_HPP

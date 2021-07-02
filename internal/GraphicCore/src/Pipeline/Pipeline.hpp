@@ -14,14 +14,16 @@
 #include "PipelineVertex.hpp"
 #include "PipelineViewport.hpp"
 
-namespace GraphicCore {
-    class Pipeline {
+namespace GraphicCore
+{
+    class Pipeline
+    {
         const vk::Device&              device;
         vk::PipelineCache              pipelineCache;
         vk::GraphicsPipelineCreateInfo pipelineCreateInfo;
-        vk::RenderPass&                _renderPass  {pipelineCreateInfo.renderPass};
-        vk::PipelineLayout&            _layout      {pipelineCreateInfo.layout};
-        uint32_t                       _subpass     {pipelineCreateInfo.subpass};
+        vk::RenderPass&                _renderPass {pipelineCreateInfo.renderPass};
+        vk::PipelineLayout&            _layout {pipelineCreateInfo.layout};
+        uint32_t                       _subpass {pipelineCreateInfo.subpass};
 
         vk::PipelineMultisampleStateCreateInfo multisampleState { };
 
@@ -47,8 +49,9 @@ namespace GraphicCore {
         void                               update( );
         void                               appendVertexLayout (const VertexLayout& vertexLayout);
         void                               setSubPass (uint32_t subpass);
-        vk::PipelineShaderStageCreateInfo& loadShader (const std::string& filePatch, const std::string& fileName,
-                                                       vk::ShaderStageFlagBits stage, const char* entryPoint = "main");
+        vk::PipelineShaderStageCreateInfo& loadShader (const std::string_view&         filePatchName,
+                                                       const vk::ShaderStageFlagBits&& stage,
+                                                       const char*                     entryPoint = "main");
         vk::Pipeline                       create (const vk::PipelineCache& cache);
         vk::Pipeline                       create( );
 

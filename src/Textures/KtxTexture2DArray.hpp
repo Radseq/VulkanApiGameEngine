@@ -9,6 +9,7 @@
 
 #include "../FileLoader/KtxTextureLoader.hpp"
 #include "Util/vkHelpers.hpp"
+#include "../Base/Core.hpp"
 
 class KtxTexture2DArray
 {
@@ -16,7 +17,8 @@ class KtxTexture2DArray
 
    public:
     KtxTexture2DArray (const GraphicCore::VulkanDevice& Context);
-    void LoadTexture (GraphicCore::Image& result, const std::string& filePatch, const vk::Format& format);
+    VulkanGame::Ref<GraphicCore::Image> LoadTexture (const std::string& filePatch,
+                                                     const vk::Format& format);
 };
 
 #endif  // TEXTURE2D_ARRAY_HPP

@@ -237,6 +237,7 @@
     <ClInclude Include="..\src\Image\ImageContainer.hpp">
       <Filter>Header\Image</Filter>
     </ClInclude>
+    <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\Device\CreateLocalDevice.cpp">
@@ -338,5 +339,6 @@
     <ClCompile Include="..\src\Pipeline\PipelineLayout.cpp">
       <Filter>Include\Pipeline</Filter>
     </ClCompile>
+    <ClCompile Include="pch.cpp" />
   </ItemGroup>
 </Project>

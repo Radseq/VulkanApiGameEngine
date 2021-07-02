@@ -1,5 +1,8 @@
 ﻿#include "Renderer.hpp"
 
+#include "../EntityProcess/EntityDesc.hpp"
+#include "../EntityProcess/EntityPipeline.hpp"
+
 /// <summary>
 /// Initializes a new instance of the <see cref="Renderer"/> class.
 /// </summary>
@@ -80,12 +83,17 @@ void Renderer::drawCurrentCommandBuffer( )
     submitInfo.signalSemaphoreCount = 1;
     submitInfo.pSignalSemaphores    = &renderFinishedSemaphores [currentFrame];
 
-    context->getVkDevice( ).resetFences (1, &inFlightFences [currentFrame]);
+    vk::Result operationResult;
 
-    const vk::Result submitRes = context->getGraphicsQueue( ).submit (1, &submitInfo, inFlightFences [currentFrame]);
+    operationResult = context->getVkDevice( ).resetFences (1, &inFlightFences [currentFrame]);
 
-    if (submitRes != vk::Result::eSuccess)
-    { throw std::runtime_error ("failed to submit draw command buffer! " + vk::to_string (submitRes)); }
+    if (operationResult != vk::Result::eSuccess)
+    { throw std::runtime_error ("failed to reset fence! " + vk::to_string (operationResult)); }
+
+    operationResult = context->getGraphicsQueue( ).submit (1, &submitInfo, inFlightFences [currentFrame]);
+
+    if (operationResult != vk::Result::eSuccess)
+    { throw std::runtime_error ("failed to submit draw command buffer! " + vk::to_string (operationResult)); }
 }
 
 /// <summary>
@@ -157,10 +165,9 @@ void Renderer::init (const vk::Extent2D& WindowSize)
 
     loadAsserts( );
 
-    entityRenderer.pushEntity (entities);
+    entityRenderer.pushEntity (EntRendObj);
 
     entityRenderer.createUniformBuffers (perspective);
-    entityRenderer.create (defaultFramebuffer.getVkRenderPass( ));
 
     createGraphicsPipeline( );
 
@@ -249,29 +256,31 @@ void Renderer::loadAsserts( )
         GraphicCore::VertexLayout::Component::VERTEX_COMPONENT_UV,
     }};
 
-    GraphicCore::Image* textureImage = new GraphicCore::Image( );
-    Model*              model        = new Model (*context, vertexLayout);
+    VulkanGame::Ref<GraphicCore::Image> textureImage = VulkanGame::CreateRef<GraphicCore::Image>( );
+    Model*                              model        = new Model (*context, vertexLayout);
 
     TinyObjModelLoader objLoader {*context};
-    objLoader.loadFromFile (model, getFilePath( ) + "/../../data/models/dragon/dragon.obj");
+    objLoader.loadFromFile (model, ResourcePatch::GetInstance( )->GetPatch ("DataPatch") + "/models/dragon/dragon.obj");
 
-    Texture2D        texture;
-    stbImgFileLoader stbTextureLoader;
+    VulkanGame::Ref<Texture2D> texture;
+    stbImgFileLoader           stbTextureLoader;
 
-    texture.CreateImage (*textureImage, *context,
-                         stbTextureLoader.LoadFile (getFilePath( ) + "/../../data/textures/dragon/white.png"),
-                         vk::Format::eR8G8B8A8Srgb);
+    textureImage =
+        texture->CreateImage (*context,
+                              stbTextureLoader.LoadFile (ResourcePatch::GetInstance( )->GetPatch ("DataPatch") +
+                                                         "/textures/dragon/white.png"),
+                              vk::Format::eR8G8B8A8Srgb);
 
     textureImage->setupDescriptorImageInfo (vk::ImageLayout::eShaderReadOnlyOptimal);
 
     assert (textureImage->getDescImageInfo( ) != vk::DescriptorImageInfo( ));
 
-    ModelTexture* mt = new ModelTexture (*textureImage);
+    VulkanGame::Ref<ModelTexture> mt = VulkanGame::CreateRef<ModelTexture> (textureImage);
 
     mt->setReflectivity (1.0F);
     mt->setShineDamper (10.0F);
 
-    TexturedModel* tm = new TexturedModel (model, mt);
+    VulkanGame::Ref<TexturedModel> tm = VulkanGame::CreateRef<TexturedModel> (model, mt);
 
     glm::vec3 pos {0, -5, -25};
     glm::vec3 rot {0, 0, 0};
@@ -279,7 +288,26 @@ void Renderer::loadAsserts( )
 
     Entity* entity = new Entity (tm, pos, rot, scale);
 
-    entities.push_back (entity);
+    VulkanGame::Ref<IShaderDescSet> entShader =
+        VulkanGame::CreateRef<EntityDesc> (*context, textureImage->getDescImageInfo( ));
+
+    entShader->CreateDescriptorSetLayout( );
+    entShader->CreateDescriptorSets (3);
+
+    VulkanGame::Ref<IShaderPipeline> entPipeline = VulkanGame::CreateRef<EntityPipeline> (*context);
+
+    entPipeline->CreatePipelineLayout (*entShader.get());
+
+     std::vector<std::string> shaderPatchName {
+        ResourcePatch::GetInstance( )->GetPatch ("DataPatch") + "/shaders/static_shader/specular_lighting/vert.spv",
+        ResourcePatch::GetInstance( )->GetPatch ("DataPatch") + "/shaders/static_shader/specular_lighting/frag.spv"};
+
+    entPipeline->CreateGraphicsPipeline (std::move(shaderPatchName), swapChain->getSwapChainExtent( ),
+                                         defaultFramebuffer.getVkRenderPass( ));
+
+    EntRendObj = VulkanGame::CreateRef<EntityMeshRender> (*entity, entShader, entPipeline);
+
+    entities.push_back (EntRendObj);
 }
 
 /// <summary>
@@ -303,6 +331,8 @@ void Renderer::destroy( )
         context->getVkDevice( ).destroySemaphore (imageAvailableSemaphores [i]);
         context->getVkDevice( ).destroyFence (inFlightFences [i]);
     }
+
+    entityRenderer.destroy( );
 
     skysphere.destroy( );
     terrain.destroy( );

@@ -4,8 +4,10 @@
 #include <vector>
 #include <vulkan/vulkan.hpp>
 
-namespace GraphicCore {
-    class DescriptorPool {
+namespace GraphicCore
+{
+    class DescriptorPool
+    {
         uint32_t                            count {0};
         std::vector<vk::DescriptorPoolSize> descPoolSize;
         vk::DescriptorPool                  descriptorPool;

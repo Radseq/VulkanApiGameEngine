@@ -27,7 +27,7 @@ vc15/x86/
 external/*
 build/
 internal/GraphicCore/*.lib
-
+internal/GraphicCore/*.pch
 
 # [Bb]in/
 [Oo]bj/

@@ -19,77 +19,102 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\Engine\EngineMain.cpp" />
-    <ClCompile Include="..\src\Engine\Game.cpp" />
-    <ClCompile Include="..\src\entities\camera.cpp" />
-    <ClCompile Include="..\src\entities\entity.cpp" />
-    <ClCompile Include="..\src\entities\light.cpp" />
-    <ClCompile Include="..\src\entities\player.cpp" />
-    <ClCompile Include="..\src\EntityProcess\EntityDescriptor.cpp" />
-    <ClCompile Include="..\src\EntityProcess\EntityPipeline.cpp" />
-    <ClCompile Include="..\src\EntityProcess\EntityRenderer.cpp" />
-    <ClCompile Include="..\src\EntityProcess\EntityShader.cpp" />
-    <ClCompile Include="..\src\FileLoader\AssimpLoader.cpp" />
-    <ClCompile Include="..\src\FileLoader\AssimpModelLoader.cpp" />
-    <ClCompile Include="..\src\FileLoader\ifstreamLoader.cpp" />
-    <ClCompile Include="..\src\FileLoader\KtxTextureLoader.cpp" />
-    <ClCompile Include="..\src\FileLoader\stbImgFileLoader.cpp" />
-    <ClCompile Include="..\src\FileLoader\TinyObjModelLoader.cpp" />
-    <ClCompile Include="..\src\Init\DefaultFrameBuffer.cpp" />
-    <ClCompile Include="..\src\Model\Model.cpp" />
-    <ClCompile Include="..\src\Model\ModelCreateInfo.cpp" />
-    <ClCompile Include="..\src\Model\ModelTexture.cpp" />
-    <ClCompile Include="..\src\Model\TexturedModel.cpp" />
-    <ClCompile Include="..\src\Render\Renderer.cpp" />
-    <ClCompile Include="..\src\Textures\KtxTexture2DArray.cpp" />
-    <ClCompile Include="..\src\Textures\Texture2D.cpp" />
-    <ClCompile Include="..\src\UniformBuffers\UniformBuffer.cpp" />
-    <ClCompile Include="..\src\Util\Configuration.cpp" />
-    <ClCompile Include="..\src\Util\math.cpp" />
-    <ClCompile Include="..\src\Util\utils.cpp" />
-    <ClCompile Include="..\src\Window\Window.cpp" />
-    <ClCompile Include="..\src\World\SkySphere\SkySphere.cpp" />
-    <ClCompile Include="..\src\World\Terrain\HeightMap.cpp" />
-    <ClCompile Include="..\src\World\Terrain\Terrain.cpp" />
+    <ClCompile Include="..\src\pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\src\ResourcePatch.cpp" />
+    <ClCompile Include="..\src\EngineMain.cpp" />
+    <ClCompile Include="..\src\Game.cpp" />
+    <ClCompile Include="..\src\camera.cpp" />
+    <ClCompile Include="..\src\entity.cpp" />
+    <ClCompile Include="..\src\light.cpp" />
+    <ClCompile Include="..\src\player.cpp" />
+    <ClCompile Include="..\src\EntityDesc.cpp" />
+    <ClCompile Include="..\src\EntityPipeline.cpp" />
+    <ClCompile Include="..\src\EntityMeshRender.cpp" />
+    <ClCompile Include="..\src\EntityRenderer.cpp" />
+    <ClCompile Include="..\src\AssimpLoader.cpp" />
+    <ClCompile Include="..\src\AssimpModelLoader.cpp" />
+    <ClCompile Include="..\src\ifstreamLoader.cpp" />
+    <ClCompile Include="..\src\KtxTextureLoader.cpp" />
+    <ClCompile Include="..\src\stbImgFileLoader.cpp" />
+    <ClCompile Include="..\src\TinyObjModelLoader.cpp" />
+    <ClCompile Include="..\src\DefaultFrameBuffer.cpp" />
+    <ClCompile Include="..\src\Model.cpp" />
+    <ClCompile Include="..\src\ModelCreateInfo.cpp" />
+    <ClCompile Include="..\src\ModelTexture.cpp" />
+    <ClCompile Include="..\src\TexturedModel.cpp" />
+    <ClCompile Include="..\src\Renderer.cpp" />
+    <ClCompile Include="..\src\DescriptorPools.cpp" />
+    <ClCompile Include="..\src\EntSpecLightShader.cpp" />
+    <ClCompile Include="..\src\LightShader.cpp" />
+    <ClCompile Include="..\src\KtxTexture2DArray.cpp" />
+    <ClCompile Include="..\src\Texture2D.cpp" />
+    <ClCompile Include="..\src\UniformBuffer.cpp" />
+    <ClCompile Include="..\src\Configuration.cpp" />
+    <ClCompile Include="..\src\math.cpp" />
+    <ClCompile Include="..\src\Timer.cpp" />
+    <ClCompile Include="..\src\utils.cpp" />
+    <ClCompile Include="..\src\Window.cpp" />
+    <ClCompile Include="..\src\SkySphere.cpp" />
+    <ClCompile Include="..\src\HeightMap.cpp" />
+    <ClCompile Include="..\src\Terrain.cpp" />
+    <ClCompile Include="..\src\WindowProperties.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\src\Base\Core.hpp" />
-    <ClInclude Include="..\src\Containers\ImageContainer.hpp" />
-    <ClInclude Include="..\src\Engine\Game.hpp" />
-    <ClInclude Include="..\src\entities\camera.hpp" />
-    <ClInclude Include="..\src\entities\entity.hpp" />
-    <ClInclude Include="..\src\entities\light.hpp" />
-    <ClInclude Include="..\src\entities\player.hpp" />
-    <ClInclude Include="..\src\EntityProcess\EntityDescriptor.hpp" />
-    <ClInclude Include="..\src\EntityProcess\EntityPipeline.hpp" />
-    <ClInclude Include="..\src\EntityProcess\EntityRenderer.hpp" />
-    <ClInclude Include="..\src\EntityProcess\EntityShader.hpp" />
-    <ClInclude Include="..\src\FileLoader\AssimpLoader.hpp" />
-    <ClInclude Include="..\src\FileLoader\AssimpModelLoader.hpp" />
-    <ClInclude Include="..\src\FileLoader\ifstreamLoader.hpp" />
-    <ClInclude Include="..\src\FileLoader\ifstreamLoaderContainer.hpp" />
-    <ClInclude Include="..\src\FileLoader\KtxTextureLoader.hpp" />
-    <ClInclude Include="..\src\FileLoader\stbImgFileLoader.hpp" />
-    <ClInclude Include="..\src\FileLoader\TinyObjModelLoader.hpp" />
-    <ClInclude Include="..\src\Init\DefaultFrameBuffer.hpp" />
-    <ClInclude Include="..\src\Model\Model.hpp" />
-    <ClInclude Include="..\src\Model\ModelCreateInfo.hpp" />
-    <ClInclude Include="..\src\Model\ModelDimension.hpp" />
-    <ClInclude Include="..\src\Model\ModelParts.hpp" />
-    <ClInclude Include="..\src\Model\ModelTexture.hpp" />
-    <ClInclude Include="..\src\Model\TexturedModel.hpp" />
-    <ClInclude Include="..\src\Render\Renderer.hpp" />
-    <ClInclude Include="..\src\Textures\KtxTexture2DArray.hpp" />
-    <ClInclude Include="..\src\Textures\Texture2D.hpp" />
-    <ClInclude Include="..\src\UniformBuffers\UniformBuffer.hpp" />
-    <ClInclude Include="..\src\Util\Configuration.hpp" />
-    <ClInclude Include="..\src\Util\KeyCodes.hpp" />
-    <ClInclude Include="..\src\Util\math.hpp" />
-    <ClInclude Include="..\src\Util\utils.hpp" />
-    <ClInclude Include="..\src\Window\Window.hpp" />
-    <ClInclude Include="..\src\World\SkySphere\SkySphere.hpp" />
-    <ClInclude Include="..\src\World\Terrain\HeightMap.hpp" />
-    <ClInclude Include="..\src\World\Terrain\Terrain.hpp" />
+    <ClInclude Include="..\src\Core.hpp" />
+    <ClInclude Include="..\src\pch.h" />
+    <ClInclude Include="..\src\ResourcePatch.hpp" />
+    <ClInclude Include="..\src\Game.hpp" />
+    <ClInclude Include="..\src\camera.hpp" />
+    <ClInclude Include="..\src\entity.hpp" />
+    <ClInclude Include="..\src\light.hpp" />
+    <ClInclude Include="..\src\player.hpp" />
+    <ClInclude Include="..\src\EntityDesc.hpp" />
+    <ClInclude Include="..\src\EntityPipeline.hpp" />
+    <ClInclude Include="..\src\EntityMeshRender.hpp" />
+    <ClInclude Include="..\src\EntityRenderer.hpp" />
+    <ClInclude Include="..\src\AssimpLoader.hpp" />
+    <ClInclude Include="..\src\AssimpModelLoader.hpp" />
+    <ClInclude Include="..\src\ifstreamLoader.hpp" />
+    <ClInclude Include="..\src\ifstreamLoaderContainer.hpp" />
+    <ClInclude Include="..\src\IModelLoad.hpp" />
+    <ClInclude Include="..\src\KtxTextureLoader.hpp" />
+    <ClInclude Include="..\src\stbImgFileLoader.hpp" />
+    <ClInclude Include="..\src\TinyObjModelLoader.hpp" />
+    <ClInclude Include="..\src\DefaultFrameBuffer.hpp" />
+    <ClInclude Include="..\src\Model.hpp" />
+    <ClInclude Include="..\src\ModelCreateInfo.hpp" />
+    <ClInclude Include="..\src\ModelDimension.hpp" />
+    <ClInclude Include="..\src\ModelParts.hpp" />
+    <ClInclude Include="..\src\ModelTexture.hpp" />
+    <ClInclude Include="..\src\TexturedModel.hpp" />
+    <ClInclude Include="..\src\Renderer.hpp" />
+    <ClInclude Include="..\src\IShaderDescSet.hpp" />
+    <ClInclude Include="..\src\IShaderPipeline.hpp" />
+    <ClInclude Include="..\src\DescriptorPools.hpp" />
+    <ClInclude Include="..\src\IShader.hpp" />
+    <ClInclude Include="..\src\IShaderFloatParm.hpp" />
+    <ClInclude Include="..\src\IShaderMat4Parm.hpp" />
+    <ClInclude Include="..\src\IShaderUniform.hpp" />
+    <ClInclude Include="..\src\IShaderUniformUpdate.hpp" />
+    <ClInclude Include="..\src\IShaderVec3Parm.hpp" />
+    <ClInclude Include="..\src\EntSpecLightShader.hpp" />
+    <ClInclude Include="..\src\LightShader.hpp" />
+    <ClInclude Include="..\src\KtxTexture2DArray.hpp" />
+    <ClInclude Include="..\src\Texture2D.hpp" />
+    <ClInclude Include="..\src\UniformBuffer.hpp" />
+    <ClInclude Include="..\src\Configuration.hpp" />
+    <ClInclude Include="..\src\KeyCodes.hpp" />
+    <ClInclude Include="..\src\math.hpp" />
+    <ClInclude Include="..\src\Timer.hpp" />
+    <ClInclude Include="..\src\utils.hpp" />
+    <ClInclude Include="..\src\VkUtils.hpp" />
+    <ClInclude Include="..\src\Window.hpp" />
+    <ClInclude Include="..\src\SkySphere.hpp" />
+    <ClInclude Include="..\src\HeightMap.hpp" />
+    <ClInclude Include="..\src\Terrain.hpp" />
+    <ClInclude Include="..\src\WindowProperties.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
@@ -186,7 +211,9 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <XMLDocumentationFileName>$(IntDir)</XMLDocumentationFileName>
-      <GenerateXMLDocumentationFiles>true</GenerateXMLDocumentationFiles>
+      <GenerateXMLDocumentationFiles>false</GenerateXMLDocumentationFiles>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>

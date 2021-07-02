@@ -19,85 +19,99 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\src\Allocation\AllocationCreateInfo.hpp" />
-    <ClInclude Include="..\src\Allocation\AllocationPassThrough.hpp" />
-    <ClInclude Include="..\src\Allocation\AllocationPool.hpp" />
-    <ClInclude Include="..\src\Allocation\AllocationProperties.hpp" />
-    <ClInclude Include="..\src\Allocation\IAllocation.hpp" />
-    <ClInclude Include="..\src\Buffer\CoreBuffeManager.hpp" />
-    <ClInclude Include="..\src\Buffer\CoreBuffer.hpp" />
-    <ClInclude Include="..\src\Command\SingleTimeCommandBuffer.hpp" />
-    <ClInclude Include="..\src\Descriptor\DescriptorPool.hpp" />
-    <ClInclude Include="..\src\Descriptor\DescriptorSetLayout.hpp" />
-    <ClInclude Include="..\src\Descriptor\DescriptorSets.hpp" />
-    <ClInclude Include="..\src\Device\CreateLocalDevice.hpp" />
-    <ClInclude Include="..\src\Device\CreateLocalDeviceByGroup.hpp" />
-    <ClInclude Include="..\src\Device\DeviceCreateInfo.hpp" />
-    <ClInclude Include="..\src\Device\ISetDevice.hpp" />
-    <ClInclude Include="..\src\Device\LocalDevices.hpp" />
-    <ClInclude Include="..\src\Device\PhysicalDevice.hpp" />
-    <ClInclude Include="..\src\Device\QueueIndices.hpp" />
-    <ClInclude Include="..\src\Device\vkQuque.hpp" />
-    <ClInclude Include="..\src\Device\VulkanDevice.hpp" />
-    <ClInclude Include="..\src\Framebuffer\SwapChain.hpp" />
-    <ClInclude Include="..\src\Framebuffer\SwapChainSupportDetails.hpp" />
-    <ClInclude Include="..\src\Image\Image.hpp" />
-    <ClInclude Include="..\src\Image\ImageContainer.hpp" />
-    <ClInclude Include="..\src\Image\ImageManager.hpp" />
-    <ClInclude Include="..\src\Instance\IVulkanInstance.hpp" />
-    <ClInclude Include="..\src\Instance\VulkanInstance.hpp" />
-    <ClInclude Include="..\src\Model\VertexLayout.hpp" />
-    <ClInclude Include="..\src\Pipeline\Pipeline.hpp" />
-    <ClInclude Include="..\src\Pipeline\PipelineColorBlend.hpp" />
-    <ClInclude Include="..\src\Pipeline\PipelineColorBlendAttachment.hpp" />
-    <ClInclude Include="..\src\Pipeline\PipelineDepthStencil.hpp" />
-    <ClInclude Include="..\src\Pipeline\PipelineDynamic.hpp" />
-    <ClInclude Include="..\src\Pipeline\PipelineInputAssembly.hpp" />
-    <ClInclude Include="..\src\Pipeline\PipelineLayout.hpp" />
-    <ClInclude Include="..\src\Pipeline\PipelineRasterization.hpp" />
-    <ClInclude Include="..\src\Pipeline\PipelineVertex.hpp" />
-    <ClInclude Include="..\src\Pipeline\PipelineViewport.hpp" />
-    <ClInclude Include="..\src\Pipeline\RenderPass.hpp" />
-    <ClInclude Include="..\src\Shaders\Shader.hpp" />
-    <ClInclude Include="..\src\Util\Frustum.hpp" />
-    <ClInclude Include="..\src\Util\math.hpp" />
-    <ClInclude Include="..\src\Util\util.hpp" />
-    <ClInclude Include="..\src\Util\vkHelpers.hpp" />
+    <ClInclude Include="..\src\AllocationCreateInfo.hpp" />
+    <ClInclude Include="..\src\AllocationPassThrough.hpp" />
+    <ClInclude Include="..\src\AllocationPool.hpp" />
+    <ClInclude Include="..\src\AllocationProperties.hpp" />
+    <ClInclude Include="..\src\CoreImageView.hpp" />
+    <ClInclude Include="..\src\Framebuffer.hpp" />
+    <ClInclude Include="..\src\FrameBufferAttachment.hpp" />
+    <ClInclude Include="..\src\IAllocation.hpp" />
+    <ClInclude Include="..\src\CoreBuffeManager.hpp" />
+    <ClInclude Include="..\src\CoreBuffer.hpp" />
+    <ClInclude Include="..\src\ILocalDevices.hpp" />
+    <ClInclude Include="..\src\ImageSampler.hpp" />
+    <ClInclude Include="..\src\SingleTimeCommandBuffer.hpp" />
+    <ClInclude Include="..\src\DescriptorPool.hpp" />
+    <ClInclude Include="..\src\DescriptorSetLayout.hpp" />
+    <ClInclude Include="..\src\DescriptorSets.hpp" />
+    <ClInclude Include="..\src\CreateLocalDevice.hpp" />
+    <ClInclude Include="..\src\CreateLocalDeviceByGroup.hpp" />
+    <ClInclude Include="..\src\DeviceCreateInfo.hpp" />
+    <ClInclude Include="..\src\ISetDevice.hpp" />
+    <ClInclude Include="..\src\LocalDevices.hpp" />
+    <ClInclude Include="..\src\PhysicalDevice.hpp" />
+    <ClInclude Include="..\src\QueueIndices.hpp" />
+    <ClInclude Include="..\src\vkBasicModelsContainer.hpp" />
+    <ClInclude Include="..\src\vkQuque.hpp" />
+    <ClInclude Include="..\src\VulkanDevice.hpp" />
+    <ClInclude Include="..\src\SwapChain.hpp" />
+    <ClInclude Include="..\src\SwapChainSupportDetails.hpp" />
+    <ClInclude Include="..\src\CoreImage.hpp" />
+    <ClInclude Include="..\src\ImageContainer.hpp" />
+    <ClInclude Include="..\src\ImageManager.hpp" />
+    <ClInclude Include="..\src\IVulkanInstance.hpp" />
+    <ClInclude Include="..\src\VulkanInstance.hpp" />
+    <ClInclude Include="..\src\VertexLayout.hpp" />
+    <ClInclude Include="..\src\pch.h" />
+    <ClInclude Include="..\src\Pipeline.hpp" />
+    <ClInclude Include="..\src\PipelineColorBlend.hpp" />
+    <ClInclude Include="..\src\PipelineColorBlendAttachment.hpp" />
+    <ClInclude Include="..\src\PipelineDepthStencil.hpp" />
+    <ClInclude Include="..\src\PipelineDynamic.hpp" />
+    <ClInclude Include="..\src\PipelineInputAssembly.hpp" />
+    <ClInclude Include="..\src\PipelineLayout.hpp" />
+    <ClInclude Include="..\src\PipelineRasterization.hpp" />
+    <ClInclude Include="..\src\PipelineVertex.hpp" />
+    <ClInclude Include="..\src\PipelineViewport.hpp" />
+    <ClInclude Include="..\src\RenderPass.hpp" />
+    <ClInclude Include="..\src\Shader.hpp" />
+    <ClInclude Include="..\src\Frustum.hpp" />
+    <ClInclude Include="..\src\CoreMath.hpp" />
+    <ClInclude Include="..\src\CoreUtil.hpp" />
+    <ClInclude Include="..\src\vkHelpers.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\Allocation\AllocationPassThrough.cpp" />
-    <ClCompile Include="..\src\Allocation\AllocationPool.cpp" />
-    <ClCompile Include="..\src\Buffer\CoreBuffeManager.cpp" />
-    <ClCompile Include="..\src\Buffer\CoreBuffer.cpp" />
-    <ClCompile Include="..\src\Command\SingleTimeCommandBuffer.cpp" />
-    <ClCompile Include="..\src\Descriptor\DescriptorPool.cpp" />
-    <ClCompile Include="..\src\Descriptor\DescriptorSetLayout.cpp" />
-    <ClCompile Include="..\src\Descriptor\DescriptorSets.cpp" />
-    <ClCompile Include="..\src\Device\CreateLocalDevice.cpp" />
-    <ClCompile Include="..\src\Device\CreateLocalDeviceByGroup.cpp" />
-    <ClCompile Include="..\src\Device\DeviceCreateInfo.cpp" />
-    <ClCompile Include="..\src\Device\LocalDevices.cpp" />
-    <ClCompile Include="..\src\Device\PhysicalDevice.cpp" />
-    <ClCompile Include="..\src\Device\VulkanDevice.cpp" />
-    <ClCompile Include="..\src\Framebuffer\SwapChain.cpp" />
-    <ClCompile Include="..\src\Framebuffer\SwapChainSupportDetails.cpp" />
-    <ClCompile Include="..\src\Image\Image.cpp" />
-    <ClCompile Include="..\src\Image\ImageManager.cpp" />
-    <ClCompile Include="..\src\Instance\VulkanInstance.cpp" />
-    <ClCompile Include="..\src\Model\VertexLayout.cpp" />
-    <ClCompile Include="..\src\Pipeline\Pipeline.cpp" />
-    <ClCompile Include="..\src\Pipeline\PipelineColorBlend.cpp" />
-    <ClCompile Include="..\src\Pipeline\PipelineColorBlendAttachment.cpp" />
-    <ClCompile Include="..\src\Pipeline\PipelineDepthStencil.cpp" />
-    <ClCompile Include="..\src\Pipeline\PipelineDynamic.cpp" />
-    <ClCompile Include="..\src\Pipeline\PipelineInputAssembly.cpp" />
-    <ClCompile Include="..\src\Pipeline\PipelineLayout.cpp" />
-    <ClCompile Include="..\src\Pipeline\PipelineRasterization.cpp" />
-    <ClCompile Include="..\src\Pipeline\PipelineVertex.cpp" />
-    <ClCompile Include="..\src\Pipeline\PipelineViewport.cpp" />
-    <ClCompile Include="..\src\Pipeline\RenderPass.cpp" />
-    <ClCompile Include="..\src\Shaders\Shader.cpp" />
-    <ClCompile Include="..\src\Util\Frustum.cpp" />
+    <ClCompile Include="..\src\AllocationPassThrough.cpp" />
+    <ClCompile Include="..\src\AllocationPool.cpp" />
+    <ClCompile Include="..\src\CoreBuffeManager.cpp" />
+    <ClCompile Include="..\src\CoreBuffer.cpp" />
+    <ClCompile Include="..\src\CoreImageView.cpp" />
+    <ClCompile Include="..\src\Framebuffer.cpp" />
+    <ClCompile Include="..\src\FrameBufferAttachment.cpp" />
+    <ClCompile Include="..\src\ImageSampler.cpp" />
+    <ClCompile Include="..\src\pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\src\SingleTimeCommandBuffer.cpp" />
+    <ClCompile Include="..\src\DescriptorPool.cpp" />
+    <ClCompile Include="..\src\DescriptorSetLayout.cpp" />
+    <ClCompile Include="..\src\DescriptorSets.cpp" />
+    <ClCompile Include="..\src\CreateLocalDevice.cpp" />
+    <ClCompile Include="..\src\CreateLocalDeviceByGroup.cpp" />
+    <ClCompile Include="..\src\DeviceCreateInfo.cpp" />
+    <ClCompile Include="..\src\LocalDevices.cpp" />
+    <ClCompile Include="..\src\PhysicalDevice.cpp" />
+    <ClCompile Include="..\src\VulkanDevice.cpp" />
+    <ClCompile Include="..\src\SwapChain.cpp" />
+    <ClCompile Include="..\src\SwapChainSupportDetails.cpp" />
+    <ClCompile Include="..\src\CoreImage.cpp" />
+    <ClCompile Include="..\src\ImageManager.cpp" />
+    <ClCompile Include="..\src\VulkanInstance.cpp" />
+    <ClCompile Include="..\src\VertexLayout.cpp" />
+    <ClCompile Include="..\src\Pipeline.cpp" />
+    <ClCompile Include="..\src\PipelineColorBlend.cpp" />
+    <ClCompile Include="..\src\PipelineColorBlendAttachment.cpp" />
+    <ClCompile Include="..\src\PipelineDepthStencil.cpp" />
+    <ClCompile Include="..\src\PipelineDynamic.cpp" />
+    <ClCompile Include="..\src\PipelineInputAssembly.cpp" />
+    <ClCompile Include="..\src\PipelineLayout.cpp" />
+    <ClCompile Include="..\src\PipelineRasterization.cpp" />
+    <ClCompile Include="..\src\PipelineVertex.cpp" />
+    <ClCompile Include="..\src\PipelineViewport.cpp" />
+    <ClCompile Include="..\src\RenderPass.cpp" />
+    <ClCompile Include="..\src\Shader.cpp" />
+    <ClCompile Include="..\src\Frustum.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
@@ -194,7 +208,10 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <XMLDocumentationFileName>$(IntDir)</XMLDocumentationFileName>
-      <GenerateXMLDocumentationFiles>true</GenerateXMLDocumentationFiles>
+      <GenerateXMLDocumentationFiles>false</GenerateXMLDocumentationFiles>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(ProjectDir)../$(TargetName).pch</PrecompiledHeaderOutputFile>
     </ClCompile>
     <Link>
       <TargetMachine>MachineX64</TargetMachine>

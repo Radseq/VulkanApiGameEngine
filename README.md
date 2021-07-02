@@ -17,6 +17,8 @@ For now entity has available graphics effects: <br />
 Per-Pixel Lighting <br />
 Specular Lighting <br />
 
+Shader explanation. [HERE](shader.md) <br />
+
 
 ##### List of Source that i used:<br />
 * [SaschaWillems](https://github.com/SaschaWillems/Vulkan) <br />

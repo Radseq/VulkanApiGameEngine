@@ -103,240 +103,278 @@
     <Filter Include="Include\Thread">
       <UniqueIdentifier>{a734db3c-1c29-4326-84da-801083c86d59}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header\Render">
+      <UniqueIdentifier>{fb8a7f2a-eb72-4d73-b05f-e99371069220}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include\Render">
+      <UniqueIdentifier>{b538af1c-e992-4fb5-a9c3-9c0312d901ad}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\src\Device\CreateLocalDevice.hpp">
-      <Filter>Header\Device</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Device\CreateLocalDeviceByGroup.hpp">
-      <Filter>Header\Device</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Device\DeviceCreateInfo.hpp">
-      <Filter>Header\Device</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Device\ISetDevice.hpp">
-      <Filter>Header\Device</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Device\LocalDevices.hpp">
-      <Filter>Header\Device</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Device\PhysicalDevice.hpp">
-      <Filter>Header\Device</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Device\QueueIndices.hpp">
-      <Filter>Header\Device</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Device\VulkanDevice.hpp">
-      <Filter>Header\Device</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Instance\IVulkanInstance.hpp">
-      <Filter>Header\Instance</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Instance\VulkanInstance.hpp">
-      <Filter>Header\Instance</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Allocation\AllocationCreateInfo.hpp">
-      <Filter>Header\Allocation</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Allocation\AllocationPassThrough.hpp">
-      <Filter>Header\Allocation</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Allocation\AllocationPool.hpp">
-      <Filter>Header\Allocation</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Allocation\AllocationProperties.hpp">
-      <Filter>Header\Allocation</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Allocation\IAllocation.hpp">
-      <Filter>Header\Allocation</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Util\Frustum.hpp">
+    <ClInclude Include="..\src\Frustum.hpp">
       <Filter>Header\Util</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\Util\math.hpp">
-      <Filter>Header\Util</Filter>
+    <ClInclude Include="..\src\AllocationCreateInfo.hpp">
+      <Filter>Header\Allocation</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\Util\util.hpp">
-      <Filter>Header\Util</Filter>
+    <ClInclude Include="..\src\AllocationPassThrough.hpp">
+      <Filter>Header\Allocation</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\Device\vkQuque.hpp">
-      <Filter>Header\Device</Filter>
+    <ClInclude Include="..\src\AllocationPool.hpp">
+      <Filter>Header\Allocation</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\Framebuffer\SwapChain.hpp">
+    <ClInclude Include="..\src\AllocationProperties.hpp">
+      <Filter>Header\Allocation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\IAllocation.hpp">
+      <Filter>Header\Allocation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\pch.h" />
+    <ClInclude Include="..\src\Pipeline.hpp">
+      <Filter>Header\Pipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\PipelineColorBlend.hpp">
+      <Filter>Header\Pipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\PipelineColorBlendAttachment.hpp">
+      <Filter>Header\Pipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\PipelineDepthStencil.hpp">
+      <Filter>Header\Pipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\PipelineDynamic.hpp">
+      <Filter>Header\Pipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\PipelineInputAssembly.hpp">
+      <Filter>Header\Pipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\PipelineLayout.hpp">
+      <Filter>Header\Pipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\PipelineRasterization.hpp">
+      <Filter>Header\Pipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\PipelineVertex.hpp">
+      <Filter>Header\Pipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\PipelineViewport.hpp">
+      <Filter>Header\Pipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\RenderPass.hpp">
+      <Filter>Header\Pipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ImageContainer.hpp">
+      <Filter>Header\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ImageManager.hpp">
+      <Filter>Header\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\SwapChainSupportDetails.hpp">
       <Filter>Header\Framebuffer</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\Framebuffer\SwapChainSupportDetails.hpp">
+    <ClInclude Include="..\src\SwapChain.hpp">
       <Filter>Header\Framebuffer</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\Pipeline\RenderPass.hpp">
-      <Filter>Header\Pipeline</Filter>
+    <ClInclude Include="..\src\CreateLocalDevice.hpp">
+      <Filter>Header\Device</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\Command\SingleTimeCommandBuffer.hpp">
-      <Filter>Header\Command</Filter>
+    <ClInclude Include="..\src\CreateLocalDeviceByGroup.hpp">
+      <Filter>Header\Device</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\Pipeline\Pipeline.hpp">
-      <Filter>Header\Pipeline</Filter>
+    <ClInclude Include="..\src\DeviceCreateInfo.hpp">
+      <Filter>Header\Device</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\Pipeline\PipelineColorBlend.hpp">
-      <Filter>Header\Pipeline</Filter>
+    <ClInclude Include="..\src\ISetDevice.hpp">
+      <Filter>Header\Device</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\Pipeline\PipelineColorBlendAttachment.hpp">
-      <Filter>Header\Pipeline</Filter>
+    <ClInclude Include="..\src\LocalDevices.hpp">
+      <Filter>Header\Device</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\Pipeline\PipelineDepthStencil.hpp">
-      <Filter>Header\Pipeline</Filter>
+    <ClInclude Include="..\src\PhysicalDevice.hpp">
+      <Filter>Header\Device</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\Pipeline\PipelineDynamic.hpp">
-      <Filter>Header\Pipeline</Filter>
+    <ClInclude Include="..\src\QueueIndices.hpp">
+      <Filter>Header\Device</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\Pipeline\PipelineInputAssembly.hpp">
-      <Filter>Header\Pipeline</Filter>
+    <ClInclude Include="..\src\vkQuque.hpp">
+      <Filter>Header\Device</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\Pipeline\PipelineRasterization.hpp">
-      <Filter>Header\Pipeline</Filter>
+    <ClInclude Include="..\src\VulkanDevice.hpp">
+      <Filter>Header\Device</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\Pipeline\PipelineVertex.hpp">
-      <Filter>Header\Pipeline</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Pipeline\PipelineViewport.hpp">
-      <Filter>Header\Pipeline</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Util\vkHelpers.hpp">
-      <Filter>Header\Util</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Model\VertexLayout.hpp">
-      <Filter>Header\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Shaders\Shader.hpp">
+    <ClInclude Include="..\src\Shader.hpp">
       <Filter>Header\Shaders</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\Descriptor\DescriptorSetLayout.hpp">
-      <Filter>Header\Descriptor</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Buffer\CoreBuffer.hpp">
+    <ClInclude Include="..\src\CoreBuffeManager.hpp">
       <Filter>Header\Buffer</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\Buffer\CoreBuffeManager.hpp">
+    <ClInclude Include="..\src\CoreBuffer.hpp">
       <Filter>Header\Buffer</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\Image\Image.hpp">
-      <Filter>Header\Image</Filter>
+    <ClInclude Include="..\src\VertexLayout.hpp">
+      <Filter>Header\Model</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\Image\ImageManager.hpp">
-      <Filter>Header\Image</Filter>
+    <ClInclude Include="..\src\VulkanInstance.hpp">
+      <Filter>Header\Instance</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\Descriptor\DescriptorPool.hpp">
+    <ClInclude Include="..\src\IVulkanInstance.hpp">
+      <Filter>Header\Instance</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\DescriptorPool.hpp">
       <Filter>Header\Descriptor</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\Descriptor\DescriptorSets.hpp">
+    <ClInclude Include="..\src\DescriptorSetLayout.hpp">
       <Filter>Header\Descriptor</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\Pipeline\PipelineLayout.hpp">
-      <Filter>Header\Pipeline</Filter>
+    <ClInclude Include="..\src\DescriptorSets.hpp">
+      <Filter>Header\Descriptor</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\Image\ImageContainer.hpp">
+    <ClInclude Include="..\src\SingleTimeCommandBuffer.hpp">
+      <Filter>Header\Command</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\CoreImageView.hpp">
       <Filter>Header\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\CoreUtil.hpp">
+      <Filter>Header\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\CoreMath.hpp">
+      <Filter>Header\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ILocalDevices.hpp">
+      <Filter>Header\Device</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ImageSampler.hpp">
+      <Filter>Header\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\CoreImage.hpp">
+      <Filter>Header\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Framebuffer.hpp">
+      <Filter>Header\Framebuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\FrameBufferAttachment.hpp">
+      <Filter>Header\Framebuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\vkHelpers.hpp">
+      <Filter>Header\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\vkBasicModelsContainer.hpp">
+      <Filter>Header\Util</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\Device\CreateLocalDevice.cpp">
-      <Filter>Include\Device</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\Device\CreateLocalDeviceByGroup.cpp">
-      <Filter>Include\Device</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\Device\DeviceCreateInfo.cpp">
-      <Filter>Include\Device</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\Device\LocalDevices.cpp">
-      <Filter>Include\Device</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\Device\PhysicalDevice.cpp">
-      <Filter>Include\Device</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\Device\VulkanDevice.cpp">
-      <Filter>Include\Device</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\Instance\VulkanInstance.cpp">
-      <Filter>Include\Instance</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\Allocation\AllocationPassThrough.cpp">
+    <ClCompile Include="..\src\AllocationPassThrough.cpp">
       <Filter>Include\Allocation</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\Allocation\AllocationPool.cpp">
+    <ClCompile Include="..\src\AllocationPool.cpp">
       <Filter>Include\Allocation</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\Util\Frustum.cpp">
+    <ClCompile Include="..\src\Frustum.cpp">
       <Filter>Include\Util</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\Framebuffer\SwapChain.cpp">
+    <ClCompile Include="..\src\RenderPass.cpp">
+      <Filter>Include\Pipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\PipelineViewport.cpp">
+      <Filter>Include\Pipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\PipelineVertex.cpp">
+      <Filter>Include\Pipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\PipelineRasterization.cpp">
+      <Filter>Include\Pipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\PipelineLayout.cpp">
+      <Filter>Include\Pipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\PipelineInputAssembly.cpp">
+      <Filter>Include\Pipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\PipelineDynamic.cpp">
+      <Filter>Include\Pipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\PipelineDepthStencil.cpp">
+      <Filter>Include\Pipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\PipelineColorBlendAttachment.cpp">
+      <Filter>Include\Pipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\PipelineColorBlend.cpp">
+      <Filter>Include\Pipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Pipeline.cpp">
+      <Filter>Include\Pipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ImageManager.cpp">
+      <Filter>Include\Image</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\SwapChainSupportDetails.cpp">
       <Filter>Include\Framebuffer</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\Framebuffer\SwapChainSupportDetails.cpp">
+    <ClCompile Include="..\src\SwapChain.cpp">
       <Filter>Include\Framebuffer</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\Pipeline\RenderPass.cpp">
-      <Filter>Include\Pipeline</Filter>
+    <ClCompile Include="..\src\VulkanDevice.cpp">
+      <Filter>Include\Device</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\Command\SingleTimeCommandBuffer.cpp">
-      <Filter>Include\Command</Filter>
+    <ClCompile Include="..\src\PhysicalDevice.cpp">
+      <Filter>Include\Device</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\Pipeline\Pipeline.cpp">
-      <Filter>Include\Pipeline</Filter>
+    <ClCompile Include="..\src\LocalDevices.cpp">
+      <Filter>Include\Device</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\Pipeline\PipelineColorBlend.cpp">
-      <Filter>Include\Pipeline</Filter>
+    <ClCompile Include="..\src\DeviceCreateInfo.cpp">
+      <Filter>Include\Device</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\Pipeline\PipelineColorBlendAttachment.cpp">
-      <Filter>Include\Pipeline</Filter>
+    <ClCompile Include="..\src\CreateLocalDeviceByGroup.cpp">
+      <Filter>Include\Device</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\Pipeline\PipelineDepthStencil.cpp">
-      <Filter>Include\Pipeline</Filter>
+    <ClCompile Include="..\src\CreateLocalDevice.cpp">
+      <Filter>Include\Device</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\Pipeline\PipelineDynamic.cpp">
-      <Filter>Include\Pipeline</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\Pipeline\PipelineInputAssembly.cpp">
-      <Filter>Include\Pipeline</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\Pipeline\PipelineRasterization.cpp">
-      <Filter>Include\Pipeline</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\Pipeline\PipelineVertex.cpp">
-      <Filter>Include\Pipeline</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\Pipeline\PipelineViewport.cpp">
-      <Filter>Include\Pipeline</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\Model\VertexLayout.cpp">
-      <Filter>Include\Model</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\Shaders\Shader.cpp">
+    <ClCompile Include="..\src\Shader.cpp">
       <Filter>Include\Shaders</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\Descriptor\DescriptorSetLayout.cpp">
-      <Filter>Include\Descriptor</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\Buffer\CoreBuffer.cpp">
+    <ClCompile Include="..\src\CoreBuffeManager.cpp">
       <Filter>Include\Buffer</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\Buffer\CoreBuffeManager.cpp">
+    <ClCompile Include="..\src\CoreBuffer.cpp">
       <Filter>Include\Buffer</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\Image\Image.cpp">
-      <Filter>Include\Image</Filter>
+    <ClCompile Include="..\src\VertexLayout.cpp">
+      <Filter>Include\Model</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\Image\ImageManager.cpp">
-      <Filter>Include\Image</Filter>
+    <ClCompile Include="..\src\VulkanInstance.cpp">
+      <Filter>Include\Instance</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\Descriptor\DescriptorPool.cpp">
+    <ClCompile Include="..\src\DescriptorSets.cpp">
       <Filter>Include\Descriptor</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\Descriptor\DescriptorSets.cpp">
+    <ClCompile Include="..\src\DescriptorSetLayout.cpp">
       <Filter>Include\Descriptor</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\Pipeline\PipelineLayout.cpp">
-      <Filter>Include\Pipeline</Filter>
+    <ClCompile Include="..\src\DescriptorPool.cpp">
+      <Filter>Include\Descriptor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\SingleTimeCommandBuffer.cpp">
+      <Filter>Include\Command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\CoreImageView.cpp">
+      <Filter>Include\Image</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\pch.cpp" />
+    <ClCompile Include="..\src\ImageSampler.cpp">
+      <Filter>Include\Image</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\CoreImage.cpp">
+      <Filter>Include\Image</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Framebuffer.cpp">
+      <Filter>Include\Framebuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\FrameBufferAttachment.cpp">
+      <Filter>Include\Framebuffer</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

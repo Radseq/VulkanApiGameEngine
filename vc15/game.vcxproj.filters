@@ -55,12 +55,6 @@
     <Filter Include="Source\Filter">
       <UniqueIdentifier>{42e4f172-0588-4876-afe7-bacb06b9b43f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header\TrianglePass">
-      <UniqueIdentifier>{ea10bc5b-955c-4c82-bdcd-d67632e099a3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\TrianglePass">
-      <UniqueIdentifier>{ba107d75-a872-40a8-9be8-56fae342ce55}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header\World">
       <UniqueIdentifier>{fce281d5-e50e-4628-afc0-836e6a2b2653}</UniqueIdentifier>
     </Filter>
@@ -130,216 +124,299 @@
     <Filter Include="Source\Base">
       <UniqueIdentifier>{87d64ffe-5abf-43e7-bac1-6a476b836408}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header\Shader">
+      <UniqueIdentifier>{730f9365-d32b-4aa9-98c7-8b881e8198c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Shader">
+      <UniqueIdentifier>{c0b6afd8-d4b2-408b-80e2-af3d3661282e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header\ShaderInterfaces">
+      <UniqueIdentifier>{8354dc16-0436-4883-a374-151f77cc75e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header\ShaderDescInterfaces">
+      <UniqueIdentifier>{d12e3d4a-efc1-4058-ac1b-1204675d0e32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header\ShaderDescriptors">
+      <UniqueIdentifier>{2943be83-6807-46e3-a7c9-09f89089b892}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\ShaderDescriptors">
+      <UniqueIdentifier>{8707da8b-321b-4702-9677-35669e10e292}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\Util\Configuration.cpp">
-      <Filter>Source\Util</Filter>
+    <ClCompile Include="..\src\ResourcePatch.cpp">
+      <Filter>Source\Base</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\Util\utils.cpp">
-      <Filter>Source\Util</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\Window\Window.cpp">
-      <Filter>Source\Window</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\Init\DefaultFrameBuffer.cpp">
-      <Filter>Source\init</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\FileLoader\ifstreamLoader.cpp">
-      <Filter>Source\FileLoader</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\FileLoader\stbImgFileLoader.cpp">
-      <Filter>Source\FileLoader</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\FileLoader\AssimpLoader.cpp">
-      <Filter>Source\FileLoader</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\Engine\EngineMain.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\Render\Renderer.cpp">
-      <Filter>Source\Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\Engine\Game.cpp">
+    <ClCompile Include="..\src\EngineMain.cpp">
       <Filter>Source\Engine</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\FileLoader\TinyObjModelLoader.cpp">
+    <ClCompile Include="..\src\Game.cpp">
+      <Filter>Source\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\camera.cpp">
+      <Filter>Source\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\entity.cpp">
+      <Filter>Source\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\light.cpp">
+      <Filter>Source\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\player.cpp">
+      <Filter>Source\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\EntityDesc.cpp">
+      <Filter>Source\EntityProcess</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\EntityMeshRender.cpp">
+      <Filter>Source\EntityProcess</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\EntityPipeline.cpp">
+      <Filter>Source\EntityProcess</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\EntityRenderer.cpp">
+      <Filter>Source\EntityProcess</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\TinyObjModelLoader.cpp">
       <Filter>Source\FileLoader</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\Textures\Texture2D.cpp">
+    <ClCompile Include="..\src\stbImgFileLoader.cpp">
+      <Filter>Source\FileLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\KtxTextureLoader.cpp">
+      <Filter>Source\FileLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ifstreamLoader.cpp">
+      <Filter>Source\FileLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\AssimpModelLoader.cpp">
+      <Filter>Source\FileLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\AssimpLoader.cpp">
+      <Filter>Source\FileLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\DefaultFrameBuffer.cpp">
+      <Filter>Source\init</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Model.cpp">
+      <Filter>Source\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ModelCreateInfo.cpp">
+      <Filter>Source\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ModelTexture.cpp">
+      <Filter>Source\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\TexturedModel.cpp">
+      <Filter>Source\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Renderer.cpp">
+      <Filter>Source\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\EntSpecLightShader.cpp">
+      <Filter>Source\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\LightShader.cpp">
+      <Filter>Source\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\DescriptorPools.cpp">
+      <Filter>Source\ShaderDescriptors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\KtxTexture2DArray.cpp">
       <Filter>Source\Textures</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\FileLoader\KtxTextureLoader.cpp">
-      <Filter>Source\FileLoader</Filter>
+    <ClCompile Include="..\src\Texture2D.cpp">
+      <Filter>Source\Textures</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\World\SkySphere\SkySphere.cpp">
-      <Filter>Source\World\SkySphere</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\World\Terrain\Terrain.cpp">
-      <Filter>Source\World\Terrain</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\World\Terrain\HeightMap.cpp">
-      <Filter>Source\World\Terrain</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\FileLoader\AssimpModelLoader.cpp">
-      <Filter>Source\FileLoader</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\entities\camera.cpp">
-      <Filter>Source\Entities</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\entities\entity.cpp">
-      <Filter>Source\Entities</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\entities\light.cpp">
-      <Filter>Source\Entities</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\Model\Model.cpp">
-      <Filter>Source\Model</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\Model\ModelCreateInfo.cpp">
-      <Filter>Source\Model</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\Model\TexturedModel.cpp">
-      <Filter>Source\Model</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\Util\math.cpp">
-      <Filter>Source\Util</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\entities\player.cpp">
-      <Filter>Source\Entities</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\Model\ModelTexture.cpp">
-      <Filter>Source\Model</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\EntityProcess\EntityRenderer.cpp">
-      <Filter>Source\EntityProcess</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\EntityProcess\EntityShader.cpp">
-      <Filter>Source\EntityProcess</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\EntityProcess\EntityDescriptor.cpp">
-      <Filter>Source\EntityProcess</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\EntityProcess\EntityPipeline.cpp">
-      <Filter>Source\EntityProcess</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\UniformBuffers\UniformBuffer.cpp">
+    <ClCompile Include="..\src\UniformBuffer.cpp">
       <Filter>Source\UniformBuffers</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\Textures\KtxTexture2DArray.cpp">
-      <Filter>Source\Textures</Filter>
+    <ClCompile Include="..\src\utils.cpp">
+      <Filter>Source\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Timer.cpp">
+      <Filter>Source\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math.cpp">
+      <Filter>Source\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Configuration.cpp">
+      <Filter>Source\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\HeightMap.cpp">
+      <Filter>Source\World\Terrain</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Terrain.cpp">
+      <Filter>Source\World\Terrain</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\SkySphere.cpp">
+      <Filter>Source\World\SkySphere</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Window.cpp">
+      <Filter>Source\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\pch.cpp" />
+    <ClCompile Include="..\src\WindowProperties.cpp">
+      <Filter>Source\Window</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\src\Util\Configuration.hpp">
-      <Filter>Header\Util</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Util\utils.hpp">
-      <Filter>Header\Util</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Window\Window.hpp">
-      <Filter>Header\Window</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Util\KeyCodes.hpp">
-      <Filter>Header\Util</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Init\DefaultFrameBuffer.hpp">
-      <Filter>Header\Init</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\FileLoader\ifstreamLoader.hpp">
-      <Filter>Header\FileLoader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\FileLoader\ifstreamLoaderContainer.hpp">
-      <Filter>Header\FileLoader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\FileLoader\stbImgFileLoader.hpp">
-      <Filter>Header\FileLoader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\FileLoader\AssimpLoader.hpp">
-      <Filter>Header\FileLoader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Render\Renderer.hpp">
-      <Filter>Header\Render</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Engine\Game.hpp">
-      <Filter>Header\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\FileLoader\TinyObjModelLoader.hpp">
-      <Filter>Header\FileLoader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Textures\Texture2D.hpp">
-      <Filter>Header\Textures</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\FileLoader\KtxTextureLoader.hpp">
-      <Filter>Header\FileLoader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Containers\ImageContainer.hpp">
-      <Filter>Header\Containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\World\SkySphere\SkySphere.hpp">
-      <Filter>Header\World\SkySphere</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\World\Terrain\Terrain.hpp">
-      <Filter>Header\World\Terrain</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\World\Terrain\HeightMap.hpp">
-      <Filter>Header\World\Terrain</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\FileLoader\AssimpModelLoader.hpp">
-      <Filter>Header\FileLoader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\entities\camera.hpp">
-      <Filter>Header\Entities</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\entities\entity.hpp">
-      <Filter>Header\Entities</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\entities\light.hpp">
-      <Filter>Header\Entities</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Model\Model.hpp">
-      <Filter>Header\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Model\ModelCreateInfo.hpp">
-      <Filter>Header\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Model\ModelDimension.hpp">
-      <Filter>Header\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Model\ModelParts.hpp">
-      <Filter>Header\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Model\TexturedModel.hpp">
-      <Filter>Header\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Util\math.hpp">
-      <Filter>Header\Util</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\entities\player.hpp">
-      <Filter>Header\Entities</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Model\ModelTexture.hpp">
-      <Filter>Header\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\EntityProcess\EntityRenderer.hpp">
-      <Filter>Header\EntityProcess</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\EntityProcess\EntityShader.hpp">
-      <Filter>Header\EntityProcess</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\EntityProcess\EntityDescriptor.hpp">
-      <Filter>Header\EntityProcess</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\EntityProcess\EntityPipeline.hpp">
-      <Filter>Header\EntityProcess</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\UniformBuffers\UniformBuffer.hpp">
-      <Filter>Header\UniformBuffers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Base\Core.hpp">
+    <ClInclude Include="..\src\Core.hpp">
       <Filter>Header\Base</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\Textures\KtxTexture2DArray.hpp">
+    <ClInclude Include="..\src\ResourcePatch.hpp">
+      <Filter>Header\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Game.hpp">
+      <Filter>Header\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\camera.hpp">
+      <Filter>Header\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\entity.hpp">
+      <Filter>Header\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\light.hpp">
+      <Filter>Header\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\player.hpp">
+      <Filter>Header\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\EntityDesc.hpp">
+      <Filter>Header\EntityProcess</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\EntityMeshRender.hpp">
+      <Filter>Header\EntityProcess</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\EntityPipeline.hpp">
+      <Filter>Header\EntityProcess</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\EntityRenderer.hpp">
+      <Filter>Header\EntityProcess</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\AssimpLoader.hpp">
+      <Filter>Header\FileLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\AssimpModelLoader.hpp">
+      <Filter>Header\FileLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ifstreamLoader.hpp">
+      <Filter>Header\FileLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ifstreamLoaderContainer.hpp">
+      <Filter>Header\FileLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\IModelLoad.hpp">
+      <Filter>Header\FileLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\KtxTextureLoader.hpp">
+      <Filter>Header\FileLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\stbImgFileLoader.hpp">
+      <Filter>Header\FileLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\TinyObjModelLoader.hpp">
+      <Filter>Header\FileLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\DefaultFrameBuffer.hpp">
+      <Filter>Header\Init</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Model.hpp">
+      <Filter>Header\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ModelCreateInfo.hpp">
+      <Filter>Header\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ModelDimension.hpp">
+      <Filter>Header\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ModelParts.hpp">
+      <Filter>Header\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ModelTexture.hpp">
+      <Filter>Header\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\TexturedModel.hpp">
+      <Filter>Header\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Renderer.hpp">
+      <Filter>Header\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\EntSpecLightShader.hpp">
+      <Filter>Header\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\LightShader.hpp">
+      <Filter>Header\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\IShaderPipeline.hpp">
+      <Filter>Header\ShaderDescInterfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\IShaderDescSet.hpp">
+      <Filter>Header\ShaderDescInterfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\DescriptorPools.hpp">
+      <Filter>Header\ShaderDescriptors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\IShaderVec3Parm.hpp">
+      <Filter>Header\ShaderInterfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\IShaderUniformUpdate.hpp">
+      <Filter>Header\ShaderInterfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\IShaderUniform.hpp">
+      <Filter>Header\ShaderInterfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\IShaderMat4Parm.hpp">
+      <Filter>Header\ShaderInterfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\IShaderFloatParm.hpp">
+      <Filter>Header\ShaderInterfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\IShader.hpp">
+      <Filter>Header\ShaderInterfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\KtxTexture2DArray.hpp">
       <Filter>Header\Textures</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Texture2D.hpp">
+      <Filter>Header\Textures</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\utils.hpp">
+      <Filter>Header\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Timer.hpp">
+      <Filter>Header\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math.hpp">
+      <Filter>Header\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\KeyCodes.hpp">
+      <Filter>Header\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Configuration.hpp">
+      <Filter>Header\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\UniformBuffer.hpp">
+      <Filter>Header\UniformBuffers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Terrain.hpp">
+      <Filter>Header\World\Terrain</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\HeightMap.hpp">
+      <Filter>Header\World\Terrain</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\SkySphere.hpp">
+      <Filter>Header\World\SkySphere</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Window.hpp">
+      <Filter>Header\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\pch.h" />
+    <ClInclude Include="..\src\WindowProperties.hpp">
+      <Filter>Header\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\VkUtils.hpp">
+      <Filter>Header\Util</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -14,10 +14,12 @@ layout(location = 0) in vec2 fragTexCoord;
 layout(location = 1) in vec3 surfaceNormal;
 layout(location = 2) in vec3 toLightVector;
 layout(location = 3) in vec3 toCameraVector;
+layout(location = 4) in float visibility;
 
 layout(location = 0) out vec4 outColor;
 
 const float ambient = 0.0f;
+const vec3 skyColor = vec3(0.5, 0.5, 0.5); // todo
 
 void main() {
 	vec3 unitNormal = normalize(surfaceNormal);
@@ -37,5 +39,8 @@ void main() {
 	float dampedFactor = pow(speculatFactor, light.shineDamper);
 	vec3 finalSpecular = dampedFactor * light.reflectivity * light.lightColor;
 
-    outColor = vec4(diffuse, 1.0) * texture(texSampler, fragTexCoord) + vec4(finalSpecular, 1.0);
+	vec4 textureColor = texture(texSampler, fragTexCoord);
+	
+    vec4 outColorcc = vec4(diffuse, 1.0) * textureColor + vec4(finalSpecular, 1.0);
+	outColor = mix(vec4(skyColor, 1.0), outColorcc, visibility);
 }

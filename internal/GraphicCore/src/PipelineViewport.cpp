@@ -12,8 +12,6 @@ namespace GraphicCore
         }
         else
         {
-            // viewportState.viewportCount = (uint32_t)viewports.size();
-            // viewportState.pViewports = viewports.data();
             Util::updatePointerFromVector (viewports, viewportState.viewportCount, viewportState.pViewports);
         }
 
@@ -24,8 +22,6 @@ namespace GraphicCore
         }
         else
         {
-            // viewportState.scissorCount = (uint32_t)scissors.size();
-            // viewportState.pScissors = scissors.data();
             Util::updatePointerFromVector (scissors, viewportState.scissorCount, viewportState.pScissors);
         }
     }

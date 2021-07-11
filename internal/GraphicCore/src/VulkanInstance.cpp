@@ -51,7 +51,9 @@ namespace GraphicCore
                 debugReportCallbackFunction);
             auto temp = VkDebugReportCallbackCreateInfoEXT (debugReportCallbackCreateInfo);
             if (vkCreateDebugReportCallbackEXT (instance, &temp, nullptr, &debugReportCallback) != VK_SUCCESS)
-            { throw std::runtime_error ("Failed to create debug report callback."); }
+            {
+                throw std::runtime_error ("Failed to create debug report callback.");
+            }
         }
     }
 
@@ -70,8 +72,7 @@ namespace GraphicCore
 
         for (const vk::LayerProperties& layer : availableLayers)
         {
-            const std::string str (layer.layerName.data( ));
-            validationLayerAvailable.push_back (str);
+            GraphicCore::Util::PassToVec (validationLayerAvailable, std::string (layer.layerName.data( )));
         }
     }
 
@@ -107,7 +108,7 @@ namespace GraphicCore
     {
         for (const auto& extension : windowExtensions) { extensions.push_back (extension.c_str( )); }
 
-        extensions.push_back (vk_debug_report);
+        GraphicCore::Util::PassToVec (extensions, vk_debug_report);
     }
 
     void VulkanInstance::CreateInstance (const std::string_view&         gameName,

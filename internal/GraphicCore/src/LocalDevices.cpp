@@ -14,7 +14,7 @@ namespace GraphicCore
 
     void LocalDevices::margeLocalDevices (const std::vector<VulkanDevice*>& list)
     {
-        for (auto* localDevice : list) { localDevices.push_back (localDevice); }
+        for (auto* localDevice : list) { GraphicCore::Util::PassToVec (localDevices, localDevice); }
     }
 
     LocalDevices::LocalDevices (IVulkanInstance& VulkanInstance, const vk::SurfaceKHR& Surface)
@@ -30,6 +30,8 @@ namespace GraphicCore
     LocalDevices::~LocalDevices( )
     {
         for (auto& localDevice : localDevices)  // It is possible to have more than 255 drivers?
-        { delete localDevice; }
+        {
+            delete localDevice;
+        }
     }
 }  // namespace GraphicCore

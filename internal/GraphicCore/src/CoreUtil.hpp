@@ -42,5 +42,10 @@ namespace GraphicCore::Util
             destData = srcVector.data( );
         }
     }
-}  // namespace GraphicCore::util
+
+    template <typename T, typename... Args> void PassToVec (std::vector<T>& vector, Args&&... args)
+    {
+        vector.emplace_back (std::forward<Args> (args)...);
+    }
+}  // namespace GraphicCore::Util
 #endif  // CORE_UTIL_HPP

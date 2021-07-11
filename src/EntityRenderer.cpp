@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "EntityRenderer.hpp"
 
-
 EntityRenderer::EntityRenderer (const GraphicCore::VulkanDevice& Context, const GraphicCore::SwapChain& SwapChain,
                                 const Camera& _camera, const Light& Light)
     : context (Context)
@@ -25,9 +24,7 @@ void EntityRenderer::destroy (bool isSwapChainCleanUp)
 
 void EntityRenderer::createUniformBuffers (const glm::mat4& perspective)
 {
-    uint32_t ImageCount {swapChain.getImageCount( )};
-
-    for (uint32_t i = 0; i < ImageCount; ++i) { updateUniformBuffer (i, perspective); }
+    for (uint32_t i = 0; i < swapChain.getImageCount( ); ++i) { updateUniformBuffer (i, perspective); }
 }
 
 void EntityRenderer::updateUniformBuffer (const uint32_t& currentImage, const glm::mat4& proj)

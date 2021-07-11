@@ -35,7 +35,6 @@ namespace GraphicCore
         VulkanDevice (PhysicalDevice& PhysicalDevice);
 
         void Destroy( ) const;
-        void CreateDevice( );
         void CreateCommandPool( ) const;
 
         const std::unique_ptr<IAllocation>& getAllocator( ) const;

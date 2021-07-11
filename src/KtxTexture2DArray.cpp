@@ -44,9 +44,13 @@ VulkanGame::Ref<GraphicCore::CoreImage> KtxTexture2DArray::LoadTexture (const st
         }
     }
     // check ref count of result
-    auto result = imageManager.CreateImage (imgLoadedData, format, vk::ImageTiling::eOptimal,
-                                            vk::ImageUsageFlagBits::eSampled | vk::ImageUsageFlagBits::eTransferDst,
-                                            vk::MemoryPropertyFlagBits::eDeviceLocal, vk::SampleCountFlagBits::e1);
+
+    auto result = VulkanGame::CreateRef<GraphicCore::CoreImage> (
+        context, std::move(imgLoadedData.TextureExtend), format,
+        vk::ImageUsageFlagBits::eSampled | vk::ImageUsageFlagBits::eTransferDst, vk::SampleCountFlagBits::e1,
+        imgLoadedData.mipLevels, imgLoadedData.arrayLayer);
+
+    result->Crete (vk::MemoryPropertyFlagBits::eDeviceLocal);
 
     VulkanGame::Ref<GraphicCore::CoreImageView> view =
         VulkanGame::CreateRef<GraphicCore::CoreImageView> (context.getVkDevice( ));

@@ -9,8 +9,7 @@ namespace GraphicCore
         {
             if (group.physicalDeviceCount > 1)
             {
-                vk::DeviceGroupDeviceCreateInfo groupCreateInfo {group.physicalDeviceCount, group.physicalDevices};
-                devicesGroupCreateInfo.push_back (groupCreateInfo);
+                GraphicCore::Util::PassToVec (devicesGroupCreateInfo, group.physicalDeviceCount, group.physicalDevices);
             }
         }
     }
@@ -25,10 +24,7 @@ namespace GraphicCore
             pDevice->GetDeviceCreateInfo( ).pNext = &physicalDevicesGroup;
             pDevice->pickDevice (surface);
 
-            VulkanDevice* logicalDevice = new VulkanDevice (*pDevice);
-
-            logicalDevice->CreateDevice( );
-            LogicalDevices.push_back (logicalDevice);
+            GraphicCore::Util::PassToVec (LogicalDevices, new VulkanDevice (*pDevice));
         }
     }
 

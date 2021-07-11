@@ -25,12 +25,14 @@ namespace GraphicCore
         // enable the debug marker extension if it is present (likely meaning a debugging tool is present)
         if (isDeviceExtensionPresent (VK_EXT_DEBUG_MARKER_EXTENSION_NAME))
         {
-            enabledExtensions.push_back (VK_EXT_DEBUG_MARKER_EXTENSION_NAME);
+            GraphicCore::Util::PassToVec (enabledExtensions, VK_EXT_DEBUG_MARKER_EXTENSION_NAME);
             enableDebugMarkers = true;
         }
 
         if (isDeviceExtensionPresent (VK_KHR_SWAPCHAIN_EXTENSION_NAME))
-        { enabledExtensions.push_back (VK_KHR_SWAPCHAIN_EXTENSION_NAME); }
+        {
+            GraphicCore::Util::PassToVec (enabledExtensions, VK_KHR_SWAPCHAIN_EXTENSION_NAME);
+        }
 
         if (!enabledExtensions.empty( ))
         {

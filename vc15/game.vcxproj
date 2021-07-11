@@ -39,7 +39,6 @@
     <ClCompile Include="..\src\KtxTextureLoader.cpp" />
     <ClCompile Include="..\src\stbImgFileLoader.cpp" />
     <ClCompile Include="..\src\TinyObjModelLoader.cpp" />
-    <ClCompile Include="..\src\DefaultFrameBuffer.cpp" />
     <ClCompile Include="..\src\Model.cpp" />
     <ClCompile Include="..\src\ModelCreateInfo.cpp" />
     <ClCompile Include="..\src\ModelTexture.cpp" />
@@ -82,7 +81,6 @@
     <ClInclude Include="..\src\KtxTextureLoader.hpp" />
     <ClInclude Include="..\src\stbImgFileLoader.hpp" />
     <ClInclude Include="..\src\TinyObjModelLoader.hpp" />
-    <ClInclude Include="..\src\DefaultFrameBuffer.hpp" />
     <ClInclude Include="..\src\Model.hpp" />
     <ClInclude Include="..\src\ModelCreateInfo.hpp" />
     <ClInclude Include="..\src\ModelDimension.hpp" />

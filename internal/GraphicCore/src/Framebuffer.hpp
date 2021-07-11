@@ -14,13 +14,11 @@ namespace GraphicCore
         vk::Framebuffer   m_Framebuffer {nullptr};
 
        public:
-        Framebuffer (const vk::Device &Device);
-
-        void Create (const FrameBufferAttachment &FBA, const RenderPass &RenderPass);
+        Framebuffer (const vk::Device &Device, const FrameBufferAttachment &FBA, const RenderPass &RenderPass);
 
         Framebuffer (const Framebuffer &) = delete;
 
-        Framebuffer (Framebuffer &&other);
+        Framebuffer (Framebuffer &&other) noexcept;
 
         ~Framebuffer( );
 

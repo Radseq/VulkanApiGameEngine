@@ -13,6 +13,13 @@ namespace GraphicCore
         : physicalDevice (PhysicalDevice)
     {
         allocator = std::make_unique<AllocationPool> (*this);
+
+        // Vulkan device
+        device = physicalDevice.GetPhysicalDevice( ).createDevice (physicalDevice.GetDeviceCreateInfo( ));
+
+        // Get the graphics queue
+        graphicsQueue = device.getQueue (physicalDevice.ReturnQueueIndices( ).graphics, 0);
+        presentQueue  = device.getQueue (physicalDevice.ReturnQueueIndices( ).compute, 0);
     }
 
     const std::unique_ptr<IAllocation>& VulkanDevice::getAllocator( ) const { return allocator; }
@@ -47,16 +54,6 @@ namespace GraphicCore
 
         device.waitIdle( );
         device.destroy( );
-    }
-
-    void VulkanDevice::CreateDevice( )
-    {
-        // Vulkan device
-        device = physicalDevice.GetPhysicalDevice( ).createDevice (physicalDevice.GetDeviceCreateInfo( ));
-
-        // Get the graphics queue
-        graphicsQueue = device.getQueue (physicalDevice.ReturnQueueIndices( ).graphics, 0);
-        presentQueue  = device.getQueue (physicalDevice.ReturnQueueIndices( ).compute, 0);
     }
 
     const vk::Device&     VulkanDevice::getVkDevice( ) const { return device; }

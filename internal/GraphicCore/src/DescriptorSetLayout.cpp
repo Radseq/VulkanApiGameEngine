@@ -1,5 +1,6 @@
 ﻿#include "pch.h"
 #include "DescriptorSetLayout.hpp"
+
 namespace GraphicCore
 {
     const vk::Flags<vk::ShaderStageFlagBits> DescriptorSetLayoutBinding::ParseVecFlags (
@@ -17,14 +18,10 @@ namespace GraphicCore
         m_TypesShader [descType] = shaderStageFlag;
         m_DescTypes.push_back (descType);
 
-        vk::DescriptorSetLayoutBinding uboLayoutBinding = { };
-        uboLayoutBinding.binding                        = m_BindingCount;
-        uboLayoutBinding.descriptorCount                = 1;
-        uboLayoutBinding.descriptorType                 = descType;
-        uboLayoutBinding.pImmutableSamplers             = nullptr;
-        uboLayoutBinding.stageFlags                     = ParseVecFlags (shaderStageFlag);
-
-        m_Bindings.push_back (uboLayoutBinding);
+        // DescriptorSetLayoutBinding (uint32_t binding_, DescriptorType descriptorType, uint32_t descriptorCount,
+        //                            ShaderStageFlags stageFlags_, Sampler * pImmutableSamplers_)
+        GraphicCore::Util::PassToVec (m_Bindings, m_BindingCount, descType, 1, ParseVecFlags (shaderStageFlag),
+                                      nullptr);
 
         ++m_BindingCount;
     }

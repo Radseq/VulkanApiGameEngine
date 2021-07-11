@@ -3,12 +3,8 @@
 
 namespace GraphicCore
 {
-    Framebuffer::Framebuffer (const vk::Device &Device)
+    Framebuffer::Framebuffer (const vk::Device &Device, const FrameBufferAttachment &FBA, const RenderPass &RenderPass)
         : m_Device {Device}
-    {
-    }
-
-    void Framebuffer::Create (const FrameBufferAttachment &FBA, const RenderPass &RenderPass)
     {
         auto &extent = FBA.GetExtent( );
 
@@ -28,17 +24,14 @@ namespace GraphicCore
         m_Framebuffer = m_Device.createFramebuffer (createInfo);
     }
 
-    Framebuffer::Framebuffer (Framebuffer &&other)
+    Framebuffer::Framebuffer (Framebuffer &&other) noexcept
         : m_Device {other.m_Device}
         , m_Framebuffer {other.m_Framebuffer}
     {
         other.m_Framebuffer = nullptr;
     }
 
-    Framebuffer::~Framebuffer( )
-    {
-        if (m_Framebuffer != vk::Framebuffer( )) { m_Device.destroyFramebuffer (m_Framebuffer); }
-    }
+    Framebuffer::~Framebuffer( ) { m_Device.destroyFramebuffer (m_Framebuffer); }
 
     vk::Framebuffer Framebuffer::GetVkFrameBuffer( ) const { return m_Framebuffer; }
 }  // namespace GraphicCore

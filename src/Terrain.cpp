@@ -96,7 +96,9 @@ void Terrain::loadAssets( )
     heightMapTextureDescImageInfo.sampler     = heightMapTextureImageSampler.GetVkSampler( );
 
     for (auto& view : heightMapTextureImage->GetViews( ))
-    { heightMapTextureDescImageInfo.imageView = view->GetImageView( ); }
+    {
+        heightMapTextureDescImageInfo.imageView = view->GetImageView( );
+    }
 
     // Setup a repeating sampler for the terrain texture layers
     // context.getVkDevice( ).destroySampler (terrainArrayTextureImage->sampler);
@@ -236,10 +238,10 @@ void Terrain::generateTerrain( )
     constexpr float    wx         = 2.0F;
     constexpr float    wy         = 2.0F;
 
-    constexpr uint32_t              vertexCount = PATCH_SIZE * PATCH_SIZE;
-    //Vertex*                         vertices    = new Vertex [vertexCount];
+    constexpr uint32_t vertexCount = PATCH_SIZE * PATCH_SIZE;
+    // Vertex*                         vertices    = new Vertex [vertexCount];
     std::array<Vertex, vertexCount> vertices;
-    //std::vector<Vertex> vertices (vertexCount);
+    // std::vector<Vertex> vertices (vertexCount);
 
     for (auto x = 0; x < PATCH_SIZE; ++x)
     {
@@ -291,8 +293,8 @@ void Terrain::generateTerrain( )
     constexpr uint32_t indexCount = w * w * 4;
 
     std::array<uint32_t, indexCount> indices { };
-    //uint32_t*                        indices = new uint32_t [indexCount];
-    //std::vector<uint32_t> indices (indexCount);
+    // uint32_t*                        indices = new uint32_t [indexCount];
+    // std::vector<uint32_t> indices (indexCount);
 
     for (auto x = 0; x < w; x++)
     {
@@ -320,7 +322,9 @@ void Terrain::setupDescriptorSets (GraphicCore::DescriptorPool& descPool)
         {descPool.getDescriptorPool( ), 1, &descSetLayout.getDescriptorSetLayout( )}) [0];
 
     for (auto& view : terrainArrayTextureImage->GetViews( ))
-    { terrainArrayTextureDescImageInfo.imageView = view->GetImageView( ); }
+    {
+        terrainArrayTextureDescImageInfo.imageView = view->GetImageView( );
+    }
 
     terrainArrayTextureDescImageInfo.imageLayout = vk::ImageLayout::eShaderReadOnlyOptimal;
     terrainArrayTextureDescImageInfo.sampler     = terrainArrayTextureImageSampler.GetVkSampler( );
@@ -345,9 +349,7 @@ void Terrain::createPipeline (const vk::RenderPass& renderPass)
     // Terrain tessellation pipeline
     GraphicCore::Pipeline builder {context.getVkDevice( ), terrainPipelineLayout, renderPass};
     builder.getPipelineInputAssembly( ).getAssembly( ).topology = vk::PrimitiveTopology::ePatchList;
-    // builder.getPipelineDynamic().getDynamicStateEnables().push_back(vk::DynamicState::eViewport);
-    builder.getPipelineDynamic( ).getDynamicStateEnables( ).push_back (vk::DynamicState::eLineWidth);
-    // builder.getPipelineDynamic().getDynamicStateEnables().push_back(vk::DynamicState::eScissor);
+    VulkanGame::PassToVec (builder.getPipelineDynamic( ).getDynamicStateEnables( ), vk::DynamicState::eLineWidth);
     builder.getVertexInputState( ).appendVertexLayout (vertexLayout);
 
     // We render the terrain as a grid of quad patches

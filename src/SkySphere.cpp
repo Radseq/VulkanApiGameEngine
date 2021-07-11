@@ -125,7 +125,9 @@ void SkySphere::setupDescriptorSets (GraphicCore::DescriptorPool& descPool)
     skySphereTextureDescImageInfo.sampler     = skySphereTextureImageSampler.GetVkSampler( );
 
     for (auto& view : skySphereTexture->GetViews( ))
-    { skySphereTextureDescImageInfo.imageView = view->GetImageView( ); }
+    {
+        skySphereTextureDescImageInfo.imageView = view->GetImageView( );
+    }
 
     std::vector<vk::WriteDescriptorSet> writeDescriptorSets {
         {skySphereDescriptorSet, 0, 0, 1, vk::DescriptorType::eUniformBuffer, nullptr,
@@ -142,9 +144,9 @@ void SkySphere::createPipelines (vk::RenderPass const& renderPass)
 
     // Terrain tessellation pipeline
     GraphicCore::Pipeline builder {context.getVkDevice( ), skyspherePipelineLayout, renderPass};
-    builder.getPipelineDynamic( ).getDynamicStateEnables( ).push_back (vk::DynamicState::eViewport);
-    builder.getPipelineDynamic( ).getDynamicStateEnables( ).push_back (vk::DynamicState::eLineWidth);
-    builder.getPipelineDynamic( ).getDynamicStateEnables( ).push_back (vk::DynamicState::eScissor);
+    VulkanGame::PassToVec (builder.getPipelineDynamic( ).getDynamicStateEnables( ), vk::DynamicState::eViewport);
+    VulkanGame::PassToVec (builder.getPipelineDynamic( ).getDynamicStateEnables( ), vk::DynamicState::eLineWidth);
+    VulkanGame::PassToVec (builder.getPipelineDynamic( ).getDynamicStateEnables( ), vk::DynamicState::eScissor);
     builder.getVertexInputState( ).appendVertexLayout (vertexLayout);
     // Skysphere pipeline
     builder.getPipelineRasterization( ).getRasterizationState( ).polygonMode = vk::PolygonMode::eFill;

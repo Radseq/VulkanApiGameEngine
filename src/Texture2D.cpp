@@ -11,9 +11,13 @@ VulkanGame::Ref<GraphicCore::CoreImage> Texture2D::CreateImage (const GraphicCor
 
     GraphicCore::ImageManager imageManager {context};
 
-    auto result = imageManager.CreateImage (imgContainer, format, vk::ImageTiling::eOptimal,
-                                            vk::ImageUsageFlagBits::eTransferDst | vk::ImageUsageFlagBits::eSampled,
-                                            vk::MemoryPropertyFlagBits::eDeviceLocal, vk::SampleCountFlagBits::e1);
+    auto result = VulkanGame::CreateRef<GraphicCore::CoreImage> (
+        context, std::move(imgContainer.TextureExtend), format,
+        vk::ImageUsageFlagBits::eTransferDst | vk::ImageUsageFlagBits::eSampled, vk::SampleCountFlagBits::e1,
+        imgContainer.mipLevels,
+        imgContainer.arrayLayer);
+
+    result->Crete (vk::MemoryPropertyFlagBits::eDeviceLocal);
 
     imageManager.copyBufferToImage (stagingBuffer.getBuffer( ), result);
 

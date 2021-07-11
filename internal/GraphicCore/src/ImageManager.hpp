@@ -22,16 +22,10 @@ namespace GraphicCore
         const VulkanDevice& device;
         using MipData = std::pair<vk::Extent3D, vk::DeviceSize>;
 
-        void allocateImgMemory (std::shared_ptr<GraphicCore::CoreImage> imageResult,
-                                const vk::MemoryPropertyFlags&          properties) const;
+       
 
        public:
         explicit ImageManager (const VulkanDevice& Device);
-
-        std::shared_ptr<GraphicCore::CoreImage> CreateImage (
-            const ImageContainer& imgContainer, const vk::Format& format, const vk::ImageTiling& tiling,
-            const vk::ImageUsageFlags& usage, const vk::MemoryPropertyFlags& properties,
-            const vk::SampleCountFlagBits& numSamples = vk::SampleCountFlagBits::e1);
 
         void copyBufferToImage (const vk::Buffer& buffer, std::shared_ptr<GraphicCore::CoreImage> coreImage);
 

@@ -36,8 +36,8 @@ class EntSpecLightShader : public IShader
     const std::vector<std::string_view> GetAllParms( ) override;
 
     void SetVec3 (const std::string_view& objParmName, const glm::vec3& parm) override;
-    // Ye i know, but i dont have better idea for shaders
     void SetMat4 (const std::string_view& objParmName, const glm::mat4& parm) override;
+    // Ye i know, but i dont have better idea for shaders
     void SetFloat (const std::string_view& objParmName, const float& parm) override { };
 
     void                            Create (const GraphicCore::VulkanDevice& context, const uint32_t& count) override;

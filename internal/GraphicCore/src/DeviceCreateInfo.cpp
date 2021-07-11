@@ -5,7 +5,8 @@ namespace GraphicCore
 {
     void DeviceCreateInfo::addQueueFamily (uint32_t queueFamilyIndex, vk::ArrayProxy<float> priorities)
     {
-        deviceQueues.push_back ({{ }, queueFamilyIndex});
+        //deviceQueues.push_back ({{ }, queueFamilyIndex});
+        GraphicCore::Util::PassToVec (deviceQueues, vk::DeviceQueueCreateInfo ({ }, queueFamilyIndex));
         std::vector<float> prioritiesVector;
         prioritiesVector.resize (priorities.size( ));
         memcpy (prioritiesVector.data( ), priorities.data( ), sizeof (float) * priorities.size( ));

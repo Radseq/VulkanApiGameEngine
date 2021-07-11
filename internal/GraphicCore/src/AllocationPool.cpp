@@ -39,7 +39,7 @@ namespace GraphicCore
     {
         const vk::DeviceSize requestedAllocSize = ((allocationProperties.size / state.pageSize) + 1) * state.pageSize;
 
-        const OffsetSize span = {allocationProperties.offset, requestedAllocSize};
+       // const OffsetSize span = {allocationProperties.offset, requestedAllocSize};
 
         MemoryPool& pool                                   = state.memPools [allocationProperties.type];
         pool.blocks [allocationProperties.id].pageReserved = false;
@@ -61,7 +61,10 @@ namespace GraphicCore
 
         if (!found)
         {
-            state.memPools [allocationProperties.type].blocks [allocationProperties.id].layout.push_back (span);
+            GraphicCore::Util::PassToVec (
+                state.memPools [allocationProperties.type].blocks [allocationProperties.id].layout,
+                allocationProperties.offset, requestedAllocSize);
+
             state.memTypeAllocSizes [allocationProperties.type] -= requestedAllocSize;
             context.getVkDevice( ).freeMemory (allocationProperties.handle);
         }

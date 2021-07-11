@@ -3,58 +3,11 @@
 
 namespace GraphicCore
 {
-    void ImageManager::allocateImgMemory (std::shared_ptr<GraphicCore::CoreImage> imageResult,
-                                          const vk::MemoryPropertyFlags&          properties) const
-    {
-        const vk::MemoryRequirements memReqs =
-            device.getVkDevice( ).getImageMemoryRequirements (imageResult->GetVkImage( ));
-        /*vk::MemoryAllocateInfo memAllocInfo;
-        memAllocInfo.allocationSize = result.getAllocSize() = memReqs.size;
-        memAllocInfo.memoryTypeIndex = device.getMemoryType(memReqs.memoryTypeBits, memoryPropertyFlags);
-        result.getMemory() = device.getVkDevice().allocateMemory(memAllocInfo);
-        device.getVkDevice().bindImageMemory(result.getVkImage(), result.getMemory(), 0);*/
 
-        AllocationCreateInfo allocInfo { };
-        allocInfo.size            = memReqs.size;
-        allocInfo.memoryTypeIndex = device.getMemoryType (memReqs.memoryTypeBits, properties);
-        allocInfo.usage           = properties;
-
-        device.getAllocator( )->alloc (imageResult->allocatedMemory, allocInfo);
-        imageResult->bind( );
-    }
 
     ImageManager::ImageManager (const VulkanDevice& Device)
         : device (Device)
     {
-    }
-
-    std::shared_ptr<GraphicCore::CoreImage> ImageManager::CreateImage (const ImageContainer&          imgContainer,
-                                                                       const vk::Format&              format,
-                                                                       const vk::ImageTiling&         tiling,
-                                                                       const vk::ImageUsageFlags&     usage,
-                                                                       const vk::MemoryPropertyFlags& properties,
-                                                                       const vk::SampleCountFlagBits& numSamples)
-    {
-        std::shared_ptr<GraphicCore::CoreImage> result = std::make_shared<GraphicCore::CoreImage> (
-            device.getVkDevice( ), imgContainer.TextureExtend, format, usage, properties, numSamples,
-            imgContainer.mipLevels, imgContainer.arrayLayer, tiling);
-
-        vk::ImageCreateInfo imageInfo = { };
-        imageInfo.imageType           = vk::ImageType::e2D;
-        imageInfo.extent              = imgContainer.TextureExtend;
-        imageInfo.mipLevels           = imgContainer.mipLevels;
-        imageInfo.arrayLayers         = imgContainer.arrayLayer;
-        imageInfo.format              = format;
-        imageInfo.tiling              = tiling;
-        imageInfo.initialLayout       = vk::ImageLayout::eUndefined;
-        imageInfo.usage               = usage;
-        imageInfo.samples             = numSamples;
-        imageInfo.sharingMode         = vk::SharingMode::eExclusive;
-
-        result->m_Image = device.getVkDevice( ).createImage (imageInfo);
-
-        allocateImgMemory (result, properties);
-        return result;
     }
 
     void ImageManager::generateMipmaps (const GraphicCore::CoreImage& coreImage)
@@ -72,7 +25,7 @@ namespace GraphicCore
         singleTimeCmdBuffer.createCommandBuffer (true);
 
         vk::ImageMemoryBarrier barrier          = { };
-        barrier.image                           = coreImage.m_Image;
+        barrier.image                           = coreImage.GetVkImage();
         barrier.srcQueueFamilyIndex             = VK_QUEUE_FAMILY_IGNORED;
         barrier.dstQueueFamilyIndex             = VK_QUEUE_FAMILY_IGNORED;
         barrier.subresourceRange.aspectMask     = vk::ImageAspectFlagBits::eColor;

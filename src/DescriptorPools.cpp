@@ -17,7 +17,8 @@ void DescriptorPools::CreateDescriptorPool (const uint32_t& descCountGivenPool, 
 
     descriptorPool.create (m_Device, maxSets);
 
-    m_DescPools.push_back (descriptorPool);
+    // m_DescPools.push_back (descriptorPool);
+    GraphicCore::Util::PassToVec (m_DescPools, descriptorPool);
 }
 
 void DescriptorPools::CreateDescriptorPool (const std::vector<uint32_t>& sizeOfDescTypes, const uint32_t& maxSets)
@@ -39,7 +40,8 @@ void DescriptorPools::CreateDescriptorPool (const std::vector<uint32_t>& sizeOfD
 
     descriptorPool.create (m_Device, maxSets);
 
-    m_DescPools.push_back (descriptorPool);
+    // m_DescPools.push_back (descriptorPool);
+    GraphicCore::Util::PassToVec (m_DescPools, descriptorPool);
 }
 
 VulkanGame::Ref<GraphicCore::DescriptorSets> DescriptorPools::CreateDescSet (const uint32_t& descSetsCount)
@@ -49,9 +51,9 @@ VulkanGame::Ref<GraphicCore::DescriptorSets> DescriptorPools::CreateDescSet (con
     // we got last descriptor pool, because desc set should be created after creating pool and "last" desc pool will use
     // specyfic desc types like this desc set, we can always create find func for pool that match pool desc type with
     // m_DescSetLayout desc types
-    auto lastCreatedPool = m_DescPools [m_DescPools.size( ) - 1];
+    // auto lastCreatedPool = m_DescPools [m_DescPools.size( ) - 1];
 
-    auto result = VulkanGame::CreateRef<GraphicCore::DescriptorSets> (lastCreatedPool, m_Device);
+    auto result = VulkanGame::CreateRef<GraphicCore::DescriptorSets> (m_DescPools.back( ), m_Device);
     result->create (descSetsCount, m_DescSetLayout);
     return result;
 }

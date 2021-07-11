@@ -25,7 +25,7 @@ void GraphicCore::DescriptorPool::addTypesToPair (const std::pair<vk::Descriptor
 void GraphicCore::DescriptorPool::addDescriptorPoolSize (const vk::DescriptorType& descType,
                                                          const uint32_t&           descriptorCount)
 {
-    descPoolSize.emplace_back (vk::DescriptorPoolSize (descType, descriptorCount));
+    descPoolSize.push_back ({descType, descriptorCount});
     ++count;
 
     addTypesToPair ({descType, descriptorCount});

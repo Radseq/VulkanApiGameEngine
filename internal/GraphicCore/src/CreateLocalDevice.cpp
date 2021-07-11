@@ -12,7 +12,10 @@ namespace GraphicCore
                 for (const auto& physicalDevice : group.physicalDevices)
                 {
                     if (physicalDevice != vk::PhysicalDevice( ))
-                        physicalDevices.push_back (physicalDevice);
+                    {
+                        GraphicCore::Util::PassToVec (physicalDevices,
+                                                      physicalDevice);
+                    }
                     else
                         break;
                 }
@@ -39,10 +42,7 @@ namespace GraphicCore
         {
             scoredDevice.second->pickDevice (surface);
 
-            VulkanDevice* logicalDevice = new VulkanDevice (*scoredDevice.second);
-
-            logicalDevice->CreateDevice( );
-            LogicalDevices.push_back (logicalDevice);
+            GraphicCore::Util::PassToVec (LogicalDevices, new VulkanDevice (*scoredDevice.second));
 
             /*if (SingleGraphicCard)*/ break;
         }

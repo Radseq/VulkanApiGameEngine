@@ -19,6 +19,6 @@ void ResourcePatch::SetPatch (const std::string_view& patch, const std::string_v
 std::vector<std::string> ResourcePatch::listOfAvailablePatch( )
 {
     std::vector<std::string> result;
-    for (const auto& patch : m_Paches) { result.push_back (std::string (patch.first)); }
+    for (const auto& patch : m_Paches) { VulkanGame::PassToVec (result, std::string (patch.first)); }
     return result;
 }

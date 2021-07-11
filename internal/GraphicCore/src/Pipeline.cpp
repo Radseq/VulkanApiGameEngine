@@ -64,9 +64,7 @@ namespace GraphicCore
                                                              const vk::ShaderStageFlagBits&& stage,
                                                              const char*                     entryPoint)
     {
-        const vk::PipelineShaderStageCreateInfo shaderStage =
-            Shader::loadShader (device, filePatchName, stage, entryPoint);
-        shaderStages.push_back (shaderStage);
+        GraphicCore::Util::PassToVec (shaderStages, Shader::loadShader (device, filePatchName, stage, entryPoint));
         return shaderStages.back( );
     }
 

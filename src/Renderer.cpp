@@ -50,7 +50,9 @@ void Renderer::prepareFrame( )
         swapChain->getVkSwapChain( ), UINT64_MAX, imageAvailableSemaphores [currentFrame], nullptr);
 
     if (resultValue.result != vk::Result::eSuccess && resultValue.result != vk::Result::eSuboptimalKHR)
-    { throw std::runtime_error ("failed to acquire swap chain image!"); }
+    {
+        throw std::runtime_error ("failed to acquire swap chain image!");
+    }
 
     if (resultValue.result == vk::Result::eErrorOutOfDateKHR)
     {
@@ -86,12 +88,16 @@ void Renderer::drawCurrentCommandBuffer( )
     operationResult = context->getVkDevice( ).resetFences (1, &inFlightFences [currentFrame]);
 
     if (operationResult != vk::Result::eSuccess)
-    { throw std::runtime_error ("failed to reset fence! " + vk::to_string (operationResult)); }
+    {
+        throw std::runtime_error ("failed to reset fence! " + vk::to_string (operationResult));
+    }
 
     operationResult = context->getGraphicsQueue( ).submit (1, &submitInfo, inFlightFences [currentFrame]);
 
     if (operationResult != vk::Result::eSuccess)
-    { throw std::runtime_error ("failed to submit draw command buffer! " + vk::to_string (operationResult)); }
+    {
+        throw std::runtime_error ("failed to submit draw command buffer! " + vk::to_string (operationResult));
+    }
 }
 
 /// <summary>
@@ -156,7 +162,6 @@ void Renderer::init (const vk::Extent2D& WindowSize)
 
     createPerspective( );
 
-    defaultFramebuffer.createRenderPass( );
     createFrameBuffers( );
 
     allocateCmdBuffers( );
@@ -192,8 +197,8 @@ void Renderer::init (const vk::Extent2D& WindowSize)
 /// </summary>
 void Renderer::createGraphicsPipeline( )
 {
-    skysphere.createPipelines (defaultFramebuffer.getVkRenderPass( ));
-    terrain.createPipeline (defaultFramebuffer.getVkRenderPass( ));
+    skysphere.createPipelines (renderPass.GetVkRenderPass( ));
+    terrain.createPipeline (renderPass.GetVkRenderPass( ));
 }
 
 /// <summary>
@@ -211,14 +216,14 @@ void Renderer::createCommandBuffers( )
     const vk::Rect2D scissor  = GraphicCore::vkHelper::rect2D (windowSize);
 
     vk::RenderPassBeginInfo renderPassInfo;
-    renderPassInfo.renderPass      = defaultFramebuffer.getVkRenderPass( );
+    renderPassInfo.renderPass      = renderPass.GetVkRenderPass( );
     renderPassInfo.renderArea      = renderArea;
     renderPassInfo.clearValueCount = GraphicCore::Util::toUint32t (clearColors.size( ));
     renderPassInfo.pClearValues    = clearColors.data( );
 
     for (size_t i = 0; i < commandBuffers.size( ); ++i)
     {
-        renderPassInfo.framebuffer = defaultFramebuffer.getFrameBuffers( ) [i];
+        renderPassInfo.framebuffer = swapChainFramebuffers [i];
 
         auto& cmdBuffer = commandBuffers [i];
 
@@ -328,11 +333,9 @@ void Renderer::loadAsserts( )
         ResourcePatch::GetInstance( )->GetPatch ("DataPatch") + "/shaders/static_shader/specular_lighting/frag.spv"};
 
     entPipeline->CreateGraphicsPipeline (std::move (shaderPatchName), swapChain->getSwapChainExtent( ),
-                                         defaultFramebuffer.getVkRenderPass( ));
+                                         renderPass.GetVkRenderPass( ));
 
     EntRendObj = VulkanGame::CreateRef<EntityMeshRender> (*entity, entShader, entPipeline);
-
-    entities.push_back (EntRendObj);
 }
 
 /// <summary>
@@ -343,7 +346,23 @@ void Renderer::createNewRenderCommandBuffers( ) { }
 /// <summary>
 /// Creates the frame buffers.
 /// </summary>
-void Renderer::createFrameBuffers( ) { defaultFramebuffer.CreateFrameBuffer( ); }
+void Renderer::createFrameBuffers( )
+{
+    vk::Extent3D swapChainExtent = vk::Extent3D (swapChain->getSwapChainExtent( ), 1);
+
+    for (size_t i = 0; i < swapChain->getSwapChainImages( ).size( ); ++i)
+    {
+        VulkanGame::Ref<GraphicCore::CoreImage> swapchainImage = VulkanGame::CreateRef<GraphicCore::CoreImage> (
+            *context, swapChain->getSwapChainImages( ) [i], swapChainExtent, swapChain->getColorFormat( ),
+            swapChain->GetSupportedImageFlags( ));
+
+        auto renderTarget = fbaFunc (std::move (swapchainImage));
+
+        VulkanGame::PassToVec (Framebuffers, context->getVkDevice( ), renderTarget, renderPass);
+
+        swapChainFramebuffers.push_back (Framebuffers [i].GetVkFrameBuffer( ));
+    }
+}
 
 /// <summary>
 /// Destroys this instance.
@@ -378,7 +397,7 @@ void Renderer::update( )
 /// </summary>
 void Renderer::reCreate( )
 {
-    defaultFramebuffer.destroy( );
+    Framebuffers.clear( );
 
     context->getVkDevice( ).freeCommandBuffers (context->getCommandPool( ), commandBuffers);
 }
@@ -414,7 +433,7 @@ void Renderer::queryPoolResult( )
 
 void Renderer::allocateCmdBuffers( )
 {
-    commandBuffers.resize (defaultFramebuffer.getFrameBuffers( ).size( ));
+    commandBuffers.resize (Framebuffers.size( ));
 
     commandBuffers =
         context->getVkDevice( ).allocateCommandBuffers ({context->getCommandPool( ), vk::CommandBufferLevel::ePrimary,

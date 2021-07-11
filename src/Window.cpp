@@ -31,13 +31,18 @@ std::vector<std::string> Window::getRequiredInstanceExtensions( )
     const char**             names = glfwGetRequiredInstanceExtensions (&count);
     if (names && count)
     {
-        for (size_t i = 0; i < count; ++i) { result.emplace_back (names [i]); }
+        for (size_t i = 0; i < count; ++i)
+        {
+            VulkanGame::PassToVec (result, names [i]);
+            // result.emplace_back (names [i]);
+        }
     }
 
 #ifdef NDEBUG
 
 #else
-    result.emplace_back (VK_EXT_DEBUG_UTILS_EXTENSION_NAME);
+    // result.emplace_back (VK_EXT_DEBUG_UTILS_EXTENSION_NAME);
+    VulkanGame::PassToVec (result, VK_EXT_DEBUG_UTILS_EXTENSION_NAME);
 #endif
 
     return result;

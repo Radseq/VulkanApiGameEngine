@@ -22,7 +22,7 @@ namespace GraphicCore
 
     class FrameBufferAttachment
     {
-        const vk::Device &device;
+        const VulkanDevice &m_LogicalDevice;
 
         vk::Extent2D extent { };
 
@@ -45,10 +45,8 @@ namespace GraphicCore
         FrameBufferAttachment (const FrameBufferAttachment &) = delete;
         FrameBufferAttachment (FrameBufferAttachment &&)      = default;
 
-        FrameBufferAttachment &operator= (const FrameBufferAttachment &other) noexcept = delete;
-        FrameBufferAttachment &operator= (FrameBufferAttachment &&other) noexcept;
 
-        vk::ResultValueType<void>::type Init( );
+        // vk::ResultValueType<void>::type Init( );
 
         const vk::Extent2D &                               GetExtent( ) const;
         const std::vector<std::shared_ptr<CoreImageView>>  GetViews( ) const;

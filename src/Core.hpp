@@ -16,6 +16,11 @@ namespace VulkanGame
     {
         return std::make_shared<T> (std::forward<Args> (args)...);
     }
+
+    template <typename T, typename... Args> void PassToVec (std::vector<T>& vector, Args&&... args)
+    {
+        vector.emplace_back (std::forward<Args> (args)...);
+    }
 }  // namespace VulkanGame
 
 #endif  // CORE_HPP

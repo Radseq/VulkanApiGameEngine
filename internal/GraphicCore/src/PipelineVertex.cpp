@@ -19,7 +19,10 @@ namespace GraphicCore
     void PipelineVertex::appendVertexLayout (const VertexLayout& vertexLayout, uint32_t binding,
                                              vk::VertexInputRate rate)
     {
-        bindingDescriptions.emplace_back (binding, vertexLayout.stride( ), rate);
+        //bindingDescriptions.emplace_back (binding, vertexLayout.stride( ), rate);
+
+        GraphicCore::Util::PassToVec (bindingDescriptions, binding, vertexLayout.stride( ), rate);
+
         const auto componentsSize = vertexLayout.components.size( );
         attributeDescriptions.reserve (attributeDescriptions.size( ) + componentsSize);
         const auto attributeIndexOffset = uint32_t (attributeDescriptions.size( ));
@@ -28,7 +31,8 @@ namespace GraphicCore
             const auto& component = vertexLayout.components [i];
             const auto  format    = vertexLayout.componentFormat (component);
             const auto  offset    = vertexLayout.offset (i);
-            attributeDescriptions.emplace_back (attributeIndexOffset + i, binding, format, offset);
+            //attributeDescriptions.emplace_back (attributeIndexOffset + i, binding, format, offset);
+            GraphicCore::Util::PassToVec (attributeDescriptions, attributeIndexOffset + i, binding, format, offset);
         }
     }
 

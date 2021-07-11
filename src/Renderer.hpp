@@ -2,9 +2,9 @@
 #define RENDERER_HPP
 
 #include <DescriptorPool.hpp>
+#include <Framebuffer.hpp>
 
 #include "Configuration.hpp"
-#include "DefaultFrameBuffer.hpp"
 #include "EntityDesc.hpp"
 #include "EntityMeshRender.hpp"
 #include "EntityPipeline.hpp"
@@ -52,7 +52,24 @@ class Renderer
     vk::Semaphore          signalSemaphores;
     vk::PipelineStageFlags waitStages;
 
-    DefaultFrameBuffer defaultFramebuffer {*context, *swapChain};
+    // DefaultFrameBuffer defaultFramebuffer {*context, *swapChain};
+
+    std::vector<vk::Framebuffer> swapChainFramebuffers;
+
+    std::vector<GraphicCore::vkBasicModels::AttachmentModel> m_AttachemntsVec {
+        {swapChain->getColorFormat( ), vk::SampleCountFlagBits::e1,
+         vk::ImageUsageFlagBits::eTransientAttachment | vk::ImageUsageFlagBits::eColorAttachment},
+        {context->depthFormat, vk::SampleCountFlagBits::e1,
+         vk::ImageUsageFlagBits::eDepthStencilAttachment | vk::ImageUsageFlagBits::eTransferSrc}};
+
+    std::vector<GraphicCore::vkBasicModels::LoadStoreInfo> storeInfoVec {{ }, {}};
+    GraphicCore::vkBasicModels::SubpassInfo                subPassInfo {{ }, {0}};
+    std::vector<GraphicCore::vkBasicModels::SubpassInfo>   subpassInfoVec {subPassInfo};
+    GraphicCore::RenderPass renderPass {context->getVkDevice( ), m_AttachemntsVec, storeInfoVec, subpassInfoVec};
+
+    std::vector<GraphicCore::Framebuffer> Framebuffers;
+
+    GraphicCore::FrameBufferAttachment::CreateFunc fbaFunc = GraphicCore::FrameBufferAttachment::DEFAULT_CREATE_FUNC;
 
     Camera& camera;
 
@@ -85,8 +102,7 @@ class Renderer
 
     void createPerspective( );
 
-    std::vector<VulkanGame::Ref<EntityMeshRender>> entities;
-    void                                           loadAsserts( );
+    void loadAsserts( );
 
     EntityRenderer entityRenderer {*context, *swapChain, camera, light};
 

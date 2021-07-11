@@ -195,9 +195,6 @@
     <ClCompile Include="..\src\AssimpLoader.cpp">
       <Filter>Source\FileLoader</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\DefaultFrameBuffer.cpp">
-      <Filter>Source\init</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\Model.cpp">
       <Filter>Source\Model</Filter>
     </ClCompile>
@@ -317,9 +314,6 @@
     </ClInclude>
     <ClInclude Include="..\src\TinyObjModelLoader.hpp">
       <Filter>Header\FileLoader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\DefaultFrameBuffer.hpp">
-      <Filter>Header\Init</Filter>
     </ClInclude>
     <ClInclude Include="..\src\Model.hpp">
       <Filter>Header\Model</Filter>

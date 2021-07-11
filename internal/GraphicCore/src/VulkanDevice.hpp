@@ -26,13 +26,13 @@ namespace GraphicCore
         vk::Queue presentQueue;
 
         vk::Format getSupportedDepthFormat( ) const;
-        vk::Format findSupportedFormat (const std::vector<vk::Format>& candidates, vk::ImageTiling tiling,
+        vk::Format findSupportedFormat (const std::array<vk::Format, 5>& candidates, vk::ImageTiling tiling,
                                         const vk::FormatFeatureFlags& features) const;
 
         std::unique_ptr<IAllocation> allocator;
 
        public:
-        VulkanDevice (PhysicalDevice& PhysicalDevice);
+        VulkanDevice (PhysicalDevice& PhysicalDevice) noexcept;
 
         void Destroy( ) const;
         void CreateCommandPool( ) const;

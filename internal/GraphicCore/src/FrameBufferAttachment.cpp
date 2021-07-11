@@ -62,7 +62,7 @@ namespace GraphicCore
         return vk::createResultValue (vk::Result::eSuccess, "Success");
     }*/
 
-    FrameBufferAttachment::FrameBufferAttachment (std::vector<std::shared_ptr<CoreImage>> &&images)
+    FrameBufferAttachment::FrameBufferAttachment (std::vector<std::shared_ptr<CoreImage>> &&images) noexcept
         : m_LogicalDevice {images.back( )->GetLocalDevice( )}
         , m_Images {std::move (images)}
     {

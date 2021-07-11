@@ -41,10 +41,9 @@ namespace GraphicCore
 
         static const CreateFunc DEFAULT_CREATE_FUNC;
 
-        FrameBufferAttachment (std::vector<std::shared_ptr<CoreImage>> &&images);
+        FrameBufferAttachment (std::vector<std::shared_ptr<CoreImage>> &&images) noexcept;
         FrameBufferAttachment (const FrameBufferAttachment &) = delete;
         FrameBufferAttachment (FrameBufferAttachment &&)      = default;
-
 
         // vk::ResultValueType<void>::type Init( );
 

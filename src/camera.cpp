@@ -67,12 +67,12 @@ bool Camera::isMoving( )
 
 void Camera::update( )
 {
-    if (KeyCodes::Instance( ).keyBoard.w) { position.z -= 0.002F; }
+    if (KeyCodes::Instance( ).keyBoard.w) { position.z -= 0.02F; }
 
-    if (KeyCodes::Instance( ).keyBoard.s) { position.z += 0.002F; }
+    if (KeyCodes::Instance( ).keyBoard.s) { position.z += 0.02F; }
 
-    if (KeyCodes::Instance( ).keyBoard.d) { position.x += 0.002F; }
-    if (KeyCodes::Instance( ).keyBoard.a) { position.x -= 0.002F; }
+    if (KeyCodes::Instance( ).keyBoard.d) { position.x += 0.02F; }
+    if (KeyCodes::Instance( ).keyBoard.a) { position.x -= 0.02F; }
 }
 
 void Camera::mouseWheel (int delta) { mouseWheelDelta = delta; }

@@ -24,18 +24,18 @@ namespace GraphicCore
             }
         };
 
-        inline bool HasDepthFormat (const vk::Format& format)
+        constexpr bool HasDepthFormat (const vk::Format& format)
         {
-            static std::vector<vk::Format> formats = {
+            std::array<vk::Format, 6> formats = {
                 vk::Format::eD16Unorm,       vk::Format::eX8D24UnormPack32, vk::Format::eD32Sfloat,
                 vk::Format::eD16UnormS8Uint, vk::Format::eD24UnormS8Uint,   vk::Format::eD32SfloatS8Uint,
             };
             return std::find (formats.begin( ), formats.end( ), format) != std::end (formats);
         }
 
-        inline bool HasStencil (const vk::Format& format)
+        constexpr bool HasStencil (const vk::Format& format)
         {
-            static std::vector<vk::Format> formats = {
+            std::array<vk::Format, 4> formats = {
                 vk::Format::eS8Uint,
                 vk::Format::eD16UnormS8Uint,
                 vk::Format::eD24UnormS8Uint,
@@ -44,12 +44,12 @@ namespace GraphicCore
             return std::find (formats.begin( ), formats.end( ), format) != std::end (formats);
         }
 
-        inline bool HasDepthStencilFormat (const vk::Format& format)
+        constexpr bool HasDepthStencilFormat (const vk::Format& format)
         {
             return (HasDepthFormat (format) || HasStencil (format));
         }
 
-        inline vk::ColorComponentFlags fullColorWriteMask( )
+        constexpr vk::ColorComponentFlags fullColorWriteMask( )
         {
             return vk::ColorComponentFlagBits::eR | vk::ColorComponentFlagBits::eG | vk::ColorComponentFlagBits::eB |
                    vk ::ColorComponentFlagBits::eA;
@@ -85,7 +85,7 @@ namespace GraphicCore
             return rect2D (size.width, size.height, offset.x, offset.y);
         }
 
-        inline vk::AccessFlags accessFlagsForLayout (vk::ImageLayout layout)
+        constexpr vk::AccessFlags accessFlagsForLayout (vk::ImageLayout layout)
         {
             switch (layout)
             {
@@ -106,7 +106,7 @@ namespace GraphicCore
             }
         }
 
-        inline vk::PipelineStageFlags pipelineStageForLayout (vk::ImageLayout layout)
+        constexpr vk::PipelineStageFlags pipelineStageForLayout (vk::ImageLayout layout)
         {
             switch (layout)
             {

@@ -9,7 +9,7 @@ namespace GraphicCore
     thread_local vk::CommandPool Context::s_cmdPool;
 #endif
 
-    VulkanDevice::VulkanDevice (PhysicalDevice& PhysicalDevice)
+    VulkanDevice::VulkanDevice (PhysicalDevice& PhysicalDevice) noexcept
         : physicalDevice (PhysicalDevice)
     {
         allocator = std::make_unique<AllocationPool> (*this);
@@ -39,7 +39,9 @@ namespace GraphicCore
         for (uint32_t i = 0; i < deviceMemProp.memoryTypeCount; ++i)
         {
             if ((typeBits & (1 << i)) && (deviceMemProp.memoryTypes [i].propertyFlags & properties) == properties)
-            { return i; }
+            {
+                return i;
+            }
         }
 
         throw std::runtime_error ("Unable to find memory type " + to_string (properties));
@@ -80,15 +82,15 @@ namespace GraphicCore
     {
         // Since all depth formats may be optional, we need to find a suitable depth format to use
         // Start with the highest precision packed format
-        std::vector<vk::Format> depthFormats = {vk::Format::eD32SfloatS8Uint, vk::Format::eD32Sfloat,
-                                                vk::Format::eD24UnormS8Uint, vk::Format::eD16UnormS8Uint,
-                                                vk::Format::eD16Unorm};
+        std::array<vk::Format, 5> depthFormats = {vk::Format::eD32SfloatS8Uint, vk::Format::eD32Sfloat,
+                                                  vk::Format::eD24UnormS8Uint, vk::Format::eD16UnormS8Uint,
+                                                  vk::Format::eD16Unorm};
 
         return findSupportedFormat (depthFormats, vk::ImageTiling::eOptimal,
                                     vk::FormatFeatureFlagBits::eDepthStencilAttachment);
     }
 
-    vk::Format VulkanDevice::findSupportedFormat (const std::vector<vk::Format>& candidates, vk::ImageTiling tiling,
+    vk::Format VulkanDevice::findSupportedFormat (const std::array<vk::Format, 5>& candidates, vk::ImageTiling tiling,
                                                   const vk::FormatFeatureFlags& features) const
     {
         for (vk::Format format : candidates)
@@ -97,7 +99,9 @@ namespace GraphicCore
             props = physicalDevice.GetPhysicalDevice( ).getFormatProperties (format);
 
             if (tiling == vk::ImageTiling::eLinear && (props.linearTilingFeatures & features) == features)
-            { return format; }
+            {
+                return format;
+            }
             else if (tiling == vk::ImageTiling::eOptimal && (props.optimalTilingFeatures & features) == features)
             {
                 return format;

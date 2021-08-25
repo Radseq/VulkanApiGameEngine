@@ -24,7 +24,7 @@
 vc15/x64/
 vc15/x86/
 
-external/*
+##external/*
 build/
 internal/GraphicCore/*.lib
 internal/GraphicCore/*.pch

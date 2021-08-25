@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="E:\Vulkan-cpp\bin\CMakeFiles\3b57acc1f88675f02dd8f7272306c740\assimp-mkdir.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="E:\Vulkan-cpp\bin\CMakeFiles\3b57acc1f88675f02dd8f7272306c740\assimp-download.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="E:\Vulkan-cpp\bin\CMakeFiles\3b57acc1f88675f02dd8f7272306c740\assimp-update.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="E:\Vulkan-cpp\bin\CMakeFiles\3b57acc1f88675f02dd8f7272306c740\assimp-patch.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="E:\Vulkan-cpp\bin\CMakeFiles\3b57acc1f88675f02dd8f7272306c740\assimp-configure.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="E:\Vulkan-cpp\bin\CMakeFiles\3b57acc1f88675f02dd8f7272306c740\assimp-build.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="E:\Vulkan-cpp\bin\CMakeFiles\3b57acc1f88675f02dd8f7272306c740\assimp-install.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="E:\Vulkan-cpp\bin\CMakeFiles\ccc80f2a1f21056116dc7b04a1472e98\assimp-complete.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="E:\Vulkan-cpp\bin\CMakeFiles\2fcc1e99bd94200211b686b52b2a63f0\assimp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="E:\Vulkan-cpp\cmake\externals\assimp\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\CMakeFiles\assimp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{5020997B-554D-383B-93D8-B6F97C88EF2B}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,936 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|x64">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|x64">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{8C2593E2-E4B7-3572-A8A2-3B915101FA0C}</ProjectGuid>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <Keyword>Win32Proj</Keyword>
+    <Platform>x64</Platform>
+    <ProjectName>assimp</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <PostBuildEvent>
+      <Message>	</Message>
+      <Command>setlocal
+if 1==0 D:/Programy_64/cmake/bin/cmake.exe -E copy E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/project/bin/assimp-vc140-mt.dll E:/Vulkan-cpp/bin
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+if 1==1 D:/Programy_64/cmake/bin/cmake.exe -E copy E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/project/bin/assimp-vc140-mt.dll E:/Vulkan-cpp/bin_debug
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <PostBuildEvent>
+      <Message>	</Message>
+      <Command>setlocal
+if 1==1 D:/Programy_64/cmake/bin/cmake.exe -E copy E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/project/bin/assimp-vc140-mt.dll E:/Vulkan-cpp/bin
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+if 1==0 D:/Programy_64/cmake/bin/cmake.exe -E copy E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/project/bin/assimp-vc140-mt.dll E:/Vulkan-cpp/bin_debug
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <PostBuildEvent>
+      <Message>	</Message>
+      <Command>setlocal
+if 1==0 D:/Programy_64/cmake/bin/cmake.exe -E copy E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/project/bin/assimp-vc140-mt.dll E:/Vulkan-cpp/bin
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+if 1==0 D:/Programy_64/cmake/bin/cmake.exe -E copy E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/project/bin/assimp-vc140-mt.dll E:/Vulkan-cpp/bin_debug
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <PostBuildEvent>
+      <Message>	</Message>
+      <Command>setlocal
+if 1==0 D:/Programy_64/cmake/bin/cmake.exe -E copy E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/project/bin/assimp-vc140-mt.dll E:/Vulkan-cpp/bin
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+if 1==0 D:/Programy_64/cmake/bin/cmake.exe -E copy E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/project/bin/assimp-vc140-mt.dll E:/Vulkan-cpp/bin_debug
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="E:\Vulkan-cpp\bin\CMakeFiles\3b57acc1f88675f02dd8f7272306c740\assimp-mkdir.rule">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Creating directories for 'assimp'</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+D:\Programy_64\cmake\bin\cmake.exe -E make_directory E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/project/src/assimp
+if %errorlevel% neq 0 goto :cmEnd
+D:\Programy_64\cmake\bin\cmake.exe -E make_directory E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/project/build
+if %errorlevel% neq 0 goto :cmEnd
+D:\Programy_64\cmake\bin\cmake.exe -E make_directory E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/project
+if %errorlevel% neq 0 goto :cmEnd
+D:\Programy_64\cmake\bin\cmake.exe -E make_directory E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/project/tmp
+if %errorlevel% neq 0 goto :cmEnd
+D:\Programy_64\cmake\bin\cmake.exe -E make_directory E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/project/src/assimp-stamp/$(Configuration)
+if %errorlevel% neq 0 goto :cmEnd
+D:\Programy_64\cmake\bin\cmake.exe -E make_directory E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/project/src
+if %errorlevel% neq 0 goto :cmEnd
+D:\Programy_64\cmake\bin\cmake.exe -E touch E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/project/src/assimp-stamp/$(Configuration)/assimp-mkdir
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">E:/Vulkan-cpp/bin/CMakeFiles/3b57acc1f88675f02dd8f7272306c740/assimp-mkdir.rule;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-mkdir</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Creating directories for 'assimp'</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+D:\Programy_64\cmake\bin\cmake.exe -E make_directory E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/project/src/assimp
+if %errorlevel% neq 0 goto :cmEnd
+D:\Programy_64\cmake\bin\cmake.exe -E make_directory E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/project/build
+if %errorlevel% neq 0 goto :cmEnd
+D:\Programy_64\cmake\bin\cmake.exe -E make_directory E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/project
+if %errorlevel% neq 0 goto :cmEnd
+D:\Programy_64\cmake\bin\cmake.exe -E make_directory E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/project/tmp
+if %errorlevel% neq 0 goto :cmEnd
+D:\Programy_64\cmake\bin\cmake.exe -E make_directory E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/project/src/assimp-stamp/$(Configuration)
+if %errorlevel% neq 0 goto :cmEnd
+D:\Programy_64\cmake\bin\cmake.exe -E make_directory E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/project/src
+if %errorlevel% neq 0 goto :cmEnd
+D:\Programy_64\cmake\bin\cmake.exe -E touch E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/project/src/assimp-stamp/$(Configuration)/assimp-mkdir
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">E:/Vulkan-cpp/bin/CMakeFiles/3b57acc1f88675f02dd8f7272306c740/assimp-mkdir.rule;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-mkdir</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Creating directories for 'assimp'</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+D:\Programy_64\cmake\bin\cmake.exe -E make_directory E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/project/src/assimp
+if %errorlevel% neq 0 goto :cmEnd
+D:\Programy_64\cmake\bin\cmake.exe -E make_directory E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/project/build
+if %errorlevel% neq 0 goto :cmEnd
+D:\Programy_64\cmake\bin\cmake.exe -E make_directory E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/project
+if %errorlevel% neq 0 goto :cmEnd
+D:\Programy_64\cmake\bin\cmake.exe -E make_directory E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/project/tmp
+if %errorlevel% neq 0 goto :cmEnd
+D:\Programy_64\cmake\bin\cmake.exe -E make_directory E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/project/src/assimp-stamp/$(Configuration)
+if %errorlevel% neq 0 goto :cmEnd
+D:\Programy_64\cmake\bin\cmake.exe -E make_directory E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/project/src
+if %errorlevel% neq 0 goto :cmEnd
+D:\Programy_64\cmake\bin\cmake.exe -E touch E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/project/src/assimp-stamp/$(Configuration)/assimp-mkdir
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">E:/Vulkan-cpp/bin/CMakeFiles/3b57acc1f88675f02dd8f7272306c740/assimp-mkdir.rule;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-mkdir</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Creating directories for 'assimp'</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+D:\Programy_64\cmake\bin\cmake.exe -E make_directory E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/project/src/assimp
+if %errorlevel% neq 0 goto :cmEnd
+D:\Programy_64\cmake\bin\cmake.exe -E make_directory E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/project/build
+if %errorlevel% neq 0 goto :cmEnd
+D:\Programy_64\cmake\bin\cmake.exe -E make_directory E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/project
+if %errorlevel% neq 0 goto :cmEnd
+D:\Programy_64\cmake\bin\cmake.exe -E make_directory E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/project/tmp
+if %errorlevel% neq 0 goto :cmEnd
+D:\Programy_64\cmake\bin\cmake.exe -E make_directory E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/project/src/assimp-stamp/$(Configuration)
+if %errorlevel% neq 0 goto :cmEnd
+D:\Programy_64\cmake\bin\cmake.exe -E make_directory E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/project/src
+if %errorlevel% neq 0 goto :cmEnd
+D:\Programy_64\cmake\bin\cmake.exe -E touch E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/project/src/assimp-stamp/$(Configuration)/assimp-mkdir
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">E:/Vulkan-cpp/bin/CMakeFiles/3b57acc1f88675f02dd8f7272306c740/assimp-mkdir.rule;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-mkdir</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="E:\Vulkan-cpp\bin\CMakeFiles\3b57acc1f88675f02dd8f7272306c740\assimp-download.rule">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Performing download step (download, verify and extract) for 'assimp'</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+cd E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src
+if %errorlevel% neq 0 goto :cmEnd
+E:
+if %errorlevel% neq 0 goto :cmEnd
+D:\Programy_64\cmake\bin\cmake.exe -Dconfig=$(Configuration) -P E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/project/src/assimp-stamp/assimp-download-Debug.cmake
+if %errorlevel% neq 0 goto :cmEnd
+D:\Programy_64\cmake\bin\cmake.exe -E touch E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/project/src/assimp-stamp/$(Configuration)/assimp-download
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">E:/Vulkan-cpp/bin/CMakeFiles/3b57acc1f88675f02dd8f7272306c740/assimp-download.rule;E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\assimp-urlinfo.txt;E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-mkdir;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-download</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Performing download step (download, verify and extract) for 'assimp'</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+cd E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src
+if %errorlevel% neq 0 goto :cmEnd
+E:
+if %errorlevel% neq 0 goto :cmEnd
+D:\Programy_64\cmake\bin\cmake.exe -Dconfig=$(Configuration) -P E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/project/src/assimp-stamp/assimp-download-Release.cmake
+if %errorlevel% neq 0 goto :cmEnd
+D:\Programy_64\cmake\bin\cmake.exe -E touch E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/project/src/assimp-stamp/$(Configuration)/assimp-download
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">E:/Vulkan-cpp/bin/CMakeFiles/3b57acc1f88675f02dd8f7272306c740/assimp-download.rule;E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\assimp-urlinfo.txt;E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-mkdir;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-download</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Performing download step (download, verify and extract) for 'assimp'</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+cd E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src
+if %errorlevel% neq 0 goto :cmEnd
+E:
+if %errorlevel% neq 0 goto :cmEnd
+D:\Programy_64\cmake\bin\cmake.exe -Dconfig=$(Configuration) -P E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/project/src/assimp-stamp/assimp-download-MinSizeRel.cmake
+if %errorlevel% neq 0 goto :cmEnd
+D:\Programy_64\cmake\bin\cmake.exe -E touch E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/project/src/assimp-stamp/$(Configuration)/assimp-download
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">E:/Vulkan-cpp/bin/CMakeFiles/3b57acc1f88675f02dd8f7272306c740/assimp-download.rule;E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\assimp-urlinfo.txt;E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-mkdir;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-download</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Performing download step (download, verify and extract) for 'assimp'</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+cd E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src
+if %errorlevel% neq 0 goto :cmEnd
+E:
+if %errorlevel% neq 0 goto :cmEnd
+D:\Programy_64\cmake\bin\cmake.exe -Dconfig=$(Configuration) -P E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/project/src/assimp-stamp/assimp-download-RelWithDebInfo.cmake
+if %errorlevel% neq 0 goto :cmEnd
+D:\Programy_64\cmake\bin\cmake.exe -E touch E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/project/src/assimp-stamp/$(Configuration)/assimp-download
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">E:/Vulkan-cpp/bin/CMakeFiles/3b57acc1f88675f02dd8f7272306c740/assimp-download.rule;E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\assimp-urlinfo.txt;E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-mkdir;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-download</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="E:\Vulkan-cpp\bin\CMakeFiles\3b57acc1f88675f02dd8f7272306c740\assimp-update.rule">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">No update step for 'assimp'</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+D:\Programy_64\cmake\bin\cmake.exe -E echo_append
+if %errorlevel% neq 0 goto :cmEnd
+D:\Programy_64\cmake\bin\cmake.exe -E touch E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/project/src/assimp-stamp/$(Configuration)/assimp-update
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">E:/Vulkan-cpp/bin/CMakeFiles/3b57acc1f88675f02dd8f7272306c740/assimp-update.rule;E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-download;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-update</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">No update step for 'assimp'</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+D:\Programy_64\cmake\bin\cmake.exe -E echo_append
+if %errorlevel% neq 0 goto :cmEnd
+D:\Programy_64\cmake\bin\cmake.exe -E touch E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/project/src/assimp-stamp/$(Configuration)/assimp-update
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">E:/Vulkan-cpp/bin/CMakeFiles/3b57acc1f88675f02dd8f7272306c740/assimp-update.rule;E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-download;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-update</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">No update step for 'assimp'</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+D:\Programy_64\cmake\bin\cmake.exe -E echo_append
+if %errorlevel% neq 0 goto :cmEnd
+D:\Programy_64\cmake\bin\cmake.exe -E touch E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/project/src/assimp-stamp/$(Configuration)/assimp-update
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">E:/Vulkan-cpp/bin/CMakeFiles/3b57acc1f88675f02dd8f7272306c740/assimp-update.rule;E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-download;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-update</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">No update step for 'assimp'</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+D:\Programy_64\cmake\bin\cmake.exe -E echo_append
+if %errorlevel% neq 0 goto :cmEnd
+D:\Programy_64\cmake\bin\cmake.exe -E touch E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/project/src/assimp-stamp/$(Configuration)/assimp-update
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">E:/Vulkan-cpp/bin/CMakeFiles/3b57acc1f88675f02dd8f7272306c740/assimp-update.rule;E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-download;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-update</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="E:\Vulkan-cpp\bin\CMakeFiles\3b57acc1f88675f02dd8f7272306c740\assimp-patch.rule">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">No patch step for 'assimp'</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+D:\Programy_64\cmake\bin\cmake.exe -E echo_append
+if %errorlevel% neq 0 goto :cmEnd
+D:\Programy_64\cmake\bin\cmake.exe -E touch E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/project/src/assimp-stamp/$(Configuration)/assimp-patch
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">E:/Vulkan-cpp/bin/CMakeFiles/3b57acc1f88675f02dd8f7272306c740/assimp-patch.rule;E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-download;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-patch</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">No patch step for 'assimp'</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+D:\Programy_64\cmake\bin\cmake.exe -E echo_append
+if %errorlevel% neq 0 goto :cmEnd
+D:\Programy_64\cmake\bin\cmake.exe -E touch E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/project/src/assimp-stamp/$(Configuration)/assimp-patch
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">E:/Vulkan-cpp/bin/CMakeFiles/3b57acc1f88675f02dd8f7272306c740/assimp-patch.rule;E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-download;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-patch</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">No patch step for 'assimp'</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+D:\Programy_64\cmake\bin\cmake.exe -E echo_append
+if %errorlevel% neq 0 goto :cmEnd
+D:\Programy_64\cmake\bin\cmake.exe -E touch E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/project/src/assimp-stamp/$(Configuration)/assimp-patch
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">E:/Vulkan-cpp/bin/CMakeFiles/3b57acc1f88675f02dd8f7272306c740/assimp-patch.rule;E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-download;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-patch</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">No patch step for 'assimp'</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+D:\Programy_64\cmake\bin\cmake.exe -E echo_append
+if %errorlevel% neq 0 goto :cmEnd
+D:\Programy_64\cmake\bin\cmake.exe -E touch E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/project/src/assimp-stamp/$(Configuration)/assimp-patch
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">E:/Vulkan-cpp/bin/CMakeFiles/3b57acc1f88675f02dd8f7272306c740/assimp-patch.rule;E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-download;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-patch</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="E:\Vulkan-cpp\bin\CMakeFiles\3b57acc1f88675f02dd8f7272306c740\assimp-configure.rule">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Performing configure step for 'assimp'</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+cd E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\build
+if %errorlevel% neq 0 goto :cmEnd
+E:
+if %errorlevel% neq 0 goto :cmEnd
+D:\Programy_64\cmake\bin\cmake.exe -Dconfig=$(Configuration) -P E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/project/src/assimp-stamp/assimp-configure-Debug.cmake
+if %errorlevel% neq 0 goto :cmEnd
+D:\Programy_64\cmake\bin\cmake.exe -E touch E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/project/src/assimp-stamp/$(Configuration)/assimp-configure
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">E:/Vulkan-cpp/bin/CMakeFiles/3b57acc1f88675f02dd8f7272306c740/assimp-configure.rule;E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\tmp\assimp-cfgcmd.txt;E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-update;E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-patch;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-configure</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Performing configure step for 'assimp'</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+cd E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\build
+if %errorlevel% neq 0 goto :cmEnd
+E:
+if %errorlevel% neq 0 goto :cmEnd
+D:\Programy_64\cmake\bin\cmake.exe -Dconfig=$(Configuration) -P E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/project/src/assimp-stamp/assimp-configure-Release.cmake
+if %errorlevel% neq 0 goto :cmEnd
+D:\Programy_64\cmake\bin\cmake.exe -E touch E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/project/src/assimp-stamp/$(Configuration)/assimp-configure
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">E:/Vulkan-cpp/bin/CMakeFiles/3b57acc1f88675f02dd8f7272306c740/assimp-configure.rule;E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\tmp\assimp-cfgcmd.txt;E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-update;E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-patch;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-configure</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Performing configure step for 'assimp'</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+cd E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\build
+if %errorlevel% neq 0 goto :cmEnd
+E:
+if %errorlevel% neq 0 goto :cmEnd
+D:\Programy_64\cmake\bin\cmake.exe -Dconfig=$(Configuration) -P E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/project/src/assimp-stamp/assimp-configure-MinSizeRel.cmake
+if %errorlevel% neq 0 goto :cmEnd
+D:\Programy_64\cmake\bin\cmake.exe -E touch E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/project/src/assimp-stamp/$(Configuration)/assimp-configure
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">E:/Vulkan-cpp/bin/CMakeFiles/3b57acc1f88675f02dd8f7272306c740/assimp-configure.rule;E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\tmp\assimp-cfgcmd.txt;E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-update;E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-patch;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-configure</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Performing configure step for 'assimp'</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+cd E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\build
+if %errorlevel% neq 0 goto :cmEnd
+E:
+if %errorlevel% neq 0 goto :cmEnd
+D:\Programy_64\cmake\bin\cmake.exe -Dconfig=$(Configuration) -P E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/project/src/assimp-stamp/assimp-configure-RelWithDebInfo.cmake
+if %errorlevel% neq 0 goto :cmEnd
+D:\Programy_64\cmake\bin\cmake.exe -E touch E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/project/src/assimp-stamp/$(Configuration)/assimp-configure
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">E:/Vulkan-cpp/bin/CMakeFiles/3b57acc1f88675f02dd8f7272306c740/assimp-configure.rule;E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\tmp\assimp-cfgcmd.txt;E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-update;E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-patch;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-configure</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="E:\Vulkan-cpp\bin\CMakeFiles\3b57acc1f88675f02dd8f7272306c740\assimp-build.rule">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Performing build step for 'assimp'</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+cd E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\build
+if %errorlevel% neq 0 goto :cmEnd
+E:
+if %errorlevel% neq 0 goto :cmEnd
+D:\Programy_64\cmake\bin\cmake.exe -Dconfig=$(Configuration) -P E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/project/src/assimp-stamp/assimp-build-Debug.cmake
+if %errorlevel% neq 0 goto :cmEnd
+D:\Programy_64\cmake\bin\cmake.exe -E touch E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/project/src/assimp-stamp/$(Configuration)/assimp-build
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">E:/Vulkan-cpp/bin/CMakeFiles/3b57acc1f88675f02dd8f7272306c740/assimp-build.rule;E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-configure;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-build</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Performing build step for 'assimp'</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+cd E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\build
+if %errorlevel% neq 0 goto :cmEnd
+E:
+if %errorlevel% neq 0 goto :cmEnd
+D:\Programy_64\cmake\bin\cmake.exe -Dconfig=$(Configuration) -P E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/project/src/assimp-stamp/assimp-build-Release.cmake
+if %errorlevel% neq 0 goto :cmEnd
+D:\Programy_64\cmake\bin\cmake.exe -E touch E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/project/src/assimp-stamp/$(Configuration)/assimp-build
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">E:/Vulkan-cpp/bin/CMakeFiles/3b57acc1f88675f02dd8f7272306c740/assimp-build.rule;E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-configure;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-build</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Performing build step for 'assimp'</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+cd E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\build
+if %errorlevel% neq 0 goto :cmEnd
+E:
+if %errorlevel% neq 0 goto :cmEnd
+D:\Programy_64\cmake\bin\cmake.exe -Dconfig=$(Configuration) -P E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/project/src/assimp-stamp/assimp-build-MinSizeRel.cmake
+if %errorlevel% neq 0 goto :cmEnd
+D:\Programy_64\cmake\bin\cmake.exe -E touch E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/project/src/assimp-stamp/$(Configuration)/assimp-build
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">E:/Vulkan-cpp/bin/CMakeFiles/3b57acc1f88675f02dd8f7272306c740/assimp-build.rule;E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-configure;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-build</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Performing build step for 'assimp'</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+cd E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\build
+if %errorlevel% neq 0 goto :cmEnd
+E:
+if %errorlevel% neq 0 goto :cmEnd
+D:\Programy_64\cmake\bin\cmake.exe -Dconfig=$(Configuration) -P E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/project/src/assimp-stamp/assimp-build-RelWithDebInfo.cmake
+if %errorlevel% neq 0 goto :cmEnd
+D:\Programy_64\cmake\bin\cmake.exe -E touch E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/project/src/assimp-stamp/$(Configuration)/assimp-build
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">E:/Vulkan-cpp/bin/CMakeFiles/3b57acc1f88675f02dd8f7272306c740/assimp-build.rule;E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-configure;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-build</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="E:\Vulkan-cpp\bin\CMakeFiles\3b57acc1f88675f02dd8f7272306c740\assimp-install.rule">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Performing install step for 'assimp'</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+cd E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\build
+if %errorlevel% neq 0 goto :cmEnd
+E:
+if %errorlevel% neq 0 goto :cmEnd
+D:\Programy_64\cmake\bin\cmake.exe --build . --config Debug --target install
+if %errorlevel% neq 0 goto :cmEnd
+D:\Programy_64\cmake\bin\cmake.exe -E touch E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/project/src/assimp-stamp/$(Configuration)/assimp-install
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">E:/Vulkan-cpp/bin/CMakeFiles/3b57acc1f88675f02dd8f7272306c740/assimp-install.rule;E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-build;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-install</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Performing install step for 'assimp'</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+cd E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\build
+if %errorlevel% neq 0 goto :cmEnd
+E:
+if %errorlevel% neq 0 goto :cmEnd
+D:\Programy_64\cmake\bin\cmake.exe --build . --config Release --target install
+if %errorlevel% neq 0 goto :cmEnd
+D:\Programy_64\cmake\bin\cmake.exe -E touch E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/project/src/assimp-stamp/$(Configuration)/assimp-install
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">E:/Vulkan-cpp/bin/CMakeFiles/3b57acc1f88675f02dd8f7272306c740/assimp-install.rule;E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-build;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-install</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Performing install step for 'assimp'</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+cd E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\build
+if %errorlevel% neq 0 goto :cmEnd
+E:
+if %errorlevel% neq 0 goto :cmEnd
+D:\Programy_64\cmake\bin\cmake.exe --build . --config MinSizeRel --target install
+if %errorlevel% neq 0 goto :cmEnd
+D:\Programy_64\cmake\bin\cmake.exe -E touch E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/project/src/assimp-stamp/$(Configuration)/assimp-install
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">E:/Vulkan-cpp/bin/CMakeFiles/3b57acc1f88675f02dd8f7272306c740/assimp-install.rule;E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-build;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-install</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Performing install step for 'assimp'</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+cd E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\build
+if %errorlevel% neq 0 goto :cmEnd
+E:
+if %errorlevel% neq 0 goto :cmEnd
+D:\Programy_64\cmake\bin\cmake.exe --build . --config RelWithDebInfo --target install
+if %errorlevel% neq 0 goto :cmEnd
+D:\Programy_64\cmake\bin\cmake.exe -E touch E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/project/src/assimp-stamp/$(Configuration)/assimp-install
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">E:/Vulkan-cpp/bin/CMakeFiles/3b57acc1f88675f02dd8f7272306c740/assimp-install.rule;E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-build;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-install</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="E:\Vulkan-cpp\bin\CMakeFiles\ccc80f2a1f21056116dc7b04a1472e98\assimp-complete.rule">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Completed 'assimp'</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+D:\Programy_64\cmake\bin\cmake.exe -E make_directory E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/CMakeFiles/$(Configuration)
+if %errorlevel% neq 0 goto :cmEnd
+D:\Programy_64\cmake\bin\cmake.exe -E touch E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/CMakeFiles/$(Configuration)/assimp-complete
+if %errorlevel% neq 0 goto :cmEnd
+D:\Programy_64\cmake\bin\cmake.exe -E touch E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/project/src/assimp-stamp/$(Configuration)/assimp-done
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">E:/Vulkan-cpp/bin/CMakeFiles/ccc80f2a1f21056116dc7b04a1472e98/assimp-complete.rule;E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-install;E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-mkdir;E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-download;E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-update;E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-patch;E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-configure;E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-build;E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-install;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\CMakeFiles\$(Configuration)\assimp-complete</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Completed 'assimp'</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+D:\Programy_64\cmake\bin\cmake.exe -E make_directory E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/CMakeFiles/$(Configuration)
+if %errorlevel% neq 0 goto :cmEnd
+D:\Programy_64\cmake\bin\cmake.exe -E touch E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/CMakeFiles/$(Configuration)/assimp-complete
+if %errorlevel% neq 0 goto :cmEnd
+D:\Programy_64\cmake\bin\cmake.exe -E touch E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/project/src/assimp-stamp/$(Configuration)/assimp-done
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">E:/Vulkan-cpp/bin/CMakeFiles/ccc80f2a1f21056116dc7b04a1472e98/assimp-complete.rule;E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-install;E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-mkdir;E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-download;E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-update;E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-patch;E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-configure;E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-build;E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-install;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\CMakeFiles\$(Configuration)\assimp-complete</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Completed 'assimp'</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+D:\Programy_64\cmake\bin\cmake.exe -E make_directory E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/CMakeFiles/$(Configuration)
+if %errorlevel% neq 0 goto :cmEnd
+D:\Programy_64\cmake\bin\cmake.exe -E touch E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/CMakeFiles/$(Configuration)/assimp-complete
+if %errorlevel% neq 0 goto :cmEnd
+D:\Programy_64\cmake\bin\cmake.exe -E touch E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/project/src/assimp-stamp/$(Configuration)/assimp-done
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">E:/Vulkan-cpp/bin/CMakeFiles/ccc80f2a1f21056116dc7b04a1472e98/assimp-complete.rule;E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-install;E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-mkdir;E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-download;E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-update;E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-patch;E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-configure;E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-build;E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-install;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\CMakeFiles\$(Configuration)\assimp-complete</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Completed 'assimp'</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+D:\Programy_64\cmake\bin\cmake.exe -E make_directory E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/CMakeFiles/$(Configuration)
+if %errorlevel% neq 0 goto :cmEnd
+D:\Programy_64\cmake\bin\cmake.exe -E touch E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/CMakeFiles/$(Configuration)/assimp-complete
+if %errorlevel% neq 0 goto :cmEnd
+D:\Programy_64\cmake\bin\cmake.exe -E touch E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/project/src/assimp-stamp/$(Configuration)/assimp-done
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">E:/Vulkan-cpp/bin/CMakeFiles/ccc80f2a1f21056116dc7b04a1472e98/assimp-complete.rule;E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-install;E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-mkdir;E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-download;E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-update;E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-patch;E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-configure;E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-build;E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\src\assimp-stamp\$(Configuration)\assimp-install;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\CMakeFiles\$(Configuration)\assimp-complete</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="E:\Vulkan-cpp\bin\CMakeFiles\2fcc1e99bd94200211b686b52b2a63f0\assimp.rule">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'"></Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">E:/Vulkan-cpp/bin/CMakeFiles/2fcc1e99bd94200211b686b52b2a63f0/assimp.rule;E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\CMakeFiles\$(Configuration)\assimp-complete;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\CMakeFiles\assimp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'"></Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">E:/Vulkan-cpp/bin/CMakeFiles/2fcc1e99bd94200211b686b52b2a63f0/assimp.rule;E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\CMakeFiles\$(Configuration)\assimp-complete;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\CMakeFiles\assimp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'"></Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">E:/Vulkan-cpp/bin/CMakeFiles/2fcc1e99bd94200211b686b52b2a63f0/assimp.rule;E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\CMakeFiles\$(Configuration)\assimp-complete;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\CMakeFiles\assimp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'"></Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">E:/Vulkan-cpp/bin/CMakeFiles/2fcc1e99bd94200211b686b52b2a63f0/assimp.rule;E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\CMakeFiles\$(Configuration)\assimp-complete;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\CMakeFiles\assimp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="E:\Vulkan-cpp\cmake\externals\assimp\CMakeLists.txt">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule E:/Vulkan-cpp/cmake/externals/assimp/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+D:\Programy_64\cmake\bin\cmake.exe -HE:/Vulkan-cpp -BE:/Vulkan-cpp/bin --check-stamp-file E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">E:/Vulkan-cpp/cmake/externals/assimp/CMakeLists.txt;E:\Vulkan-cpp\cmake\externals\assimp\CMakeLists.txt;D:\Programy_64\cmake\share\cmake-3.11\Modules\ExternalProject.cmake;D:\Programy_64\cmake\share\cmake-3.11\Modules\RepositoryInfo.txt.in;D:\Programy_64\cmake\share\cmake-3.11\Modules\ExternalProject-download.cmake.in;E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\tmp\assimp-cfgcmd.txt.in;D:\Programy_64\cmake\share\cmake-3.11\Modules\SelectLibraryConfigurations.cmake;E:\Vulkan-cpp\cmake\externals\assimp\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule E:/Vulkan-cpp/cmake/externals/assimp/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+D:\Programy_64\cmake\bin\cmake.exe -HE:/Vulkan-cpp -BE:/Vulkan-cpp/bin --check-stamp-file E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">E:/Vulkan-cpp/cmake/externals/assimp/CMakeLists.txt;E:\Vulkan-cpp\cmake\externals\assimp\CMakeLists.txt;D:\Programy_64\cmake\share\cmake-3.11\Modules\ExternalProject.cmake;D:\Programy_64\cmake\share\cmake-3.11\Modules\RepositoryInfo.txt.in;D:\Programy_64\cmake\share\cmake-3.11\Modules\ExternalProject-download.cmake.in;E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\tmp\assimp-cfgcmd.txt.in;D:\Programy_64\cmake\share\cmake-3.11\Modules\SelectLibraryConfigurations.cmake;E:\Vulkan-cpp\cmake\externals\assimp\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule E:/Vulkan-cpp/cmake/externals/assimp/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+D:\Programy_64\cmake\bin\cmake.exe -HE:/Vulkan-cpp -BE:/Vulkan-cpp/bin --check-stamp-file E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">E:/Vulkan-cpp/cmake/externals/assimp/CMakeLists.txt;E:\Vulkan-cpp\cmake\externals\assimp\CMakeLists.txt;D:\Programy_64\cmake\share\cmake-3.11\Modules\ExternalProject.cmake;D:\Programy_64\cmake\share\cmake-3.11\Modules\RepositoryInfo.txt.in;D:\Programy_64\cmake\share\cmake-3.11\Modules\ExternalProject-download.cmake.in;E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\tmp\assimp-cfgcmd.txt.in;D:\Programy_64\cmake\share\cmake-3.11\Modules\SelectLibraryConfigurations.cmake;E:\Vulkan-cpp\cmake\externals\assimp\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule E:/Vulkan-cpp/cmake/externals/assimp/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+D:\Programy_64\cmake\bin\cmake.exe -HE:/Vulkan-cpp -BE:/Vulkan-cpp/bin --check-stamp-file E:/Vulkan-cpp/bin/ext/Visual-Studio-15-2017-Win64/assimp/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">E:/Vulkan-cpp/cmake/externals/assimp/CMakeLists.txt;E:\Vulkan-cpp\cmake\externals\assimp\CMakeLists.txt;D:\Programy_64\cmake\share\cmake-3.11\Modules\ExternalProject.cmake;D:\Programy_64\cmake\share\cmake-3.11\Modules\RepositoryInfo.txt.in;D:\Programy_64\cmake\share\cmake-3.11\Modules\ExternalProject-download.cmake.in;E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\project\tmp\assimp-cfgcmd.txt.in;D:\Programy_64\cmake\share\cmake-3.11\Modules\SelectLibraryConfigurations.cmake;E:\Vulkan-cpp\cmake\externals\assimp\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="E:\Vulkan-cpp\bin\ext\Visual-Studio-15-2017-Win64\assimp\CMakeFiles\assimp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="E:\Vulkan-cpp\bin\ZERO_CHECK.vcxproj">
+      <Project>{FE574D3C-7F03-3839-A5AB-4F678DCAE495}</Project>
+      <Name>ZERO_CHECK</Name>
+    </ProjectReference>
+    <ProjectReference Include="E:\Vulkan-cpp\bin\SetupDebug.vcxproj">
+      <Project>{8D383E71-BCA3-3055-9326-284BD982EFAA}</Project>
+      <Name>SetupDebug</Name>
+    </ProjectReference>
+    <ProjectReference Include="E:\Vulkan-cpp\bin\SetupRelease.vcxproj">
+      <Project>{42EFFE1C-E178-3D75-96F1-E9A542978BEA}</Project>
+      <Name>SetupRelease</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

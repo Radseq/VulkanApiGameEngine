@@ -1,12 +1,16 @@
 #include "pch.h"
 #include "CoreBuffeManager.hpp"
 
-namespace GraphicCore {
+namespace GraphicCore
+{
     CoreBufferManager::CoreBufferManager (const VulkanDevice& Device)
-        : device (Device) { }
+        : device (Device)
+    {
+    }
 
     void CoreBufferManager::stageToDeviceBuffer (GraphicCore::CoreBuffer& result, const vk::BufferUsageFlags& usage,
-                                                 size_t size, const void* data) const {
+                                                 size_t size, const void* data) const
+    {
         GraphicCore::CoreBuffer staging;
 
         createStagingBuffer (staging, size, data);
@@ -25,7 +29,8 @@ namespace GraphicCore {
 
     void CoreBufferManager::createBuffer (GraphicCore::CoreBuffer& result, const vk::BufferUsageFlags& usageFlags,
                                           const vk::MemoryPropertyFlags& memoryPropertyFlags,
-                                          const vk::DeviceSize&          size) const {
+                                          const vk::DeviceSize&          size) const
+    {
         result.device            = device.getVkDevice( );
         result.descriptor.range  = VK_WHOLE_SIZE;
         result.descriptor.offset = 0;
@@ -35,8 +40,7 @@ namespace GraphicCore {
         bufferCreateInfo.size  = size;
         bufferCreateInfo.setSharingMode (vk::SharingMode::eExclusive);
 
-        result.descriptor.buffer = result.buffer =
-            device.getVkDevice( ).createBuffer (bufferCreateInfo);
+        result.descriptor.buffer = result.buffer = device.getVkDevice( ).createBuffer (bufferCreateInfo);
 
         // Prepare and initialize a uniform buffer block containing shader uniforms
         // In Vulkan there are no more single uniforms like in GL
@@ -80,12 +84,14 @@ namespace GraphicCore {
     // - Delete the host visible (staging) buffer
     // - Use the device local buffers for rendering
     void CoreBufferManager::createStagingBuffer (GraphicCore::CoreBuffer& result, const vk::DeviceSize& size,
-                                                 const void* data) const {
+                                                 const void* data) const
+    {
         createBuffer (result, vk::BufferUsageFlagBits::eTransferSrc,
                       vk::MemoryPropertyFlagBits::eHostVisible | vk::MemoryPropertyFlagBits::eHostCoherent, size);
-        if (data != nullptr) { 
-            device.copyToMemory (result.getAllocatedMemory( ).handle, data, size); 
-            //result.copyToMemory (data);
+        if (data != nullptr)
+        {
+            // device.copyToMemory (result.getAllocatedMemory( ).handle, data, size);
+            result.copyToMemory (data, size);
             // ok i coped code from device.copyToMemory to GraphicCore::CoreBuffer (result)
             // and result.copyToMemory (data); dont wotk
             // device.copyToMemory (result.getAllocatedMemory( ).handle, data, size); work
@@ -94,11 +100,13 @@ namespace GraphicCore {
     }
 
     void CoreBufferManager::createDeviceBuffer (GraphicCore::CoreBuffer& result, const vk::BufferUsageFlags& usageFlags,
-                                                const vk::DeviceSize& size) const {
+                                                const vk::DeviceSize& size) const
+    {
         createBuffer (result, usageFlags, vk::MemoryPropertyFlagBits::eDeviceLocal, size);
     }
 
-    void CoreBufferManager::createSizedUniformBuffer (GraphicCore::CoreBuffer& result, const vk::DeviceSize& size) const {
+    void CoreBufferManager::createSizedUniformBuffer (GraphicCore::CoreBuffer& result, const vk::DeviceSize& size) const
+    {
         const auto alignment     = device.getDevice( ).GetDeviceProperties( ).limits.minUniformBufferOffsetAlignment;
         const auto extra         = size % alignment;
         const auto count         = 1;

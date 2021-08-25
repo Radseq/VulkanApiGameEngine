@@ -13,8 +13,7 @@ namespace GraphicCore
                 {
                     if (physicalDevice != vk::PhysicalDevice( ))
                     {
-                        GraphicCore::Util::PassToVec (physicalDevices,
-                                                      physicalDevice);
+                        GraphicCore::Util::PassToVec (physicalDevices, physicalDevice);
                     }
                     else
                         break;
@@ -42,13 +41,13 @@ namespace GraphicCore
         {
             scoredDevice.second->pickDevice (surface);
 
-            GraphicCore::Util::PassToVec (LogicalDevices, new VulkanDevice (*scoredDevice.second));
+            GraphicCore::Util::PassToVec (LogicalDevices, std::make_shared<VulkanDevice> (*scoredDevice.second));
 
             /*if (SingleGraphicCard)*/ break;
         }
     }
 
-    std::vector<VulkanDevice*> CreateLocalDevice::GetLocalDevices( ) { return LogicalDevices; }
+    std::vector<std::shared_ptr<VulkanDevice>> CreateLocalDevice::GetLocalDevices( ) { return LogicalDevices; }
 
     CreateLocalDevice::CreateLocalDevice (IVulkanInstance& Instance)
         : instance (Instance)

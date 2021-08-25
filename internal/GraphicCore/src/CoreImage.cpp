@@ -62,7 +62,7 @@ namespace GraphicCore
         SetImageType( );  // will be probelm if this func throw error
     }
 
-    CoreImage::CoreImage (const VulkanDevice& LocalDevice, const vk::Extent3D&& Extent, const vk::Format& Format,
+    CoreImage::CoreImage (const VulkanDevice& LocalDevice, const vk::Extent3D& Extent, const vk::Format& Format,
                           const vk::ImageUsageFlags& UsageFlags, const vk::SampleCountFlagBits SampleCount,
                           const uint32_t& MipLevels, const uint32_t& ArrayLayers, const vk::ImageTiling& Tiling)
         : m_LogicalDevice (LocalDevice)

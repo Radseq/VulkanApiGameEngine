@@ -95,8 +95,7 @@ namespace GraphicCore
     {
         for (vk::Format format : candidates)
         {
-            vk::FormatProperties props;
-            props = physicalDevice.GetPhysicalDevice( ).getFormatProperties (format);
+            vk::FormatProperties props = physicalDevice.GetPhysicalDevice( ).getFormatProperties (format);
 
             if (tiling == vk::ImageTiling::eLinear && (props.linearTilingFeatures & features) == features)
             {

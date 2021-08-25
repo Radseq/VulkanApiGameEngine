@@ -48,7 +48,7 @@ namespace GraphicCore
         CoreImage (const VulkanDevice& LocalDevice, const vk::Image& image, vk::Extent3D& Extent,
                    const vk::Format& Format, const vk::ImageUsageFlags& UsageFlags);
 
-        CoreImage (const VulkanDevice& LocalDevice, const vk::Extent3D&& Extent, const vk::Format& Format,
+        CoreImage (const VulkanDevice& LocalDevice, const vk::Extent3D& Extent, const vk::Format& Format,
                    const vk::ImageUsageFlags&    UsageFlags,
                    const vk::SampleCountFlagBits SampleCount = vk::SampleCountFlagBits::e1,
                    const uint32_t& MipLevels = 1, const uint32_t& ArrayLayers = 1,

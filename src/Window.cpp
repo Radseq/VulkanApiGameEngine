@@ -48,20 +48,6 @@ std::vector<std::string> Window::getRequiredInstanceExtensions( )
     return result;
 }
 
-/*
-std::vector<std::string> Window::getRequiredInstanceExtensions() {
-        uint32_t glfwExtensionCount = 0;
-        const char** glfwExtensions = glfwGetRequiredInstanceExtensions(&glfwExtensionCount);
-
-        std::vector<const char*> extensions(glfwExtensions, glfwExtensions + glfwExtensionCount);
-
-#ifdef NDEBUG
-        extensions.push_back(VK_EXT_DEBUG_UTILS_EXTENSION_NAME);
-#endif
-
-        return extensions;
-}*/
-
 void Window::createWindowSurface (const vk::Instance& instance, const vk::AllocationCallbacks* pAllocator)
 {
     const auto result = static_cast<vk::Result> (glfwCreateWindowSurface (
@@ -121,16 +107,18 @@ vk::Extent2D Window::getExtent2DWindowSize( ) const { return size; }
 
 void Window::setExtent2DWindowSize (const vk::Extent2D& setSize)
 {
-    // ReSharper disable once CppInconsistentNaming
     glm::ivec2 tempSize {setSize.width, setSize.height};
     setWindowSize (tempSize);
     size = setSize;
 }
 
-void Window::setTitle (const std::string_view& deviceName, const uint32_t& frameCounter) const
+void Window::setTitle (const std::string& deviceName, const uint32_t& frameCounter) const
 {
-    const std::string windowTitle =
-        "Game - " + std::string {deviceName.data( )} + " - " + std::to_string (frameCounter) + " fps";
+    /* const std::string windowTitle =
+        "Game - " + deviceName + " - " + std::to_string (frameCounter) + " fps";
+    */
+    std::string&& windowTitle = "Game - " + deviceName + " - " + std::to_string (frameCounter) + " fps";
+
     glfwSetWindowTitle (window, windowTitle.c_str( ));
 }
 
@@ -151,7 +139,6 @@ bool Window::isWindowResized( ) { return isWindowResize; }
 const VkSurfaceKHR& Window::getCSurface( ) const { return rawSurface; }
 const glm::vec2&    Window::getMousePos( ) const { return mousePos; }
 const glm::vec2&    Window::getDeltaPos( ) const { return deltaPos; }
-float&              Window::getZoomSpeed( ) { return zoomSpeed; }
 
 glm::vec2 Window::getWindowSize( ) const
 {
@@ -248,7 +235,6 @@ void Window::onKeyReleased (const int& key, const int& mods)
 void Window::onMouseScrolled (const float& delta)
 {
     KeyCodes::Instance( ).mouse.scrollDeta = delta;
-    // camera.translate(glm::vec3(0.0F, 0.0F, (float)delta * 0.005f * zoomSpeed));
 }
 
 void Window::onMouseMoved (const glm::vec2& newPos)

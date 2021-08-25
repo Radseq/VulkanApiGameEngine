@@ -12,7 +12,7 @@ VulkanGame::Ref<GraphicCore::CoreImage> Texture2D::CreateImage (const GraphicCor
     GraphicCore::ImageManager imageManager {context};
 
     auto result = VulkanGame::CreateRef<GraphicCore::CoreImage> (
-        context, std::move(imgContainer.TextureExtend), format,
+        context, imgContainer.TextureExtend, format,
         vk::ImageUsageFlagBits::eTransferDst | vk::ImageUsageFlagBits::eSampled, vk::SampleCountFlagBits::e1,
         imgContainer.mipLevels,
         imgContainer.arrayLayer);

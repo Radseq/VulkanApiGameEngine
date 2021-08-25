@@ -24,11 +24,11 @@ namespace GraphicCore
             pDevice->GetDeviceCreateInfo( ).pNext = &physicalDevicesGroup;
             pDevice->pickDevice (surface);
 
-            GraphicCore::Util::PassToVec (LogicalDevices, new VulkanDevice (*pDevice));
+            GraphicCore::Util::PassToVec (LogicalDevices, std::make_shared<VulkanDevice> (*pDevice));
         }
     }
 
-    std::vector<VulkanDevice*> CreateLocalDeviceByGroup::GetLocalDevices( ) { return LogicalDevices; }
+    std::vector<std::shared_ptr<VulkanDevice>> CreateLocalDeviceByGroup::GetLocalDevices( ) { return LogicalDevices; }
 
     CreateLocalDeviceByGroup::CreateLocalDeviceByGroup (IVulkanInstance& Instance)
         : instance (Instance)

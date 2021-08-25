@@ -10,10 +10,10 @@ namespace GraphicCore
     class ISetDevice
     {
        public:
-        virtual ~ISetDevice( )                                                          = default;
-        virtual void                       PickDevice( )                                = 0;
-        virtual void                       CreateDevice (const vk::SurfaceKHR& surface) = 0;
-        virtual std::vector<VulkanDevice*> GetLocalDevices( )                           = 0;
+        virtual ~ISetDevice( )                                                                          = default;
+        virtual void                                       PickDevice( )                                = 0;
+        virtual void                                       CreateDevice (const vk::SurfaceKHR& surface) = 0;
+        virtual std::vector<std::shared_ptr<VulkanDevice>> GetLocalDevices( )                           = 0;
     };
 }  // namespace GraphicCore
 

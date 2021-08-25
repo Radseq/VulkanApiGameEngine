@@ -22,9 +22,6 @@ class Window
     glm::vec2 mousePos;
     glm::vec2 deltaPos;
 
-    // Use to adjust mouse zoom speed
-    float zoomSpeed = 1.0F;  // todo send to camera class?
-
    public:
     bool init( );
     Window( );
@@ -40,7 +37,7 @@ class Window
     void showWindow (bool show = true) const;
 
     void setExtent2DWindowSize (const vk::Extent2D& size);
-    void setTitle (const std::string_view& deviceName, const uint32_t& frameCounter = 0) const;
+    void setTitle (const std::string& deviceName, const uint32_t& frameCounter = 0) const;
     void setSizeLimits (const glm::uvec2& minSize, const glm::uvec2& maxSize = { }) const;
     void setWindowSize (glm::ivec2& newSize) const;
     void setWindowShouldClose( ) const;
@@ -53,7 +50,6 @@ class Window
 
     const glm::vec2&      getMousePos( ) const;
     const glm::vec2&      getDeltaPos( ) const;
-    float&                getZoomSpeed( );
     glm::vec2             getWindowSize( ) const;
     const VkSurfaceKHR&   getCSurface( ) const;
     const vk::SurfaceKHR& getSurface( ) const;

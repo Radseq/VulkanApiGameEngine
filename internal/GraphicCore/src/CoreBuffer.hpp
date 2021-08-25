@@ -42,15 +42,14 @@ namespace GraphicCore
         {
             copy (sizeof (T) * data.size( ), data.data( ), offset);
         }
-        /*
-        template <typename T> void copyToMemory (const T& data, size_t offset = 0) const {
-            vk::DeviceSize size {sizeof (T)};
 
+        template <typename T> void copyToMemory (const T& data, const vk::DeviceSize& size, size_t offset = 0) const
+        {
             void* mapped =
                 device.mapMemory (allocatedMemory.handle, allocatedMemory.offset, size, vk::MemoryMapFlags( ));
-            memcpy (mapped, &data, static_cast<size_t> (size));
+            memcpy (mapped, data, static_cast<size_t> (size));
             device.unmapMemory (allocatedMemory.handle);
-        }*/
+        }
 
         /**
          * Setup the default descriptor for this buffer

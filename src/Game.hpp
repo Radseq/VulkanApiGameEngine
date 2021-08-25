@@ -21,7 +21,7 @@ class Timer;
 class Game
 {
     const std::string_view windowName {"Vulkan Api Game"};
-    std::string_view       windowNameArg;
+    std::string            windowNameArg;
     const int              WIDTH  = Configuration::getInstance( )->GetConfigIntOption ("WindowWidth");
     const int              HEIGHT = Configuration::getInstance( )->GetConfigIntOption ("WindowHeight");
     // const int MAX_FRAMES_IN_FLIGHT = Configuration::getInstance()->GetConfigIntOption("MaxFramesInFlight");

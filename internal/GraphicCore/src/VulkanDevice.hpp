@@ -46,14 +46,7 @@ namespace GraphicCore
 
         const vk::CommandPool& getCommandPool( ) const;
 
-        template <typename T>
-        void copyToMemory (const vk::DeviceMemory& memory, const T& data, const vk::DeviceSize& size,
-                           size_t offset = 0) const
-        {
-            void* mapped = device.mapMemory (memory, offset, size, vk::MemoryMapFlags( ));
-            memcpy (mapped, data, static_cast<size_t> (size));
-            device.unmapMemory (memory);
-        }
+
         /*
         void copyToMemory(const vk::DeviceMemory& memory, const void* data,
         vk::DeviceSize size, vk::DeviceSize offset = 0) const;

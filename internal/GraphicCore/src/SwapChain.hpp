@@ -46,12 +46,12 @@ namespace GraphicCore
         void CreateSwapChain (vk::Extent2D& windowSize, const vk::SurfaceKHR& surface);
         void destroy (bool IsRecreated = false);
 
-        const vk::ImageUsageFlags    GetSupportedImageFlags( ) const;
-        const vk::SwapchainKHR&      getVkSwapChain( );
-        const vk::Extent2D           getSwapChainExtent( ) const;
-        const std::vector<vk::Image> getSwapChainImages( ) const;
-        const vk::Format&            getColorFormat( ) const;
-        const uint32_t               getImageCount( ) const;
+        constexpr vk::ImageUsageFlags GetSupportedImageFlags( );
+        const vk::SwapchainKHR&       getVkSwapChain( );
+        const vk::Extent2D            getSwapChainExtent( ) const;
+        const std::vector<vk::Image>  getSwapChainImages( ) const;
+        const vk::Format&             getColorFormat( ) const;
+        const uint32_t                getImageCount( ) const;
     };
 }  // namespace GraphicCore
 

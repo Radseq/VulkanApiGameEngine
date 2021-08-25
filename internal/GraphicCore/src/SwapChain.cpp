@@ -22,7 +22,9 @@ namespace GraphicCore
         // If the surface format list only includes one entry with  vk::Format::eUndefined,
         // there is no preferered format, so we assume  vk::Format::eB8G8R8A8Unorm
         if ((formatCount == 1) && (surfaceFormats [0].format == vk::Format::eUndefined))
-        { colorFormat = vk::Format::eB8G8R8A8Unorm; }
+        {
+            colorFormat = vk::Format::eB8G8R8A8Unorm;
+        }
         else
         {
             // Always select the first available color format
@@ -35,9 +37,14 @@ namespace GraphicCore
 
     const uint32_t SwapChain::NumberOfSwapchainImages( ) const
     {
+        // minImageCount is almost always 2  (double buffering),
+        // 3 is for triple buffering
+        // 2 + 1 =  triple buffering
         uint32_t imagesNumber = surfCaps.minImageCount + 1;
         if ((surfCaps.maxImageCount > 0) && (imagesNumber > surfCaps.maxImageCount))
-        { imagesNumber = surfCaps.maxImageCount; }
+        {
+            imagesNumber = surfCaps.maxImageCount;
+        }
 
         return imagesNumber;
     }
@@ -142,21 +149,29 @@ namespace GraphicCore
         vk::Extent2D swap_chain_extent = {640, 480};
 
         if (swap_chain_extent.width < surfCaps.minImageExtent.width)
-        { swap_chain_extent.width = surfCaps.minImageExtent.width; }
+        {
+            swap_chain_extent.width = surfCaps.minImageExtent.width;
+        }
 
         if (swap_chain_extent.height < surfCaps.minImageExtent.height)
-        { swap_chain_extent.height = surfCaps.minImageExtent.height; }
+        {
+            swap_chain_extent.height = surfCaps.minImageExtent.height;
+        }
 
         if (swap_chain_extent.width > surfCaps.maxImageExtent.width)
-        { swap_chain_extent.width = surfCaps.maxImageExtent.width; }
+        {
+            swap_chain_extent.width = surfCaps.maxImageExtent.width;
+        }
 
         if (swap_chain_extent.height > surfCaps.maxImageExtent.height)
-        { swap_chain_extent.height = surfCaps.maxImageExtent.height; }
+        {
+            swap_chain_extent.height = surfCaps.maxImageExtent.height;
+        }
 
         Extend = swap_chain_extent;
     }
 
-    const vk::ImageUsageFlags SwapChain::GetSupportedImageFlags( ) const
+    constexpr vk::ImageUsageFlags SwapChain::GetSupportedImageFlags( )
     {
         vk::ImageUsageFlags flags;
 
@@ -193,13 +208,19 @@ namespace GraphicCore
         // Is any way to write this better?
 
         if (surfCaps.supportedUsageFlags & vk::ImageUsageFlagBits::eColorAttachment)
-        { flags |= vk::ImageUsageFlagBits::eColorAttachment; }
+        {
+            flags |= vk::ImageUsageFlagBits::eColorAttachment;
+        }
 
         if (surfCaps.supportedUsageFlags & vk::ImageUsageFlagBits::eTransferSrc)
-        { flags |= vk::ImageUsageFlagBits::eTransferSrc; }
+        {
+            flags |= vk::ImageUsageFlagBits::eTransferSrc;
+        }
 
         if (surfCaps.supportedUsageFlags & vk::ImageUsageFlagBits::eTransferDst)
-        { flags |= vk::ImageUsageFlagBits::eTransferDst; }
+        {
+            flags |= vk::ImageUsageFlagBits::eTransferDst;
+        }
         /*
         if (surfCaps.supportedUsageFlags & vk::ImageUsageFlagBits::eSampled)
         {
@@ -266,7 +287,9 @@ namespace GraphicCore
     {
         vk::SurfaceTransformFlagBitsKHR preTransform;
         if (surfCaps.supportedTransforms & vk::SurfaceTransformFlagBitsKHR::eIdentity)
-        { preTransform = vk::SurfaceTransformFlagBitsKHR::eIdentity; }
+        {
+            preTransform = vk::SurfaceTransformFlagBitsKHR::eIdentity;
+        }
         else
         {
             preTransform = surfCaps.currentTransform;

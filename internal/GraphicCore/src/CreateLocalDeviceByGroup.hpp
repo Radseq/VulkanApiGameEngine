@@ -17,16 +17,16 @@ namespace GraphicCore
     {
         std::vector<vk::PhysicalDeviceGroupProperties> physicalDevicesGroupProp;
         std::vector<vk::DeviceGroupDeviceCreateInfo>   devicesGroupCreateInfo;
-        std::vector<VulkanDevice*>                     LogicalDevices;
+        std::vector<std::shared_ptr<VulkanDevice>>     LogicalDevices;
         IVulkanInstance&                               instance;
 
        public:
         CreateLocalDeviceByGroup (IVulkanInstance& VulkanInstance);
         ~CreateLocalDeviceByGroup( ) = default;
 
-        void                       PickDevice( ) override;
-        void                       CreateDevice (const vk::SurfaceKHR& surface) override;
-        std::vector<VulkanDevice*> GetLocalDevices( ) override;
+        void                                       PickDevice( ) override;
+        void                                       CreateDevice (const vk::SurfaceKHR& surface) override;
+        std::vector<std::shared_ptr<VulkanDevice>> GetLocalDevices( ) override;
     };
 }  // namespace GraphicCore
 

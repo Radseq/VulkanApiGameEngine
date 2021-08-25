@@ -14,7 +14,7 @@ namespace GraphicCore
        public:
         virtual void Create (ISetDevice* device) = 0;
 
-        virtual std::vector<VulkanDevice*> GetLocalDevice( ) const = 0;
+        virtual std::vector<std::shared_ptr<VulkanDevice>> GetLocalDevice( ) const = 0;
     };
 }  // namespace GraphicCore
 

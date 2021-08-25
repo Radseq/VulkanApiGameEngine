@@ -17,15 +17,15 @@ namespace GraphicCore
 
     class LocalDevices : public ILocalDevices
     {
-        const vk::SurfaceKHR&      surface;
-        IVulkanInstance&           instance;
-        std::vector<VulkanDevice*> localDevices;
-        void                       margeLocalDevices (const std::vector<VulkanDevice*>& list);
+        const vk::SurfaceKHR&                      surface;
+        IVulkanInstance&                           instance;
+        std::vector<std::shared_ptr<VulkanDevice>> localDevices;
+        void margeLocalDevices (const std::vector<std::shared_ptr<VulkanDevice>>& list);
 
        public:
         void Create (ISetDevice* device) override;
 
-        std::vector<VulkanDevice*> GetLocalDevice( ) const override;
+        std::vector<std::shared_ptr<VulkanDevice>> GetLocalDevice( ) const override;
 
         LocalDevices (IVulkanInstance& VulkanInstance, const vk::SurfaceKHR& Surface);
         ~LocalDevices( );

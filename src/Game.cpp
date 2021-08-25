@@ -3,8 +3,7 @@
 
 void Game::initWindow( )
 {
-    WindowProperties pror {windowName, windowSize.width, windowSize.height};
-    window.createWindow (std::move (pror));
+    window.createWindow ({windowName, windowSize.width, windowSize.height});
 
     // deviceHandler.init(window.get());
     /*
@@ -18,7 +17,7 @@ void Game::initWindow( )
 void Game::setWindowNameArgs( )
 {
     assert (context != nullptr);
-    const std::string_view str (context->getDevice( ).GetDeviceProperties( ).deviceName.data( ));
+    const std::string str (context->getDevice( ).GetDeviceProperties( ).deviceName.data( ));
     windowNameArg = str;
 }
 
@@ -34,7 +33,7 @@ void Game::initVulkan( )
 
 void Game::createLogicalDevice( )
 {
-    context = localDevices->GetLocalDevice( ).front( );
+    context = localDevices->GetLocalDevice( ).front( ).get( );
 
     context->CreateCommandPool( );
 }

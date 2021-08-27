@@ -7,11 +7,12 @@ EntityPipeline::EntityPipeline (const GraphicCore::VulkanDevice& Context)
 }
 
 void EntityPipeline::CreateGraphicsPipeline (std::vector<std::string>&& shaderPatchName,
-                                             const vk::Extent2D& swapChainWindowSize, const vk::RenderPass& renderPass)
+                                             const vk::Extent2D& swapChainWindowSize, const vk::RenderPass& renderPass,
+                                             const GraphicCore::VertexLayout& vertex)
 {
     GraphicCore::Pipeline builder {m_Context.getVkDevice( ), pipelineLayout->getVkPipelineLayout( ), renderPass};
     builder.getPipelineViewport( ).setViewportAndScissor (swapChainWindowSize);
-    builder.getVertexInputState( ).appendVertexLayout (vertex_layout);
+    builder.getVertexInputState( ).appendVertexLayout (vertex);
     builder.getPipelineRasterization( ).getRasterizationState( ).cullMode = vk::CullModeFlagBits::eBack;
     builder.getPipelineRasterization( ).getRasterizationState( ).frontFace =
         vk::FrontFace::eCounterClockwise;  // eClockwise;

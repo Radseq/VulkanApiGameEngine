@@ -16,6 +16,19 @@ bool Window::isKeyPressed (int key) const { return glfwGetKey (window, key) == G
 
 GLFWwindow* Window::getWindow( ) const { return window; }
 
+void Window::checkFramBufferSize( )
+{
+    int width = 0, height = 0;
+    glfwGetFramebufferSize (window, &width, &height);
+    while (width == 0 || height == 0)
+    {
+        glfwGetFramebufferSize (window, &width, &height);
+        glfwWaitEvents( );
+    }
+
+    isWindowResize = false;
+}
+
 void Window::setWindowSize (glm::ivec2& newSize) const { glfwGetWindowSize (window, &newSize.x, &newSize.y); }
 int  Window::windowShouldClose( ) const { return glfwWindowShouldClose (window); }
 void Window::setWindowShouldClose( ) const { glfwSetWindowShouldClose (window, 1); }
@@ -232,10 +245,7 @@ void Window::onKeyReleased (const int& key, const int& mods)
     }
 }
 
-void Window::onMouseScrolled (const float& delta)
-{
-    KeyCodes::Instance( ).mouse.scrollDeta = delta;
-}
+void Window::onMouseScrolled (const float& delta) { KeyCodes::Instance( ).mouse.scrollDeta = delta; }
 
 void Window::onMouseMoved (const glm::vec2& newPos)
 {

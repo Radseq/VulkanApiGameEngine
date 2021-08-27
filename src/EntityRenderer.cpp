@@ -1,10 +1,9 @@
 #include "pch.h"
 #include "EntityRenderer.hpp"
 
-EntityRenderer::EntityRenderer (const GraphicCore::VulkanDevice& Context, const GraphicCore::SwapChain& SwapChain,
+EntityRenderer::EntityRenderer (const GraphicCore::VulkanDevice& Context,
                                 const Camera& _camera, const Light& Light)
     : context (Context)
-    , swapChain (SwapChain)
     , camera (_camera)
     , light (Light)
 {
@@ -22,9 +21,11 @@ void EntityRenderer::destroy (bool isSwapChainCleanUp)
     context.getVkDevice( ).destroyCommandPool (context.getCommandPool( ));
 }
 
-void EntityRenderer::createUniformBuffers (const glm::mat4& perspective)
+void EntityRenderer::createUniformBuffers (const glm::mat4& perspective, const uint32_t& imageSize)
 {
-    for (uint32_t i = 0; i < swapChain.getImageCount( ); ++i) { updateUniformBuffer (i, perspective); }
+    for (uint32_t i = 0; i < imageSize; ++i) { 
+        updateUniformBuffer (i, perspective); 
+    }
 }
 
 void EntityRenderer::updateUniformBuffer (const uint32_t& currentImage, const glm::mat4& proj)

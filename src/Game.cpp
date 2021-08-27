@@ -63,7 +63,7 @@ void Game::run( )
     initWindow( );
     initVulkan( );
 
-    renderer = std::make_unique<Renderer> (swapChain.get( ), context, camera);
+    renderer = std::make_unique<Renderer> (swapChain, context, camera);
     renderer->init (windowSize);
 
     render( );
@@ -87,6 +87,7 @@ void Game::cleanupSwapChain( )
 
 void Game::recreateSwapChain( )
 {
+    window.checkFramBufferSize( );
     windowSize = window.getExtent2DWindowSize( );
     context->getVkDevice( ).waitIdle( );
 

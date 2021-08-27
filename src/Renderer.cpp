@@ -7,7 +7,8 @@
 /// <param name="SwapChain">The swap chain.</param>
 /// <param name="Context">The context.</param>
 /// <param name="_camera">The camera.</param>
-Renderer::Renderer (GraphicCore::SwapChain* SwapChain, GraphicCore::VulkanDevice* Context, Camera& _camera)
+Renderer::Renderer (std::unique_ptr<GraphicCore::SwapChain>& SwapChain, GraphicCore::VulkanDevice* Context,
+                    Camera& _camera)
     : swapChain (SwapChain)
     , context (Context)
     , camera (_camera)
@@ -170,7 +171,7 @@ void Renderer::init (const vk::Extent2D& WindowSize)
 
     entityRenderer.pushEntity (EntRendObj);
 
-    entityRenderer.createUniformBuffers (perspective);
+    entityRenderer.createUniformBuffers (perspective, swapChain->getImageCount( ));
 
     createGraphicsPipeline( );
 
@@ -251,11 +252,9 @@ void Renderer::createCommandBuffers( )
 
 void Renderer::loadAsserts( )
 {
-    GraphicCore::VertexLayout vertexLayout {{
-        GraphicCore::VertexLayout::Component::VERTEX_COMPONENT_POSITION,
-        GraphicCore::VertexLayout::Component::VERTEX_COMPONENT_NORMAL,
-        GraphicCore::VertexLayout::Component::VERTEX_COMPONENT_UV,
-    }};
+    GraphicCore::VertexLayout vertexLayout {{GraphicCore::VertexLayout::Component::VERTEX_COMPONENT_POSITION,
+                                             GraphicCore::VertexLayout::Component::VERTEX_COMPONENT_TEXT_COORD,
+                                             GraphicCore::VertexLayout::Component::VERTEX_COMPONENT_NORMAL}};
 
     // CoreImage (const vk::Device& Device, const vk::Extent3D& Extent, const vk::Format& Format,
     //   const vk::ImageUsageFlags& UsageFlags, const vk::MemoryPropertyFlags& MemoryProperties);
@@ -302,10 +301,6 @@ void Renderer::loadAsserts( )
     for (auto& view : textureImage->GetViews( )) { textureDescImageInfo.imageView = view->GetImageView( ); }
     textureDescImageInfo.sampler = textureImageSampler.GetVkSampler( );
 
-    // textureImage->setupDescriptorImageInfo ();
-
-    // assert (textureImage->getDescImageInfo( ) != vk::DescriptorImageInfo( ));
-
     VulkanGame::Ref<ModelTexture> mt = VulkanGame::CreateRef<ModelTexture> (textureImage);
 
     mt->setReflectivity (1.0F);
@@ -333,7 +328,7 @@ void Renderer::loadAsserts( )
         ResourcePatch::GetInstance( )->GetPatch ("DataPatch") + "/shaders/static_shader/specular_lighting/frag.spv"};
 
     entPipeline->CreateGraphicsPipeline (std::move (shaderPatchName), swapChain->getSwapChainExtent( ),
-                                         renderPass.GetVkRenderPass( ));
+                                         renderPass.GetVkRenderPass( ), vertexLayout);
 
     EntRendObj = VulkanGame::CreateRef<EntityMeshRender> (*entity, entShader, entPipeline);
 }
@@ -398,6 +393,7 @@ void Renderer::update( )
 void Renderer::reCreate( )
 {
     Framebuffers.clear( );
+    swapChainFramebuffers.clear( );
 
     context->getVkDevice( ).freeCommandBuffers (context->getCommandPool( ), commandBuffers);
 }

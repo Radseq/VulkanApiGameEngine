@@ -14,19 +14,17 @@ class EntityRenderer
 {
     const Light&                     light;
     const GraphicCore::VulkanDevice& context;
-    const GraphicCore::SwapChain&    swapChain;
 
     const Camera& camera;
 
     VulkanGame::Ref<EntityMeshRender> entities;
 
    public:
-    EntityRenderer (const GraphicCore::VulkanDevice& Context, const GraphicCore::SwapChain& SwapChain,
-                    const Camera& _camera, const Light& Light);
+    EntityRenderer (const GraphicCore::VulkanDevice& Context, const Camera& _camera, const Light& Light);
 
     void destroy (bool isSwapChainCleanUp = false);
 
-    void createUniformBuffers (const glm::mat4& perspective);
+    void createUniformBuffers (const glm::mat4& perspective, const uint32_t& imageSize);
     void updateUniformBuffer (const uint32_t& currentImage, const glm::mat4& proj);
     void updateDrawCommandBuffer (const vk::CommandBuffer& cmdBufer, const size_t& i);
 

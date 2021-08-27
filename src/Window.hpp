@@ -55,6 +55,7 @@ class Window
     const vk::SurfaceKHR& getSurface( ) const;
     vk::Extent2D          getExtent2DWindowSize( ) const;
     GLFWwindow*           getWindow( ) const;
+    void                  checkFramBufferSize( );
 
     static std::vector<std::string> getRequiredInstanceExtensions( );
     static void keyboardHandler (GLFWwindow* glFwWindow, int key, int scancode, int action, int mods);

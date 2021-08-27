@@ -26,8 +26,8 @@ class Configuration;
 
 class Renderer
 {
-    GraphicCore::SwapChain*    swapChain;
-    GraphicCore::VulkanDevice* context;
+    std::unique_ptr<GraphicCore::SwapChain>& swapChain;
+    GraphicCore::VulkanDevice*               context;
 
     glm::mat4 perspective;
 
@@ -104,14 +104,14 @@ class Renderer
 
     void loadAsserts( );
 
-    EntityRenderer entityRenderer {*context, *swapChain, camera, light};
+    EntityRenderer entityRenderer {*context, camera, light};
 
     vk::DescriptorImageInfo textureDescImageInfo { };
 
     GraphicCore::ImageSampler textureImageSampler {context->getVkDevice( )};
 
    public:
-    Renderer (GraphicCore::SwapChain* SwapChain, GraphicCore::VulkanDevice* Context, Camera& _camera);
+    Renderer (std::unique_ptr<GraphicCore::SwapChain>& SwapChain, GraphicCore::VulkanDevice* Context, Camera& _camera);
 
     void draw( );
 

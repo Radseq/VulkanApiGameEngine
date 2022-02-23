@@ -42,7 +42,7 @@ class Window
     void setWindowSize (glm::ivec2& newSize) const;
     void setWindowShouldClose( ) const;
 
-    bool        isWindowResized( );
+    bool        isWindowResized( ) const;
     void        waitEvents( );
     bool        isKeyPressed (int key) const;
     int         windowShouldClose( ) const;

@@ -7,9 +7,8 @@
 /// <param name="SwapChain">The swap chain.</param>
 /// <param name="Context">The context.</param>
 /// <param name="_camera">The camera.</param>
-Renderer::Renderer (std::unique_ptr<GraphicCore::SwapChain>& SwapChain, GraphicCore::VulkanDevice* Context,
-                    Camera& _camera)
-    : swapChain (SwapChain)
+Renderer::Renderer (const Window& window, GraphicCore::VulkanDevice* Context, Camera& _camera)
+    : m_Window (window)
     , context (Context)
     , camera (_camera)
 {
@@ -157,11 +156,16 @@ void Renderer::initSemaphores( )
 /// Initializes the specified window size.
 /// </summary>
 /// <param name="WindowSize">Size of the window.</param>
-void Renderer::init (const vk::Extent2D& WindowSize)
+void Renderer::init( )
 {
-    windowSize = WindowSize;
+    auto vecWindowSize = m_Window.getWindowSize( );
+    windowSize         = vk::Extent2D (vecWindowSize.x, vecWindowSize.y);
+
+    createSwapChain( );
 
     createPerspective( );
+
+    setUpRenderPass( );
 
     createFrameBuffers( );
 
@@ -198,8 +202,8 @@ void Renderer::init (const vk::Extent2D& WindowSize)
 /// </summary>
 void Renderer::createGraphicsPipeline( )
 {
-    skysphere.createPipelines (renderPass.GetVkRenderPass( ));
-    terrain.createPipeline (renderPass.GetVkRenderPass( ));
+    skysphere.createPipelines (renderPass->GetVkRenderPass( ));
+    terrain.createPipeline (renderPass->GetVkRenderPass( ));
 }
 
 /// <summary>
@@ -213,11 +217,10 @@ void Renderer::createCommandBuffers( )
     const vk::ClearDepthStencilValue depthStencil = GraphicCore::vkHelper::getClearValueDepth (1.0F, 0);
     std::vector<vk::ClearValue>      clearColors {clearColor, depthStencil};
 
-    vk::Viewport     viewport = GraphicCore::vkHelper::viewport (windowSize);
-    const vk::Rect2D scissor  = GraphicCore::vkHelper::rect2D (windowSize);
+    const vk::Viewport viewport = GraphicCore::vkHelper::viewport (windowSize);
 
     vk::RenderPassBeginInfo renderPassInfo;
-    renderPassInfo.renderPass      = renderPass.GetVkRenderPass( );
+    renderPassInfo.renderPass      = renderPass->GetVkRenderPass( );
     renderPassInfo.renderArea      = renderArea;
     renderPassInfo.clearValueCount = GraphicCore::Util::toUint32t (clearColors.size( ));
     renderPassInfo.pClearValues    = clearColors.data( );
@@ -235,7 +238,7 @@ void Renderer::createCommandBuffers( )
         cmdBuffer.beginRenderPass (renderPassInfo, vk::SubpassContents::eInline);
 
         cmdBuffer.setViewport (0, viewport);
-        cmdBuffer.setScissor (0, scissor);
+        cmdBuffer.setScissor (0, renderArea);
         cmdBuffer.setLineWidth (1.0F);
 
         skysphere.updateDrawCommandBuffer (cmdBuffer);
@@ -314,21 +317,20 @@ void Renderer::loadAsserts( )
 
     Entity* entity = new Entity (tm, pos, rot, scale);
 
-    VulkanGame::Ref<IShaderDescSet> entShader = VulkanGame::CreateRef<EntityDesc> (*context, textureDescImageInfo);
+    entShader = new EntityDesc (*context, textureDescImageInfo);
 
     entShader->CreateDescriptorSetLayout( );
     entShader->CreateDescriptorSets (3);
 
-    VulkanGame::Ref<IShaderPipeline> entPipeline = VulkanGame::CreateRef<EntityPipeline> (*context);
+    entPipeline = VulkanGame::CreateRef<EntityPipeline> (*context);
 
-    entPipeline->CreatePipelineLayout (*entShader.get( ));
+    entPipeline->CreatePipelineLayout (*entShader);
 
     std::vector<std::string> shaderPatchName {
         ResourcePatch::GetInstance( )->GetPatch ("DataPatch") + "/shaders/static_shader/specular_lighting/vert.spv",
         ResourcePatch::GetInstance( )->GetPatch ("DataPatch") + "/shaders/static_shader/specular_lighting/frag.spv"};
 
-    entPipeline->CreateGraphicsPipeline (std::move (shaderPatchName), swapChain->getSwapChainExtent( ),
-                                         renderPass.GetVkRenderPass( ), vertexLayout);
+    entPipeline->CreateGraphicsPipeline (std::move (shaderPatchName), renderPass->GetVkRenderPass( ), vertexLayout);
 
     EntRendObj = VulkanGame::CreateRef<EntityMeshRender> (*entity, entShader, entPipeline);
 }
@@ -353,7 +355,7 @@ void Renderer::createFrameBuffers( )
 
         auto renderTarget = fbaFunc (std::move (swapchainImage));
 
-        VulkanGame::PassToVec (Framebuffers, context->getVkDevice( ), renderTarget, renderPass);
+        VulkanGame::PassToVec (Framebuffers, context->getVkDevice( ), renderTarget, *renderPass.get( ));
 
         swapChainFramebuffers.push_back (Framebuffers [i].GetVkFrameBuffer( ));
     }
@@ -364,6 +366,13 @@ void Renderer::createFrameBuffers( )
 /// </summary>
 void Renderer::destroy( )
 {
+    swapChain->destroy (m_Window.isWindowResized( ));
+
+    Framebuffers.clear( );
+    swapChainFramebuffers.clear( );
+
+    context->getVkDevice( ).freeCommandBuffers (context->getCommandPool( ), commandBuffers);
+
     for (int i = 0; i < MAX_FRAMES_IN_FLIGHT; ++i)
     {
         context->getVkDevice( ).destroySemaphore (renderFinishedSemaphores [i]);
@@ -385,17 +394,6 @@ void Renderer::update( )
     skysphere.updateUniformBuffers (perspective);
     terrain.updateUniformBuffers (swapChain->getSwapChainExtent( ), perspective);
     entityRenderer.updateUniformBuffer (currentImage, perspective);
-}
-
-/// <summary>
-///  delete resources for recreate
-/// </summary>
-void Renderer::reCreate( )
-{
-    Framebuffers.clear( );
-    swapChainFramebuffers.clear( );
-
-    context->getVkDevice( ).freeCommandBuffers (context->getCommandPool( ), commandBuffers);
 }
 
 /// <summary>
@@ -436,7 +434,21 @@ void Renderer::allocateCmdBuffers( )
                                                          GraphicCore::Util::toUint32t (commandBuffers.size( ))});
 }
 
-void Renderer::setUpRenderPass( ) { }
+void Renderer::setUpRenderPass( )
+{
+    std::vector<GraphicCore::vkBasicModels::AttachmentModel> m_AttachemntsVec {
+        {swapChain->getColorFormat( ), vk::SampleCountFlagBits::e1,
+         vk::ImageUsageFlagBits::eTransientAttachment | vk::ImageUsageFlagBits::eColorAttachment},
+        {context->depthFormat, vk::SampleCountFlagBits::e1,
+         vk::ImageUsageFlagBits::eDepthStencilAttachment | vk::ImageUsageFlagBits::eTransferSrc}};
+
+    std::vector<GraphicCore::vkBasicModels::LoadStoreInfo> storeInfoVec {{ }, {}};
+    GraphicCore::vkBasicModels::SubpassInfo                subPassInfo {{ }, {0}};
+    std::vector<GraphicCore::vkBasicModels::SubpassInfo>   subpassInfoVec {subPassInfo};
+
+    renderPass = VulkanGame::CreateRef<GraphicCore::RenderPass> (context->getVkDevice( ), m_AttachemntsVec,
+                                                                 storeInfoVec, subpassInfoVec);
+}
 
 void Renderer::createPerspective( )
 {
@@ -456,3 +468,80 @@ void Renderer::createPerspective( )
 /// </summary>
 /// <returns></returns>
 const bool& Renderer::isFrameBufferResized( ) { return frameBufferResized; }
+
+void Renderer::createSwapChain( )
+{
+    swapChain = std::make_unique<GraphicCore::SwapChain> (context);
+    swapChain->CreateSwapChain (windowSize, m_Window.getSurface( ));
+}
+
+void Renderer::recreateSwapChain( )
+{
+    // m_Window.checkFramBufferSize( );
+
+    Framebuffers.clear( );
+    swapChainFramebuffers.clear( );
+
+    context->getVkDevice( ).freeCommandBuffers (context->getCommandPool( ), commandBuffers);
+
+    renderPass->destroy( );
+    renderPass.reset( );
+
+    swapChain->destroy (true);
+
+    descPool.destroy (context->getVkDevice( ));
+
+    auto vecWindowSize = m_Window.getWindowSize( );
+    windowSize         = vk::Extent2D (vecWindowSize.x, vecWindowSize.y);
+
+    createSwapChain( );
+    setUpRenderPass( );
+
+    createFrameBuffers( );
+
+    //entShader->Destroy( );
+    //entShader.reset( );
+
+    EntRendObj->Destroy ();
+    entShader = nullptr;
+
+
+    GraphicCore::VertexLayout vertexLayout {{GraphicCore::VertexLayout::Component::VERTEX_COMPONENT_POSITION,
+                                             GraphicCore::VertexLayout::Component::VERTEX_COMPONENT_TEXT_COORD,
+                                             GraphicCore::VertexLayout::Component::VERTEX_COMPONENT_NORMAL}};
+
+    entShader = new EntityDesc (*context, textureDescImageInfo);
+
+    entShader->CreateDescriptorSetLayout( );
+    entShader->CreateDescriptorSets (3);
+
+
+    entPipeline->CreatePipelineLayout (*entShader);
+
+    std::vector<std::string> shaderPatchName {
+        ResourcePatch::GetInstance( )->GetPatch ("DataPatch") + "/shaders/static_shader/specular_lighting/vert.spv",
+        ResourcePatch::GetInstance( )->GetPatch ("DataPatch") + "/shaders/static_shader/specular_lighting/frag.spv"};
+
+    setUpRenderPass( );
+
+    entPipeline->CreateGraphicsPipeline (std::move (shaderPatchName), renderPass->GetVkRenderPass( ), vertexLayout);
+
+
+    entityRenderer.createUniformBuffers (perspective, swapChain->getImageCount( ));
+
+
+
+
+
+
+
+    descPool.addDescriptorPoolSize (vk::DescriptorType::eUniformBuffer, 2);
+    descPool.addDescriptorPoolSize (vk::DescriptorType::eCombinedImageSampler, 3);
+    constexpr uint32_t maxSize = 2;
+    descPool.create (context->getVkDevice( ), maxSize);
+    skysphere.setupDescriptorSets (descPool);
+    terrain.setupDescriptorSets (descPool);
+
+    allocateCmdBuffers( );
+    createCommandBuffers( );
+}

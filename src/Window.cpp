@@ -147,7 +147,7 @@ void Window::onWindowResized (const vk::Extent2D& newSize)
     size           = newSize;
 }
 
-bool Window::isWindowResized( ) { return isWindowResize; }
+bool Window::isWindowResized( ) const { return isWindowResize; }
 
 const VkSurfaceKHR& Window::getCSurface( ) const { return rawSurface; }
 const glm::vec2&    Window::getMousePos( ) const { return mousePos; }

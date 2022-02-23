@@ -25,6 +25,7 @@ class DescriptorPools
     void CreateDescriptorPool (const std::vector<uint32_t>& descCountGivenPool, const uint32_t& maxSets);
 
     VulkanGame::Ref<GraphicCore::DescriptorSets> CreateDescSet (const uint32_t& descSetsCount);
+    void Destroy( );
 };
 
 #endif  // DESCRIPTOR_POOLS_HPP

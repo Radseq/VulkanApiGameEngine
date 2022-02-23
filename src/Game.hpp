@@ -38,7 +38,6 @@ class Game
 
     Window                                     window { };
     std::unique_ptr<GraphicCore::LocalDevices> localDevices;  // vulkanInstance, Surface
-    std::unique_ptr<GraphicCore::SwapChain>    swapChain;     // context
     std::unique_ptr<Renderer>                  renderer;      // swapChain, context, camera
 
     // DeviceHandler deviceHandler{camera};
@@ -63,16 +62,12 @@ class Game
 
     void initVulkan( );
     void cleanUp( );
-    void createSwapChain( );
 
     void createInstance( );
     void createSurface( );
     void pickPhysicalDevice( );
     void createLogicalDevice( );
 
-    void cleanupSwapChain( );
-
-    void recreateSwapChain( );
     void update (const float& deltaTime);
 
     // Called when view change occurs

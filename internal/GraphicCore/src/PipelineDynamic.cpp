@@ -10,8 +10,6 @@ namespace GraphicCore
 
     void PipelineDynamic::update( )
     {
-        // dynamicState.dynamicStateCount = (uint32_t)dynamicStateEnables.size();
-        // dynamicState.pDynamicStates = dynamicStateEnables.data();
         Util::updatePointerFromVector (dynamicStateEnables, dynamicState.dynamicStateCount,
                                        dynamicState.pDynamicStates);
     }

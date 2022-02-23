@@ -15,6 +15,7 @@
 #include "TexturedModel.hpp"
 #include "VkUtils.hpp"
 #include "VulkanDevice.hpp"
+#include "Window.hpp"
 #include "entity.hpp"
 #include "light.hpp"
 #include "stbImgFileLoader.hpp"
@@ -26,8 +27,7 @@ class Configuration;
 
 class Renderer
 {
-    std::unique_ptr<GraphicCore::SwapChain>& swapChain;
-    GraphicCore::VulkanDevice*               context;
+    GraphicCore::VulkanDevice* context;
 
     glm::mat4 perspective;
 
@@ -54,20 +54,9 @@ class Renderer
 
     // DefaultFrameBuffer defaultFramebuffer {*context, *swapChain};
 
-    std::vector<vk::Framebuffer> swapChainFramebuffers;
-
-    std::vector<GraphicCore::vkBasicModels::AttachmentModel> m_AttachemntsVec {
-        {swapChain->getColorFormat( ), vk::SampleCountFlagBits::e1,
-         vk::ImageUsageFlagBits::eTransientAttachment | vk::ImageUsageFlagBits::eColorAttachment},
-        {context->depthFormat, vk::SampleCountFlagBits::e1,
-         vk::ImageUsageFlagBits::eDepthStencilAttachment | vk::ImageUsageFlagBits::eTransferSrc}};
-
-    std::vector<GraphicCore::vkBasicModels::LoadStoreInfo> storeInfoVec {{ }, {}};
-    GraphicCore::vkBasicModels::SubpassInfo                subPassInfo {{ }, {0}};
-    std::vector<GraphicCore::vkBasicModels::SubpassInfo>   subpassInfoVec {subPassInfo};
-    GraphicCore::RenderPass renderPass {context->getVkDevice( ), m_AttachemntsVec, storeInfoVec, subpassInfoVec};
-
-    std::vector<GraphicCore::Framebuffer> Framebuffers;
+    VulkanGame::Ref<GraphicCore::RenderPass> renderPass;
+    std::vector<vk::Framebuffer>             swapChainFramebuffers;
+    std::vector<GraphicCore::Framebuffer>    Framebuffers;
 
     GraphicCore::FrameBufferAttachment::CreateFunc fbaFunc = GraphicCore::FrameBufferAttachment::DEFAULT_CREATE_FUNC;
 
@@ -81,6 +70,9 @@ class Renderer
     GraphicCore::DescriptorPool descPool { };
 
     VulkanGame::Ref<EntityMeshRender> EntRendObj;
+
+    IShaderDescSet*                  entShader;
+    VulkanGame::Ref<IShaderPipeline> entPipeline;
 
     void prepareFrame( );
     void drawCurrentCommandBuffer( );
@@ -110,15 +102,21 @@ class Renderer
 
     GraphicCore::ImageSampler textureImageSampler {context->getVkDevice( )};
 
+    std::unique_ptr<GraphicCore::SwapChain> swapChain;
+
+    const Window& m_Window;
+
    public:
-    Renderer (std::unique_ptr<GraphicCore::SwapChain>& SwapChain, GraphicCore::VulkanDevice* Context, Camera& _camera);
+    Renderer (const Window& window, GraphicCore::VulkanDevice* Context, Camera& _camera);
 
     void draw( );
 
-    void init (const vk::Extent2D& WindowSize);
+    void init( );
     void destroy( );
     void update( );
-    void reCreate( );
+
+    void createSwapChain( );
+    void recreateSwapChain( );
 
     const bool& isFrameBufferResized( );
 };

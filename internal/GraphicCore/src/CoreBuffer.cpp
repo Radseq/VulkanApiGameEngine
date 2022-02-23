@@ -35,7 +35,7 @@ namespace GraphicCore {
             buffer = vk::Buffer { };
         }
 
-        context.getAllocator( )->free (allocatedMemory);
+        //context.getAllocator( )->free (allocatedMemory);
     }
 
     void CoreBuffer::unMap( ) { device.unmapMemory (allocatedMemory.handle); }

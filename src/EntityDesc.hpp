@@ -21,12 +21,11 @@ class EntityDesc : public IShaderDescSet
     DescriptorPools                              descPools {m_DescSetLayout, m_Context.getVkDevice( )};
     VulkanGame::Ref<GraphicCore::DescriptorSets> m_DescSet;
 
-    VulkanGame::Ref<LightShader>        m_LightShader;
-    VulkanGame::Ref<EntSpecLightShader> m_EntSpecLight;
-
     uint32_t binding {0};  // how much addDescriptorWrite called
     uint32_t descSetIndex {0};
     uint32_t maxDescSet {0};
+
+    std::vector<IShader*> ShadersVec;
 
     void ResetDescSetIndex( );
 
@@ -52,7 +51,7 @@ class EntityDesc : public IShaderDescSet
 
     const VulkanGame::Ref<GraphicCore::DescriptorSets> GetDescSets( ) const override;
 
-    std::vector<VulkanGame::Ref<IShader>> GetShaders( ) override;
+    std::vector<IShader*> GetShaders( ) override;
 
     void Destroy( ) override;
 };

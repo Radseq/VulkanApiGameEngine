@@ -17,7 +17,7 @@ void EntityRenderer::destroy (bool isSwapChainCleanUp)
          entities.Destroy( );
      }
      */
-    entities->Destroy( );
+    entities->Destroy ();
     context.getVkDevice( ).destroyCommandPool (context.getCommandPool( ));
 }
 

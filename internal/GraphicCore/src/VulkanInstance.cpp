@@ -49,7 +49,7 @@ namespace GraphicCore
                     vk::DebugReportFlagBitsEXT::ePerformanceWarning | vk::DebugReportFlagBitsEXT::eError |
                     vk::DebugReportFlagBitsEXT::eDebug,
                 debugReportCallbackFunction);
-            auto temp = VkDebugReportCallbackCreateInfoEXT (debugReportCallbackCreateInfo);
+            const auto& temp = VkDebugReportCallbackCreateInfoEXT (debugReportCallbackCreateInfo);
             if (vkCreateDebugReportCallbackEXT (instance, &temp, nullptr, &debugReportCallback) != VK_SUCCESS)
             {
                 throw std::runtime_error ("Failed to create debug report callback.");

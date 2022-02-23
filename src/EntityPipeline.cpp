@@ -7,11 +7,10 @@ EntityPipeline::EntityPipeline (const GraphicCore::VulkanDevice& Context)
 }
 
 void EntityPipeline::CreateGraphicsPipeline (std::vector<std::string>&& shaderPatchName,
-                                             const vk::Extent2D& swapChainWindowSize, const vk::RenderPass& renderPass,
-                                             const GraphicCore::VertexLayout& vertex)
+                                             const vk::RenderPass& renderPass, const GraphicCore::VertexLayout& vertex)
 {
     GraphicCore::Pipeline builder {m_Context.getVkDevice( ), pipelineLayout->getVkPipelineLayout( ), renderPass};
-    builder.getPipelineViewport( ).setViewportAndScissor (swapChainWindowSize);
+    // builder.getPipelineViewport( ).setViewportAndScissor (swapChainWindowSize);
     builder.getVertexInputState( ).appendVertexLayout (vertex);
     builder.getPipelineRasterization( ).getRasterizationState( ).cullMode = vk::CullModeFlagBits::eBack;
     builder.getPipelineRasterization( ).getRasterizationState( ).frontFace =
@@ -21,6 +20,7 @@ void EntityPipeline::CreateGraphicsPipeline (std::vector<std::string>&& shaderPa
     builder.getPipelineDepthStencil( ).getDepthStencil( ).depthCompareOp   = vk::CompareOp::eLess;
     builder.getPipelineDepthStencil( ).getDepthStencil( ).depthTestEnable  = VK_TRUE;
     builder.getPipelineDepthStencil( ).getDepthStencil( ).depthWriteEnable = VK_TRUE;
+    builder.getPipelineDynamic( ).getDynamicStateEnables( ) = {vk::DynamicState::eViewport, vk::DynamicState::eScissor};
 
     vk::PipelineColorBlendAttachmentState colorBlendAttachment = { };
     colorBlendAttachment.colorWriteMask = vk::ColorComponentFlagBits::eR | vk::ColorComponentFlagBits::eG |
@@ -53,4 +53,5 @@ void EntityPipeline::Destroy( )
 {
     m_Context.getVkDevice( ).destroyPipeline (graphicsPipeline);
     m_Context.getVkDevice( ).destroyPipelineLayout (pipelineLayout->getVkPipelineLayout( ));
+    pipelineLayout.reset( );
 }

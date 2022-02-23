@@ -130,7 +130,7 @@ namespace GraphicCore
 
         swapChain = device->getVkDevice( ).createSwapchainKHR (swapChainCI);
 
-        // If an existing sawp chain is re-created, destroy the old swap chain
+        // If an existing swap chain is re-created, destroy the old swap chain
         // This also cleans up all the presentable images
         if (oldSwapchain) { destroy (oldSwapchain); }
 

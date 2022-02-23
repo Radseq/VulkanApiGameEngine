@@ -26,7 +26,7 @@ class IShaderDescSet
 
     virtual const VulkanGame::Ref<GraphicCore::DescriptorSets> GetDescSets( ) const = 0;
 
-    virtual std::vector<VulkanGame::Ref<IShader>> GetShaders( ) = 0;
+    virtual std::vector<IShader*> GetShaders( ) = 0;
 
     virtual void Destroy( ) = 0;
 };

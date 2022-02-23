@@ -23,8 +23,8 @@ class EntityPipeline : public IShaderPipeline
    public:
     explicit EntityPipeline (const GraphicCore::VulkanDevice& Context);
 
-    void CreateGraphicsPipeline (std::vector<std::string>&& shaderPatchName, const vk::Extent2D& swapChainWindowSize,
-                                 const vk::RenderPass& renderPass, const GraphicCore::VertexLayout& vertex) override;
+    void CreateGraphicsPipeline (std::vector<std::string>&& shaderPatchName, const vk::RenderPass& renderPass,
+                                 const GraphicCore::VertexLayout& vertex) override;
     void CreatePipelineLayout (const IShaderDescSet& descSet) override;
     void Bind (const IShaderDescSet& descSet, const vk::CommandBuffer& cmdBufer,
                const size_t& frameIndex) const override;

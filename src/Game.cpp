@@ -27,7 +27,6 @@ void Game::initVulkan( )
     createSurface( );
     pickPhysicalDevice( );
     createLogicalDevice( );
-    createSwapChain( );
     setWindowNameArgs( );
 }
 
@@ -40,8 +39,6 @@ void Game::createLogicalDevice( )
 
 void Game::cleanUp( )
 {
-    cleanupSwapChain( );
-
     renderer->destroy( );
 
     context->Destroy( );
@@ -52,19 +49,13 @@ void Game::cleanUp( )
     window.destroy( );
 }
 
-void Game::createSwapChain( )
-{
-    swapChain = std::make_unique<GraphicCore::SwapChain> (context);
-    swapChain->CreateSwapChain (windowSize, window.getSurface( ));
-}
-
 void Game::run( )
 {
     initWindow( );
     initVulkan( );
 
-    renderer = std::make_unique<Renderer> (swapChain, context, camera);
-    renderer->init (windowSize);
+    renderer = std::make_unique<Renderer> (window, context, camera);
+    renderer->init( );
 
     render( );
 
@@ -79,31 +70,18 @@ void Game::pickPhysicalDevice( )
     localDevices = std::make_unique<GraphicCore::LocalDevices> (vulkanInstance, window.getSurface( ));
 }
 
-void Game::cleanupSwapChain( )
-{
-    renderer->reCreate( );
-    swapChain->destroy (window.isWindowResized( ));
-}
-
-void Game::recreateSwapChain( )
-{
-    window.checkFramBufferSize( );
-    windowSize = window.getExtent2DWindowSize( );
-    context->getVkDevice( ).waitIdle( );
-
-    cleanupSwapChain( );
-    createSwapChain( );
-
-    renderer->init (windowSize);
-}
-
 void Game::render( )
 {
     while (!window.windowShouldClose( ))
     {
         m_Timer.Start( );
 
-        if (window.isWindowResized( )) { recreateSwapChain( ); }
+        if (window.isWindowResized( ))
+        {
+            window.checkFramBufferSize( );
+            context->getVkDevice( ).waitIdle( );
+            renderer->recreateSwapChain( );
+        }
 
         renderer->draw( );
 

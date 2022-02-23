@@ -57,3 +57,8 @@ VulkanGame::Ref<GraphicCore::DescriptorSets> DescriptorPools::CreateDescSet (con
     result->create (descSetsCount, m_DescSetLayout);
     return result;
 }
+
+void DescriptorPools::Destroy( )
+{
+    for (size_t i = 0; i < m_DescPools.size( ); ++i) { m_DescPools [i].destroy (m_Device); }
+}

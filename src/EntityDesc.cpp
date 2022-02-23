@@ -5,20 +5,14 @@ EntityDesc::EntityDesc (const GraphicCore::VulkanDevice& Context, const vk::Desc
     : m_Context (Context)
     , m_DescImgInfo (descImgInfo)
 {
-    m_LightShader  = VulkanGame::CreateRef<LightShader>( );
-    m_EntSpecLight = VulkanGame::CreateRef<EntSpecLightShader>( );
+    ShadersVec.push_back (new LightShader( ));
+    ShadersVec.push_back (new EntSpecLightShader( ));
 }
 
 const GraphicCore::DescriptorSetLayoutBinding&     EntityDesc::GetDescSetLayout( ) const { return m_DescSetLayout; }
 const VulkanGame::Ref<GraphicCore::DescriptorSets> EntityDesc::GetDescSets( ) const { return m_DescSet; }
 
-std::vector<VulkanGame::Ref<IShader>> EntityDesc::GetShaders( )
-{
-    std::vector<VulkanGame::Ref<IShader>> shader;
-    shader.push_back (m_LightShader);
-    shader.push_back (m_EntSpecLight);
-    return shader;
-};
+std::vector<IShader*> EntityDesc::GetShaders( ) { return ShadersVec; };
 
 void EntityDesc::UpdateWriteDescriptors( )
 {
@@ -36,8 +30,7 @@ void EntityDesc::CreateDescriptorSets (const uint32_t& count)
     m_DescSet  = descPools.CreateDescSet (count);
     maxDescSet = m_DescSet->GetDescSetCount( ) - 1;
 
-    m_EntSpecLight->Create (m_Context, count);
-    m_LightShader->Create (m_Context, count);
+    for (const auto& shader : ShadersVec) { shader->Create (m_Context, count); }
 
     WriteDescSet( );
 }
@@ -58,19 +51,26 @@ void EntityDesc::WriteDescSet( )
 {
     for (uint32_t i = 0; i < m_DescSet->GetDescSetCount( ); ++i)
     {
-        WriteDescBufferInfo (&m_EntSpecLight->GetUniformDesc (i));
+        WriteDescBufferInfo (&ShadersVec[1]->GetUniformDesc (i));
 
         WriteDescImgInfo (&m_DescImgInfo);
 
-        WriteDescBufferInfo (&m_LightShader->GetUniformDesc (i));
+        WriteDescBufferInfo (&ShadersVec[0]->GetUniformDesc (i));
         UpdateWriteDescriptors( );
     }
 }
 
 void EntityDesc::Destroy( )
 {
-    m_EntSpecLight->Destroy (m_Context);
-    m_LightShader->Destroy (m_Context);
+    for (const auto shader : ShadersVec)
+    {
+        shader->Destroy (m_Context);
+        delete shader;
+    }
+    
+    ShadersVec.clear( );
+
+    descPools.Destroy( );
 }
 
 void EntityDesc::WriteDescBufViewInfo (const vk::BufferView* BuffeeView)

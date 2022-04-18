@@ -17,7 +17,7 @@ namespace GraphicCore
     {
         struct CompareExtent2D
         {
-            bool operator( ) (const VkExtent2D& lhs, const VkExtent2D& rhs) const
+            bool operator( ) (const vk::Extent2D& lhs, const vk::Extent2D& rhs) const
             {
                 return !(lhs.width == rhs.width && lhs.height == rhs.height) &&
                        (lhs.width < rhs.width && lhs.height < rhs.height);

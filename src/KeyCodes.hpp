@@ -23,13 +23,13 @@
 #define KEY_KPADD  GLFW_KEY_KP_ADD
 #define KEY_KPSUB  GLFW_KEY_KP_SUBTRACT
 
-#define GAMEPAD_BUTTON_A     0x1000
-#define GAMEPAD_BUTTON_B     0x1001
-#define GAMEPAD_BUTTON_X     0x1002
-#define GAMEPAD_BUTTON_Y     0x1003
-#define GAMEPAD_BUTTON_L1    0x1004
-#define GAMEPAD_BUTTON_R1    0x1005
-#define GAMEPAD_BUTTON_START 0x1006
+constexpr auto GAMEPAD_BUTTON_A = 0x1000;
+constexpr auto GAMEPAD_BUTTON_B = 0x1001;
+constexpr auto GAMEPAD_BUTTON_X = 0x1002;
+constexpr auto GAMEPAD_BUTTON_Y = 0x1003;
+constexpr auto GAMEPAD_BUTTON_L1 = 0x1004;
+constexpr auto GAMEPAD_BUTTON_R1 = 0x1005;
+constexpr auto GAMEPAD_BUTTON_START = 0x1006;
 
 class KeyCodes
 {
